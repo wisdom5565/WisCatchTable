@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>즐거운 미식 생활의 시작, 캐치테이블</title>
+    <div th:replace="fragment/link :: link"/>
+    <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/collection_detail.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="root">
+    <div th:replace="fragment/header :: header"/>
+    <div th:replace="fragment/others_header :: others_header"/>
+    <div class="css-luwwab eug5r8l1">
+        <div class="css-833hqy ecbxmj4">
+            <div class="css-1v4whg ecbxmj3">프로필</div>
+            <ul class="css-1x9bshx ecbxmj2">
+                <li class="css-0 ecbxmj1">
+                    <a class="css-pi3u6r ecbxmj0" href="/profile.html">프로필<span class="css-e41glx e1x0rfoo0"></span
+                    ></a>
+                </li>
+                <li class="css-0 ecbxmj1">
+                    <a class="css-pi3u6r ecbxmj0" href="/profile-collection.html">컬렉션 보기<span
+                            class="css-e41glx e1x0rfoo0"></span
+                    ></a>
+                </li>
+                <li class="css-0 ecbxmj1">
+                    <a class="css-pi3u6r ecbxmj0" href="/profile-review.html">리뷰 보기<span
+                            class="css-e41glx e1x0rfoo0"></span
+                    ></a>
+                </li>
+            </ul>
+        </div>
+        <div class="css-171zbec eug5r8l0">
+            <div class="css-j0lifa ed9qr673">
+                <div class="css-fhxb3m ed9qr672">
+                    <h2 class="css-1268zpe ed9qr671">프로필 보기</h2>
+                </div>
+            </div>
+
+            <main id="main">
+                <div class="wrapper" id="profileReviewListScroll">
+                    <div class="container">
+                        <div class="header-left-1">
+                        </div>
+                        <div class="dim-layer" style="display: none;">
+                            <div class="dimBg"></div>
+                            <div id="layer2" class="pop-layer" style="margin-top: -132.5px; margin-left: -205px;">
+                                <div class="pop-container">
+                                    <div class="pop-conts">
+                                        <a href="#"><p class="ctxt mb20">사용자 차단</p></a>
+                                        <br>
+                                        <a href="#"><p class="ctxt mb20">사용자 신고</p></a>
+                                        <br>
+                                        <div class="btn-r">
+                                            <a href="#" class="btn-layerClose" style="padding:  10px 140px 10px 140px;">닫기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </header> -->
+
+                    <main id="main">
+                        <section class="section section-overflow-hidden pt-24">
+                            <div class="container  ">
+                                <div class="mypage-profile">
+                                    <div class="profile-pic  ">
+                                        <div class="img"
+                                             style="background-image: url(&quot;https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/noimg/profile_default_v2.png&quot;);">
+                                        </div>
+                                    </div>
+                                    <div class="mypage-profile-meta">
+                                        <h4 class="name username"><span class="txt" style="max-width: none;">준숑이</span>
+                                        </h4>
+                                        <div class="meta">
+                                            <dl>
+                                                <dt>팔로잉</dt>
+                                                <dd id="result">2</dd>
+                                            </dl>
+                                            <span>|</span>
+                                            <dl>
+                                                <dt>팔로워</dt>
+                                                <dd>0</dd>
+                                            </dl>
+                                        </div>
+
+                                    </div>
+                                    <div class="mypage-profile--desc" style="display: block;">
+                                        <div class="__desc">
+                                            <p id="introduce_p" class="expand"></p>
+                                        </div>
+                                        <button class="btn btn-md btn-orange btn-rounded full-width" id="profile-btn">
+                                    <span class="label" onclick="count()" value="+">
+                                        프로필 수정
+                                    </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <hr class="separator mt-28">
+                        <section class="section section-overflow-hidden">
+                            <div class="profile-summary">
+                                <dl class="__block">
+                                    <dt>평균 별점</dt>
+                                    <dd>
+                                        <div class="__avr-rate"><strong>5</strong>
+                                            <div class="stars">
+                                                <span class="star full"
+                                                      style="width: 20px; height: 20px; margin-right: 8px;"></span>
+                                                <span class="star full"
+                                                      style="width: 20px; height: 20px; margin-right: 8px;"></span>
+                                                <span class="star full"
+                                                      style="width: 20px; height: 20px; margin-right: 8px;"></span>
+                                                <span class="star full"
+                                                      style="width: 20px; height: 20px; margin-right: 8px;"></span>
+                                                <span class="star full"
+                                                      style="width: 20px; height: 20px; margin-right: 8px;"></span>
+                                            </div>
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <dl class="__block">
+                                    <dt>활동 지역</dt>
+                                    <dd>
+                                        <div class="color-gray">서울</div>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </section>
+
+                    </main>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragment/footer :: footer"/>
+</body>
+<script type="text/javascript" src="/js/script.js"></script>
+</html>

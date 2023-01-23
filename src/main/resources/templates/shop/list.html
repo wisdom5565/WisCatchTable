@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>즐거운 미식 생활의 시작, 캐치테이블</title>
+    <div th:replace="fragment/link :: link"/>
+    <link rel="stylesheet" href="/css/list_style.css">
+</head>
+<body>
+    <div id="root">
+        <div th:replace="fragment/header :: header"/>
+        <div class="wrapper">
+
+            <main id="main" style="padding-bottom: 0px;">
+                <div class="search-header __autohide" style="background: none; top: 48px;">
+                    <div style="background: rgb(255, 255, 255);">
+                        <div class="__filter-list">
+                            <div class="__actions">
+                                <a class="__map" id="btnGoMap">
+                                    <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/wad-custom/filter-header/filter_header_map.svg">
+                                </a>
+                                <a class="__setting __active" id="btnShowFilter">
+                                    <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/wad-custom/filter-header/filter_header_setting_on.svg">
+                                    <span class="__count">1</span>
+                                </a>
+                            </div>
+                            <span class="__split"></span>
+                            <div class="__list">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide swiper-slide-active" style="margin-right: 8px;">
+                                        <a class="__active">
+                                            <span>한우오마카...</span>
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-next" style="margin-right: 8px;">
+                                        <a>
+                                            <span>내 주변</span>
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="margin-right: 8px;">
+                                        <a>
+                                            <span>지역</span>
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="margin-right: 8px;">
+                                        <a>
+                                            <span>가격</span>
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="margin-right: 8px;">
+                                        <a>
+                                            <span>분위기</span>
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="margin-right: 8px;">
+                                        <a>
+                                            <span>편의시설</span>
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="margin-right: 8px;">
+                                        <a>
+                                            <span>테이블 타입</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="datetime-selector">
+                            <a>
+                                <span class="value">내일(화) / 2명 / 오후 7:00</span>
+                            </a>
+                        </div>
+                    </div>
+       
+                    <!-- <hr class="separator"> -->
+                    <div class="__search-result-header mb-20">
+                        <div class="__total-count">
+                            <strong>102개</strong>의 레스토랑
+                        </div>
+                        <a class="__sort">
+                            <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/icons/icon_sort_20221020.svg" alt="">
+                            <span class="__label">추천 순</span>
+                            <i>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4.94 6L8 9.05333L11.06 6L12 6.94L8 10.94L4 6.94L4.94 6Z" fill="black"></path>
+                                </svg>
+                            </i>
+                        </a>
+                    </div>
+                    <section class="section">
+                        <div class="container gutter-sm">
+                            <div class="saved-restaurant-list">
+                                <div style="padding-bottom: 10px;">
+                                    <div id="searchList_">
+                                        <div id="searchList__0" data-dummy="40">
+                                            <div>
+                                                <div class="saved-restaurant-list-item" style="padding-bottom: 40px;">
+                                                    <div class="restaurant-info">
+                                                        <div class="tb">
+                                                            <div class="img" style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s24345/24345_225222244064978_thumbMenuImage.jpg?small180&quot;); overflow: hidden;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="detail-header">
+                                                                <div class="txt">
+                                                                    <h4 class="name">한우물</h4>
+                                                                    <p class="excerpt">이태원 퀴논길에 위치한 한우 컴팩트 그릴링 코스 전문점</p>
+                                                                </div>
+                                                                <a class="btn-bookmark">북마크</a>
+                                                            </div>
+                                                            <div class="restaurant-meta">
+                                                                <div class="__d-flex mb-6">
+                                                                    <div class="rating">
+                                                                        <span class="star">4.6</span>&nbsp;
+                                                                        <span class="count">(580)</span>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="tags">한식 • 이태원</span><span class="price">점심 3.9만원 · 저녁 5 - 7만원</span>
+                                                            </div>
+                                                            <div class="timetable-list timetable-list-sm">
+                                                                <button class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="searchList__0" data-dummy="40">
+                                            <div>
+                                                <div class="saved-restaurant-list-item" style="padding-bottom: 40px;">
+                                                    <div class="restaurant-info">
+                                                        <div class="tb">
+                                                            <div class="img" style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s24345/24345_225222244064978_thumbMenuImage.jpg?small180&quot;); overflow: hidden;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="detail-header">
+                                                                <div class="txt">
+                                                                    <h4 class="name">한우물</h4>
+                                                                    <p class="excerpt">이태원 퀴논길에 위치한 한우 컴팩트 그릴링 코스 전문점</p>
+                                                                </div>
+                                                                <a class="btn-bookmark">북마크</a>
+                                                            </div>
+                                                            <div class="restaurant-meta">
+                                                                <div class="__d-flex mb-6">
+                                                                    <div class="rating">
+                                                                        <span class="star">4.6</span>&nbsp;
+                                                                        <span class="count">(580)</span>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="tags">한식 • 이태원</span><span class="price">점심 3.9만원 · 저녁 5 - 7만원</span>
+                                                            </div>
+                                                            <div class="timetable-list timetable-list-sm">
+                                                                <button class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="searchList__0" data-dummy="40">
+                                            <div>
+                                                <div class="saved-restaurant-list-item" style="padding-bottom: 40px;">
+                                                    <div class="restaurant-info">
+                                                        <div class="tb">
+                                                            <div class="img" style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s24345/24345_225222244064978_thumbMenuImage.jpg?small180&quot;); overflow: hidden;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="detail-header">
+                                                                <div class="txt">
+                                                                    <h4 class="name">한우물</h4>
+                                                                    <p class="excerpt">이태원 퀴논길에 위치한 한우 컴팩트 그릴링 코스 전문점</p>
+                                                                </div>
+                                                                <a class="btn-bookmark">북마크</a>
+                                                            </div>
+                                                            <div class="restaurant-meta">
+                                                                <div class="__d-flex mb-6">
+                                                                    <div class="rating">
+                                                                        <span class="star">4.6</span>&nbsp;
+                                                                        <span class="count">(580)</span>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="tags">한식 • 이태원</span><span class="price">점심 3.9만원 · 저녁 5 - 7만원</span>
+                                                            </div>
+                                                            <div class="timetable-list timetable-list-sm">
+                                                                <button class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="searchList__0" data-dummy="40">
+                                            <div>
+                                                <div class="saved-restaurant-list-item" style="padding-bottom: 40px;">
+                                                    <div class="restaurant-info">
+                                                        <div class="tb">
+                                                            <div class="img" style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s24345/24345_225222244064978_thumbMenuImage.jpg?small180&quot;); overflow: hidden;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="detail-header">
+                                                                <div class="txt">
+                                                                    <h4 class="name">한우물</h4>
+                                                                    <p class="excerpt">이태원 퀴논길에 위치한 한우 컴팩트 그릴링 코스 전문점</p>
+                                                                </div>
+                                                                <a class="btn-bookmark">북마크</a>
+                                                            </div>
+                                                            <div class="restaurant-meta">
+                                                                <div class="__d-flex mb-6">
+                                                                    <div class="rating">
+                                                                        <span class="star">4.6</span>&nbsp;
+                                                                        <span class="count">(580)</span>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="tags">한식 • 이태원</span><span class="price">점심 3.9만원 · 저녁 5 - 7만원</span>
+                                                            </div>
+                                                            <div class="timetable-list timetable-list-sm">
+                                                                <button class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="searchList__0" data-dummy="40">
+                                            <div>
+                                                <div class="saved-restaurant-list-item" style="padding-bottom: 40px;">
+                                                    <div class="restaurant-info">
+                                                        <div class="tb">
+                                                            <div class="img" style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s24345/24345_225222244064978_thumbMenuImage.jpg?small180&quot;); overflow: hidden;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="detail">
+                                                            <div class="detail-header">
+                                                                <div class="txt">
+                                                                    <h4 class="name">한우물</h4>
+                                                                    <p class="excerpt">이태원 퀴논길에 위치한 한우 컴팩트 그릴링 코스 전문점</p>
+                                                                </div>
+                                                                <a class="btn-bookmark">북마크</a>
+                                                            </div>
+                                                            <div class="restaurant-meta">
+                                                                <div class="__d-flex mb-6">
+                                                                    <div class="rating">
+                                                                        <span class="star">4.6</span>&nbsp;
+                                                                        <span class="count">(580)</span>
+                                                                    </div>
+                                                                </div>
+                                                                <span class="tags">한식 • 이태원</span><span class="price">점심 3.9만원 · 저녁 5 - 7만원</span>
+                                                            </div>
+                                                            <div class="timetable-list timetable-list-sm">
+                                                                <button class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <button class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </button>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="margin-bottom: auto; margin-top: auto; min-width: 70px;">
+                                                                    <span class="time">&nbsp;</span>
+                                                                </a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item disabled" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">&nbsp;</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                                <a class="timetable-list-item" style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span class="time">오후 12:00</span></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+        <div th:replace="fragment/footer :: footer"/>
+    </div>
+</body>
+</html>

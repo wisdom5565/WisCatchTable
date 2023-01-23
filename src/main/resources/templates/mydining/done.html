@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>즐거운 미식 생활의 시작, 캐치테이블</title>
+    <div th:replace="fragment/link :: link"/>
+    <link rel="stylesheet" href="/css/collection_detail.css">
+<body class="disable-user-select">
+<div id="root">
+    <!--  header 시작-->
+    <div th:replace="fragment/header :: header"/>
+    <!--header 끝-->
+    <!-- 배너(리뷰 작성기한 30일로 변경) 시작 -->
+    <div style="background-color : #FEF7EA;">
+        <a href="/ct/notice/content/371" class="__banner">
+            <img src="/images/mydining_banner.png"
+                 style="display: block; width: 100%; box-shadow: 0 0 20px rgb(0 0 0 / 5%); margin-bottom: 34px;">
+        </a>
+    </div>
+    <!-- 배너(리뷰 작성기한 30일로 변경) 끝 -->
+
+    <!-- wrapper 시작 -->
+    <div class="wrapper">
+        <main id="main">
+            <div class="mb-30">
+            </div>
+            <section class="section mb-30">
+                <div class="container gutter-sm">
+                    <div class="tag-radio-group mt--10">
+                        <label><input type="radio" name="type" value="planned"><span class="label">방문예정</span></label>
+                        <label><input type="radio" name="type" value="done" checked=""><span
+                                class="label">방문완료</span></label>
+                        <label><input type="radio" name="type" value="cancel"><span class="label">취소/노쇼</span></label>
+                    </div>
+                </div>
+                <div class="container gutter-sm mt-24">
+                    <div class="section-header">
+                        <h3 class="section-title section-title-sm">총 1건</h3>
+                        <div class="utils"><a href="#" class="btn-sort desc">방문일자</a></div>
+                    </div>
+                    <div class="section-body">
+                        <div class="my-dining-list">
+                            <div class="section-body">
+                                <div class="mypage-reservation-list">
+                                    <div class="my-dining-list">
+                                        <div id="myReservationDoneListScroll">
+                                            <div id="myReservationDoneListScroll_0" data-dummy="216.27273559570312">
+                                                <div class="my-dining-item-wrap">
+                                                    <div class="my-dining-item completed">
+                                                        <div class="my-dining-item-header">
+                                                            <div class="my-dining-status">
+                                                                <div class="badge">방문완료</div>
+                                                                <div class="desc">총 1회 방문</div>
+                                                            </div>
+                                                            <div class="restaurant-info">
+                                                                <div class="tb"><img
+                                                                        src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s20174/20174_2143012474882250.jpg?small220">
+                                                                </div>
+                                                                <div class="info">
+                                                                    <h3>스시소요</h3>
+                                                                    <div class="meta"><span>스시오마카세 · 부천</span></div>
+                                                                    <div class="date">2022.7.17 오후 8:00 2명</div>
+                                                                    <div>
+                                                                        <p class="notice ebold"
+                                                                           style="margin-top: 5px;">결제 취소 및 환불까지 평균
+                                                                            3~10일이 걸립니다.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <a class="btn-delete">삭제</a>
+                                                        </div>
+                                                        <div class="my-dining-item-body">
+                                                            <div class="txt-center"><a href="#"
+                                                                                       class="btn btn-blue"><span
+                                                                    class="label arrow font-13">내 리뷰
+                                                                            보러가기</span></a>
+                                                            </div>
+                                                        </div>
+                                                        <div th:replace="fragment/review_write :: review_write"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- wrapper 끝 -->
+
+    <div th:replace="fragment/footer :: footer"/>
+</div>
+<script>
+    const drawStar = (target) => {
+        document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+    }
+</script>
+</body>
+</html>
