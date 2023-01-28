@@ -1,4 +1,4 @@
-package com.catchmind.catchtable.controller.page;
+package com.catchmind.catchtable.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.catchmind.catchtable.controller.page;
+package com.catchmind.catchtable.controller;
 
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Controller;

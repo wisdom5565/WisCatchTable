@@ -14,22 +14,24 @@
 <body>
 <div id="root">
 <!--header 시작-->
-<div th:replace="fragment/header :: header"/>
+    <header id="header">
+        ㅎㄷㅎㄷ
+    </header>
 <!--header 끝-->
     <div class="wrapper">
         <main id="main">
+            <form method="post" id="frm" action="/loginOk" class="container">
             <section class="signin-wrapper" style="height: auto;">
                 <div class="__inner">
-                    <form class="container">
-                        <div class="css-o5dw7d">
+                    <div class="css-o5dw7d">
                             로그인
                         </div>
                         <div class="input-control mb-30">
-                            <input type="text" class="form-input form-input-underline" id="login-id" name="login-id"
+                            <input type="text" class="form-input form-input-underline" id="prHp" name="prHp"
                                    placeholder="휴대폰 번호 or 닉네임" autocomplete="off" value="">
                         </div>
                         <div class="input-control mb-30">
-                            <input type="password" id="login-pw" name="login-pw" class="form-input form-input-underline"
+                            <input type="password" id="prUserpw" name="prUserpw" class="form-input form-input-underline"
                                    placeholder="비밀번호" autocomplete="off" value="">
                             <button type="button" class="hide-password ">패스워드보이기</button>
                         </div>
@@ -41,14 +43,14 @@
                                 <a href="#" class="color-gray underline">비밀번호 찾기</a>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
             </section>
             <div class="sticky-bottom-btns pb-68 display-none-with-aos-keyboard login-btn">
-                <button id="login-btn" class="btn btn-lg btn-red full-width login-btn" disabled="">
+                <a id="loginBtn" class="btn btn-lg btn-red full-width login-btn">
                     <strong class="bold">로그인</strong>
-                </button>
+                </a>
             </div>
+            </form>
             <!--            <div class="sticky-bottom-btns pb-68 display-none-with-aos-keyboard kakao-btn">-->
             <!--                <button id="kakao-btn" class="btn btn-lg btn-yellow full-width kakao-btn">-->
             <!--                    <strong class="bold kakao-btn"><img id="kakao-balloon"-->
@@ -62,6 +64,7 @@
     <div th:replace="fragment/footer :: footer"/>
     <!-- footer 끝 -->
 </div>
+<script src="/js/login.js"></script>
 </body>
 
 </html>

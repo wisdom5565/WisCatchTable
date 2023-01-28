@@ -1,4 +1,4 @@
-package com.catchmind.catchtable.controller.page;
+package com.catchmind.catchtable.controller;
 
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
