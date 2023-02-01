@@ -8,7 +8,6 @@ import javax.persistence.*;
 //@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@ToString(callSuper = true)
 public class BistroDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,8 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ReserveRepository extends JpaRepository<Reserve, Long> {
+
+    List<Reserve> findAllByresStatusAndProfile_PrIdx(ReservationType resStatus, Long prIdx);
     List<Reserve> findAllByresStatus(ReservationType resStatus);
 
 }

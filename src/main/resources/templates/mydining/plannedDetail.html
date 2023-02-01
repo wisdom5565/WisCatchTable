@@ -1,20 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>즐거운 미식 생활의 시작, 캐치테이블</title>
-    <div th:replace="fragment/link :: link"/>
-    <link rel="stylesheet" href="/css/detail.css">
-    <link rel="stylesheet" href="/css/collection_detail.css">
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>즐거운 미식 생활의 시작, 캐치테이블</title>
+  <div th:replace="fragment/link :: link"/>
+  <link rel="stylesheet" href="/css/detail.css">
+  <link rel="stylesheet" href="/css/collection_detail.css">
+</head>
+<style>
+  #modal.modal-overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    z-index: 1;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+  }
+  #modal .modal-window {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    width: 400px;
+    height: 325px;
+    position: relative;
+    top: -100px;
+    padding: 10px;
+  }
+  #modal .title {
+    padding-left: 10px;
+    display: inline;
+    /*text-shadow: 1px 1px 2px gray;*/
+    color: black;
+
+  }
+  #modal .title h2 {
+    display: inline;
+  }
+  #modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    /*text-shadow: 1px 1px 2px gray;*/
+    color: black;
+  }
+
+  #modal .content {
+    margin-top: 20px;
+    /*padding: 0px 10px;*/
+    /*text-shadow: 1px 1px 2px gray;*/
+    color: black;
+  }
+</style>
+<body>
 <div id="root">
   <header id="header">
     ㅎㄷㅎㄷ
   </header>
-    <div class="wrapper">
+  <div class="wrapper">
     <main id="main">
       <section class="section bg-gray mb-30" style="background-color: white;">
         <div class="restaurant-reservation-detail">
@@ -26,29 +76,23 @@
                 </div>
                 <h2 class="name">
                   <a href="/ct/shop/Y2F0Y2hfMCtRcEsrMGd5ZUloTGszSitWY2xhdz09"
-                    th:text="${detail.resAdminDto().resaBisName()}"></a
+                     th:text="${detail.resAdminDto().resaBisName()}"></a
                   >
                 </h2>
                 <div style="display: flex;justify-content: center">
-                  <h3 class="type" th:text="${detail.bistroInfoDto().bisCategory()}"></h3>
-                  <span>&nbsp•&nbsp</span>
-                  <h3 class="type" th:text="${detail.bistroInfoDto().bisRegion()}"></h3>
+                  <h3 class="type">[[${detail.bistroInfoDto.bisCategory}]] • [[${detail.bistroInfoDto.bisRegion}]]</h3>
                 </div>
               </div>
               <div class="detail-box-body">
                 <div class="options">
                   <div class="date">
-                    <span th:text="${detail.resMonth()}"></span>
-                    <span th:text="${detail.resDay()}"></span>
-<!--                    <span>(</span>-->
-                    <span></span>
+                    <span>[[${detail.resMonth}]]월 [[${detail.resDay}]]일</span>
                   </div>
                   <div class="time">
-                    <span th:text="${detail.resTime()}"></span>
+                    <span>[[${detail.resTime}]]시</span>
                   </div>
                   <div class="people">
-                    <span th:text="${detail.resPerson()}"></span>
-                    명
+                    <span>[[${detail.resPerson}]]명</span>
                   </div>
                 </div>
                 <hr class="hairline" />
@@ -58,36 +102,36 @@
                     <span style="border-right: 1px solid #ded7d7;height: 12px;
     margin: 0 10px;
     display: inline-block;"></span>
-                    <button>예약취소</button>
+                    <button id="btn-modal">예약취소</button>
                   </div>
                 </div>
-<!--                <div class="reservation-info">-->
-<!--                  <div>-->
-<!--                    <div class="reservation-info">-->
-<!--                      <dl>-->
-<!--                        <dt>예약 일시</dt>-->
-<!--                        <dd>-->
-<!--                          <span th:text="${#temporals.month(detail.regDate())}"></span>-->
-<!--                          <span>.</span>-->
-<!--                          <span th:text="${#temporals.day(detail.regDate())}"></span>-->
-<!--                          <span>(</span><span th:text="${#temporals.dayOfWeekNameShort(detail.regDate())}"></span><span>)</span>&nbsp-->
-<!--                          <span th:text="${#temporals.hour(detail.regDate())}"></span><span>:</span><span th:text="${#temporals.minute(detail.regDate())}"></span>-->
-<!--&lt;!&ndash;                          12.08(목) 오후 8:06&ndash;&gt;-->
-<!--                        </dd>-->
-<!--                      </dl>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <hr class="hairline" />-->
-<!--                <div>-->
-<!--                  <div class="cancel-msg">-->
-<!--                    <h6>예약이 완료되었습니다.</h6>-->
-<!--                    <p>-->
-<!--                      변경사항을 미리 알려 주셔서 감사합니다. 다음에 다시-->
-<!--                      찾아주세요 :)-->
-<!--                    </p>-->
-<!--                  </div>-->
-<!--                </div>-->
+                <!--                <div class="reservation-info">-->
+                <!--                  <div>-->
+                <!--                    <div class="reservation-info">-->
+                <!--                      <dl>-->
+                <!--                        <dt>예약 일시</dt>-->
+                <!--                        <dd>-->
+                <!--                          <span th:text="${#temporals.month(detail.regDate())}"></span>-->
+                <!--                          <span>.</span>-->
+                <!--                          <span th:text="${#temporals.day(detail.regDate())}"></span>-->
+                <!--                          <span>(</span><span th:text="${#temporals.dayOfWeekNameShort(detail.regDate())}"></span><span>)</span>&nbsp-->
+                <!--                          <span th:text="${#temporals.hour(detail.regDate())}"></span><span>:</span><span th:text="${#temporals.minute(detail.regDate())}"></span>-->
+                <!--&lt;!&ndash;                          12.08(목) 오후 8:06&ndash;&gt;-->
+                <!--                        </dd>-->
+                <!--                      </dl>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                </div>-->
+                <!--                <hr class="hairline" />-->
+                <!--                <div>-->
+                <!--                  <div class="cancel-msg">-->
+                <!--                    <h6>예약이 완료되었습니다.</h6>-->
+                <!--                    <p>-->
+                <!--                      변경사항을 미리 알려 주셔서 감사합니다. 다음에 다시-->
+                <!--                      찾아주세요 :)-->
+                <!--                    </p>-->
+                <!--                  </div>-->
+                <!--                </div>-->
               </div>
             </div>
           </div>
@@ -104,10 +148,10 @@
                 <dt style="margin-right: 28px;">예약자</dt>
                 <dd style="word-break: break-all" th:text="${detail.prName()}">전지혜</dd>
               </dl>
-<!--              <dl>-->
-<!--                <dt>예약경로</dt>-->
-<!--                <dd>캐치테이블 앱</dd>-->
-<!--              </dl>-->
+              <!--              <dl>-->
+              <!--                <dt>예약경로</dt>-->
+              <!--                <dd>캐치테이블 앱</dd>-->
+              <!--              </dl>-->
             </div>
           </div>
         </div>
@@ -121,9 +165,9 @@
           <div class="section-body">
             <div class="well">
               <p class="font-12 color-gray" th:text="${detail.bistroDetailDto().bdCaution()}">
-<!--                예약은 전날 까지 가능하며, 좌석은 직원들이 안내 해드릴-->
-<!--                겁니다.<br />공연은 매주 목,금,토 19:30~21:00 진행하니 예약 시-->
-<!--                참고 부탁 드리겠습니다.-->
+                <!--                예약은 전날 까지 가능하며, 좌석은 직원들이 안내 해드릴-->
+                <!--                겁니다.<br />공연은 매주 목,금,토 19:30~21:00 진행하니 예약 시-->
+                <!--                참고 부탁 드리겠습니다.-->
               </p>
             </div>
           </div>
@@ -138,20 +182,20 @@
           <div class="section-body">
             <div class="sc-gsnTZi hLhZKP">
               <div
-                class="map"
-                id="mapContainer"
-                style="
+                      class="map"
+                      id="mapContainer"
+                      style="
                   height: 240px;
                   overflow: hidden;
                   background: url('https://t1.daumcdn.net/mapjsapi/images/2x/bg_tile.png');
                 "
               >
                 <img
-                  src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/location-red.svg"
-                  class="icon"
+                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/location-red.svg"
+                        class="icon"
                 />
                 <div
-                  style="
+                        style="
                     position: absolute;
                     left: 0px;
                     top: 0px;
@@ -163,7 +207,7 @@
                   <div style="position: absolute">
                     <div style="position: absolute; z-index: 0"></div>
                     <div
-                      style="
+                            style="
                         position: absolute;
                         z-index: 1;
                         left: 0px;
@@ -171,11 +215,11 @@
                       "
                     >
                       <img
-                        src="https://map1.daumcdn.net/map_2d_hd/2212ejo/L3/1999/889.png"
-                        alt=""
-                        role="presentation"
-                        draggable="false"
-                        style="
+                              src="https://map1.daumcdn.net/map_2d_hd/2212ejo/L3/1999/889.png"
+                              alt=""
+                              role="presentation"
+                              draggable="false"
+                              style="
                           position: absolute;
                           user-select: none;
                           -webkit-user-drag: none;
@@ -193,11 +237,11 @@
                           height: 256px;
                         "
                       /><img
-                        src="https://map2.daumcdn.net/map_2d_hd/2212ejo/L3/1999/890.png"
-                        alt=""
-                        role="presentation"
-                        draggable="false"
-                        style="
+                            src="https://map2.daumcdn.net/map_2d_hd/2212ejo/L3/1999/890.png"
+                            alt=""
+                            role="presentation"
+                            draggable="false"
+                            style="
                           position: absolute;
                           user-select: none;
                           -webkit-user-drag: none;
@@ -214,12 +258,12 @@
                           width: 256px;
                           height: 256px;
                         "
-                      /><img
-                        src="https://map3.daumcdn.net/map_2d_hd/2212ejo/L3/1999/891.png"
-                        alt=""
-                        role="presentation"
-                        draggable="false"
-                        style="
+                    /><img
+                            src="https://map3.daumcdn.net/map_2d_hd/2212ejo/L3/1999/891.png"
+                            alt=""
+                            role="presentation"
+                            draggable="false"
+                            style="
                           position: absolute;
                           user-select: none;
                           -webkit-user-drag: none;
@@ -236,12 +280,12 @@
                           width: 256px;
                           height: 256px;
                         "
-                      /><img
-                        src="https://map1.daumcdn.net/map_2d_hd/2212ejo/L3/2000/889.png"
-                        alt=""
-                        role="presentation"
-                        draggable="false"
-                        style="
+                    /><img
+                            src="https://map1.daumcdn.net/map_2d_hd/2212ejo/L3/2000/889.png"
+                            alt=""
+                            role="presentation"
+                            draggable="false"
+                            style="
                           position: absolute;
                           user-select: none;
                           -webkit-user-drag: none;
@@ -258,12 +302,12 @@
                           width: 256px;
                           height: 256px;
                         "
-                      /><img
-                        src="https://map2.daumcdn.net/map_2d_hd/2212ejo/L3/2000/890.png"
-                        alt=""
-                        role="presentation"
-                        draggable="false"
-                        style="
+                    /><img
+                            src="https://map2.daumcdn.net/map_2d_hd/2212ejo/L3/2000/890.png"
+                            alt=""
+                            role="presentation"
+                            draggable="false"
+                            style="
                           position: absolute;
                           user-select: none;
                           -webkit-user-drag: none;
@@ -280,12 +324,12 @@
                           width: 256px;
                           height: 256px;
                         "
-                      /><img
-                        src="https://map3.daumcdn.net/map_2d_hd/2212ejo/L3/2000/891.png"
-                        alt=""
-                        role="presentation"
-                        draggable="false"
-                        style="
+                    /><img
+                            src="https://map3.daumcdn.net/map_2d_hd/2212ejo/L3/2000/891.png"
+                            alt=""
+                            role="presentation"
+                            draggable="false"
+                            style="
                           position: absolute;
                           user-select: none;
                           -webkit-user-drag: none;
@@ -302,11 +346,11 @@
                           width: 256px;
                           height: 256px;
                         "
-                      />
+                    />
                     </div>
                     <div style="position: absolute; z-index: 1"></div>
                     <div
-                      style="
+                            style="
                         width: 480px;
                         height: 240px;
                         position: absolute;
@@ -315,8 +359,8 @@
                     ></div>
                     <div style="position: absolute; z-index: 1">
                       <svg
-                        version="1.1"
-                        style="
+                              version="1.1"
+                              style="
                           stroke: none;
                           stroke-dashoffset: 0.5;
                           stroke-linejoin: round;
@@ -328,13 +372,13 @@
                           left: -960px;
                           top: -480px;
                         "
-                        viewBox="0 0 2400 1200"
+                              viewBox="0 0 2400 1200"
                       >
                         <defs></defs>
                       </svg>
                     </div>
                     <div
-                      style="
+                            style="
                         position: absolute;
                         z-index: 1;
                         width: 100%;
@@ -343,7 +387,7 @@
                       "
                     >
                       <div
-                        style="
+                              style="
                           position: absolute;
                           margin: -35px 0px 0px -12px;
                           z-index: 0;
@@ -352,12 +396,12 @@
                         "
                       >
                         <img
-                          draggable="false"
-                          src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/location-red.svg"
-                          alt=""
-                          role="presentation"
-                          title=""
-                          style="
+                                draggable="false"
+                                src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/location-red.svg"
+                                alt=""
+                                role="presentation"
+                                title=""
+                                style="
                             min-width: 0px;
                             min-height: 0px;
                             max-width: 99999px;
@@ -379,7 +423,7 @@
                   </div>
                 </div>
                 <div
-                  style="
+                        style="
                     position: absolute;
                     cursor: default;
                     z-index: 1;
@@ -392,7 +436,7 @@
                   "
                 >
                   <div
-                    style="
+                          style="
                       color: rgb(0, 0, 0);
                       text-align: center;
                       font-size: 10px;
@@ -400,7 +444,7 @@
                     "
                   >
                     <div
-                      style="
+                            style="
                         float: left;
                         margin: 2px 3px 0px 4px;
                         height: 6px;
@@ -414,7 +458,7 @@
                       "
                     ></div>
                     <div
-                      style="
+                            style="
                         float: left;
                         margin: 0px 4px 0px 0px;
                         font-family: AppleSDGothicNeo-Regular, 돋움, dotum,
@@ -428,14 +472,14 @@
                   </div>
                   <div style="margin: 0px 4px; float: left">
                     <a
-                      target="_blank"
-                      href="http://map.kakao.com/"
-                      title="Kakao 지도로 보시려면 클릭하세요."
-                      style="float: left; width: 32px; height: 10px"
-                      ><img
-                        src="https://t1.daumcdn.net/mapjsapi/images/2x/m_bi_b.png"
-                        alt="Kakao 지도로 이동"
-                        style="
+                            target="_blank"
+                            href="http://map.kakao.com/"
+                            title="Kakao 지도로 보시려면 클릭하세요."
+                            style="float: left; width: 32px; height: 10px"
+                    ><img
+                            src="https://t1.daumcdn.net/mapjsapi/images/2x/m_bi_b.png"
+                            alt="Kakao 지도로 이동"
+                            style="
                           float: left;
                           width: 32px;
                           height: 10px;
@@ -443,7 +487,7 @@
                         "
                     /></a>
                     <div
-                      style="
+                            style="
                         font: 11px / 11px Arial, Tahoma, Dotum, sans-serif;
                         float: left;
                       "
@@ -451,7 +495,7 @@
                   </div>
                 </div>
                 <div
-                  style="
+                        style="
                     cursor: auto;
                     position: absolute;
                     z-index: 2;
@@ -461,15 +505,15 @@
                 ></div>
               </div>
               <div class="addr">
-<!--                <a class="btn-copy">매장주소 복사하기</a>-->
+                <!--                <a class="btn-copy">매장주소 복사하기</a>-->
                 <p th:text="${detail.bistroDetailDto().bdAddr()}">서울특별시 중구 세종대로 135 코리아나호텔 2층</p>
               </div>
             </div>
-<!--            <div class="btn-centered">-->
-<!--              <a href="#" class="btn full-width btn-lg"-->
-<!--                ><strong class="label arrow">레스토랑 길찾기</strong></a-->
-<!--              >-->
-<!--            </div>-->
+            <!--            <div class="btn-centered">-->
+            <!--              <a href="#" class="btn full-width btn-lg"-->
+            <!--                ><strong class="label arrow">레스토랑 길찾기</strong></a-->
+            <!--              >-->
+            <!--            </div>-->
           </div>
         </div>
       </section>
@@ -486,17 +530,17 @@
                   <dt>전화번호</dt>
                   <dd th:text="${detail.bistroDetailDto().bdHp()}">02-2171-7830</dd>
                 </dl>
-<!--                <div class="action">-->
-<!--                  <a class="btn-call"><span>전화하기</span></a>-->
-<!--                </div>-->
+                <!--                <div class="action">-->
+                <!--                  <a class="btn-call"><span>전화하기</span></a>-->
+                <!--                </div>-->
               </div>
               <div class="desc-block">
                 <dl>
                   <dt><a class="__toggle">매장 소개</a></dt>
                   <dd class="color-gray" th:text="${detail.bistroDetailDto().bdIntro()}">
-<!--                    안녕하세요 호텔 코리아나 피아 라운지입니다.<br />아늑한-->
-<!--                    라운지에서 라이브 재즈 공연과 함께 이탈리안 음식을 이용-->
-<!--                    가능하니<br />많은 이용 부탁드리겠습니다.-->
+                    <!--                    안녕하세요 호텔 코리아나 피아 라운지입니다.<br />아늑한-->
+                    <!--                    라운지에서 라이브 재즈 공연과 함께 이탈리안 음식을 이용-->
+                    <!--                    가능하니<br />많은 이용 부탁드리겠습니다.-->
                   </dd>
                 </dl>
               </div>
@@ -531,8 +575,76 @@
       </section>
       <div class="space-40"></div>
     </main>
-    </div>
-    <div th:replace="fragment/footer :: footer"/>
   </div>
-  </body>
+
+  <div th:replace="fragment/footer :: footer"/>
+</div>
+<div id="modal" class="modal-overlay">
+  <div class="modal-window">
+    <!--    <div class="title">-->
+    <!--      <h2 class="drawer-box-title ml-10">예약을 취소하시겠어요?</h2>-->
+    <!--    </div>-->
+    <div class="close-area">X</div>
+    <div class="content">
+      <div class="drawer-box">
+        <div class="drawer-box-header mb--20" style="padding: 0 20px 27px 0;">
+          <h2 class="drawer-box-title ml-10">예약을 취소하시겠어요?</h2>
+        </div>
+        <div class="drawer-box-body" style="padding: 20px 0;">
+          <div class="p-10 pt-20 pb-20">
+            <table>
+              <tbody>
+              <tr>
+                <th class="pt-5 pb-5 font-14 color-gray">레스토랑</th>
+                <td class="pt-5 pb-5 pl-15 font-16" th:text="${detail.resAdminDto().resaBisName()}">라비옥</td>
+              </tr>
+              <tr>
+                <th class="pt-5 pb-5 font-14 color-gray">예약일시</th>
+                <td class="pt-5 pb-5 pl-15 font-16">[[${detail.resMonth}]]월 [[${detail.resDay}]]일 [[${detail.resTime}]]시 [[${detail.resPerson}]]명</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr class="hairline weak mt-5 mb-25 ml--20 mr--20" style="margin-top: 20px;">
+        </div>
+        <div class="drawer-box-footer">
+          <div class="btn-group">
+            <!--            <button class="btn btn-lg btn-outline">취소하지 않음</button>-->
+            <form  th:action="@{'/mydining/reserve/plannedDetail/' + ${detail.resIdx()}}" method="post" enctype="multipart/form-data" style="width: 97%;">
+              <!--              <input type="hidden" name="_method" value="put" />-->
+              <input type="hidden" name="resIdx" th:value="${detail.resIdx()}">
+              <button class="btn btn-lg btn-red" type="submit" style="width: 100%;">예약 취소</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  const loremIpsum = document.getElementById("lorem-ipsum")
+  fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
+          .then(response => response.text())
+          .then(result => loremIpsum.innerHTML = result)
+
+  const modal = document.getElementById("modal")
+  const btnModal = document.getElementById("btn-modal")
+  btnModal.addEventListener("click", e => {
+    modal.style.display = "flex"
+  })
+
+  modal.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+      modal.style.display = "none"
+    }
+  })
+
+  const closeBtn = modal.querySelector(".close-area")
+  closeBtn.addEventListener("click", e => {
+    modal.style.display = "none"
+  })
+</script>
+</body>
 </html>

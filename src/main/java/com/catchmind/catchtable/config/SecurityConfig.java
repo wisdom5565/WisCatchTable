@@ -3,19 +3,40 @@ package com.catchmind.catchtable.config;
 import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.ProfileRepository;
+import com.catchmind.catchtable.service.ProfileLogicService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
+
 // 스프링 시큐리티 설정 클래스
-@Configuration
+
 @EnableWebSecurity
+@RequiredArgsConstructor
+@Configuration(proxyBeanMethods = false)
+
 public class SecurityConfig {
 
     @Bean
@@ -40,15 +61,17 @@ public class SecurityConfig {
         // 권한을 부여해주지 않으면 어느 페이지를 가든 로그인으로 가기 떄문에 권한부여를 위해 작성함
     }
     @Bean
-    public UserDetailsService userDetailsService(ProfileRepository profileRepository){    // 유저 정보를 가져오는 인터페이스
+    public UserDetailsService userDetailsService(ProfileRepository profileRepository) {    // 유저 정보를 가져오는 인터페이스
         return prHp -> profileRepository.findByPrHp(prHp)
                 .map(ProfileDto::from)
                 .map(CatchPrincipal::from)                // 인증된 사용자의 계정 데이타를 저장할 레코드 클래스
-                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다 - prHp : "+ prHp));
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다 - prHp : " + prHp));
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){       // 기본 암호화 해줄 수 있뜨
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public static PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
+
+
 }

@@ -11,7 +11,14 @@ spring:
         format_sql: true
   thymeleaf3:
     decoupled-logic: true
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 100MB
+      location: D:/test/
+  main:
+      allow-bean-definition-overriding: true
 server:
-  port: 8888
+  port: 9090
 
 

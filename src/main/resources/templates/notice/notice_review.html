@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,15 +8,15 @@
     <div th:replace="fragment/link :: link"/>
     <link rel="stylesheet" href="/css/collection_detail.css" />
     <link rel="stylesheet" href="/css/notice.css">
-  </head>
-  <body class="disable-user-select">
-    <div id="root">
-  <!-- header 시작 -->
-        <header id="header">
-            ㅎㄷㅎㄷ
-        </header>
-  <!-- header 끝 -->
-      <div class="wrapper">
+</head>
+<body class="disable-user-select">
+<div id="root">
+    <!-- header 시작 -->
+    <header id="header">
+        ㅎㄷㅎㄷ
+    </header>
+    <!-- header 끝 -->
+    <div class="wrapper">
         <div class="css-1i60c0e emilzgk3">
             <div class="css-1uvp5r6 emilzgk2">
                 <div class="css-qwe8mt emilzgk1">공지사항</div>
@@ -25,29 +25,29 @@
             <div class="css-1t45bai erzmnr90">
                 <div class="css-1dhg94g e1pwb5hv0">
                     <div class="css-1xrh39a e1pwb5hv2">제목</div>
-                    <div class="css-8vgw34 e1pwb5hv1">[안내] 스마일페이 시스템 점검 안내 (2022.12.18)</div>
+                    <div class="css-8vgw34 e1pwb5hv1" th:text="${content.noTitle()}">[안내] 스마일페이 시스템 점검 안내 (2022.12.18)</div>
                 </div>
                 <div class="css-1dhg94g e1pwb5hv0">
                     <div class="css-1xrh39a e1pwb5hv2">작성자</div>
-                    <div class="css-8vgw34 e1pwb5hv1">컬리</div>
+                    <div class="css-8vgw34 e1pwb5hv1">캐치테이블</div>
                 </div>
                 <div class="css-1dhg94g e1pwb5hv0">
                     <div class="css-1xrh39a e1pwb5hv2">작성일</div>
-                    <div class="css-8vgw34 e1pwb5hv1">2022.12.14</div>
+                    <div class="css-8vgw34 e1pwb5hv1" th:text="${#temporals.format(content.regDate, 'yyyy.MM.dd')}">2022.12.14</div>
                 </div>
                 <div class="css-1xvp3jp ezf0ge90">
                     <div>
-                        <p><img alt="image" src="//lacms-board.kurly.com/board/notice/20221214/1344c951-4a6e-48d3-b6a6-8a6854c4bb98.jpg"></p>
+                        <p th:text="${content.noContent()}"></p>
                     </div>
                 </div>
-                <div class="css-d7qwpj e1p3kiis0"><button class="css-214ym4 e4nu7ef3" type="button" width="150" height="42" radius="0"><span class="css-ymwvow e4nu7ef1">목록</span></button></div>
+                <div class="css-d7qwpj e1p3kiis0"><a th:href="@{'/notice'}"><button class="css-214ym4 e4nu7ef3" type="button" width="150" height="42" radius="0"><span class="css-ymwvow e4nu7ef1">목록</span></button></a></div>
             </div>
         </div>
-      </div>
-        <!-- footer 시작 -->
-        <div th:replace="fragment/footer :: footer"/>
-        <!-- footer 끝 -->
     </div>
-  </body>
-  <script src="/js/notice.js"></script>
-  </html>
+    <!-- footer 시작 -->
+    <div th:replace="fragment/footer :: footer"/>
+    <!-- footer 끝 -->
+</div>
+</body>
+<script src="/js/notice.js"></script>
+</html>

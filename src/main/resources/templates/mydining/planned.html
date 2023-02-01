@@ -7,6 +7,8 @@
     <title>즐거운 미식 생활의 시작, 캐치테이블</title>
     <div th:replace="fragment/link :: link"/>
     <link rel="stylesheet" href="/css/collection_detail.css">
+    <html xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <style>
         .my-dining-item.completed .btn-delete, .my-dining-item.with-x .btn-delete {
             position: absolute;
@@ -183,7 +185,8 @@
 
                 <div class="container gutter-sm mt-24">
                     <div class="section-header" th:if="${!#lists.isEmpty(list)}">
-                        <h3 class="section-title section-title-sm">총 1건</h3>
+                        <!--                        <p th:text="${#authentication.name}"></p>-->
+                        <h3 class="section-title section-title-sm">총 [[${#lists.size(list)}]]건</h3>
                         <!--                            <div class="utils"><a href="#" class="btn-sort desc">예약일자</a></div>-->
                     </div>
                     <div class="section-body" th:each="list: ${list}">
@@ -202,8 +205,8 @@
                                                                 <div class="badge danger" th:text="${list.resStatus.description}"></div>
                                                                 <div class="desc">
                                                                     <div class="cancel">
-                                                                        <span class="label" th:text="${list.resStatus.description}"></span>
-                                                                        <span class="date">12.08(목) 오후 8:06</span>
+                                                                        <!--                                                                        <span class="label" th:text="${list.resStatus.description}"></span>-->
+                                                                        <span class="date">[[${#temporals.month(list.regDate)}]]월 [[${#temporals.day(list.regDate)}]]일([[${#temporals.dayOfWeekNameShort(list.regDate)}]])  [[${#temporals.format(list.regDate, 'HH:mm')}]]</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -216,7 +219,7 @@
                                                                 <div class="info">
                                                                     <h3 th:text="${list.resAdmin.resaBisName}"></h3>
                                                                     <div class="meta"><span th:text="${list.bistroInfo.bisCategory}"></span></div>
-                                                                    <div class="date"><span>2022.12.24 오후 4:30 3명</span></div>
+                                                                    <div class="date"><span>[[${list.resMonth}]]월 [[${list.resDay}]]일 [[${list.resTime}]]시 [[${list.resPerson}]]명</span></div>
                                                                 </div>
                                                             </div>
                                                             <!--                                                                <a class="btn-delete">삭제</a>-->

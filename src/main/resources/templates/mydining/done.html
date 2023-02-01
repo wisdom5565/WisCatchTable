@@ -134,6 +134,8 @@
             border: 1px solid transparent;
             color: #666;
         }
+
+
     </style>
 </head>
 <body class="disable-user-select">
@@ -168,97 +170,79 @@
                         </a>
                     </div>
                 </div>
-                <div class="container gutter-sm mt-24">
-                    <div class="section-header">
-                        <h3 class="section-title section-title-sm">총 1건</h3>
-                        <div class="utils">
-                            <a href="#" class="btn-sort desc">방문일자</a>
+                <div class="container gutter-sm" th:if="${#lists.isEmpty(list)}">
+                    <div class="section-body ">
+                        <div class="my-dining-list">
+                            <p class="txt-center plain-txt font-16 bold color-gray3 mt-70 mb-20">방문예정 내역이 없습니다.
+                                <br>캐치테이블을 통해 편리하게 예약해 보세요!</p>
+                            <div class="centered-btn">
+                                <a href="#" class="btn-blue">
+                                            <span class="label"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                                                     xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56604 2.0625C5.28489 2.0625 2.625 4.72239 2.625 8.00354C2.625 11.2847 5.28489 13.9446 8.56604 13.9446C10.0188 13.9446 11.3498 13.4231 12.382 12.5572L14.4359 14.4396C14.7413 14.7195 15.2157 14.6988 15.4956 14.3935C15.7755 14.0881 15.7548 13.6137 15.4494 13.3338L13.4012 11.4565C14.0974 10.4834 14.5071 9.29132 14.5071 8.00354C14.5071 4.72239 11.8472 2.0625 8.56604 2.0625ZM4.125 8.00354C4.125 5.55082 6.11332 3.5625 8.56604 3.5625C11.0188 3.5625 13.0071 5.55082 13.0071 8.00354C13.0071 10.4563 11.0188 12.4446 8.56604 12.4446C6.11332 12.4446 4.125 10.4563 4.125 8.00354Z" fill="#0091FF">
+                                            </path>
+                                        </svg> 레스토랑 둘러보기</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="container gutter-sm mt-24">
+                    <div class="section-header" th:if="${!#lists.isEmpty(list)}">
+                        <h3 class="section-title section-title-sm">총 [[${#lists.size(list)}]]건</h3>
+                        <div class="utils">
+                            <!--                            <a href="#" class="btn-sort desc">방문일자</a>-->
+                        </div>
+                    </div>
+
                     <div class="section-body" th:each="list: ${list}" style="margin-bottom: 20px;">
-                        <div class="my-dining-list">
-                            <div class="section-body">
-                                <div class="mypage-reservation-list">
-                                    <div class="my-dining-list">
-                                        <div id="myReservationDoneListScroll">
-                                            <div id="myReservationDoneListScroll_0" data-dummy="216.27273559570312">
-                                                <div class="my-dining-item-wrap">
-                                                    <div class="my-dining-item completed">
-                                                        <div class="my-dining-item-header">
-                                                            <div class="my-dining-status">
-                                                                <div class="badge" th:text="${list.resStatus.description}">방문완료</div>
-                                                                <div class="desc">총 1회 방문</div>
-                                                            </div>
-                                                            <div class="restaurant-info">
-                                                                <div class="tb"><img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s20174/20174_2143012474882250.jpg?small220">
+                        <a style="cursor: pointer" >
+                            <div class="my-dining-list">
+                                <div class="section-body">
+                                    <div class="mypage-reservation-list">
+                                        <div class="my-dining-list">
+                                            <div id="myReservationDoneListScroll">
+                                                <div id="myReservationDoneListScroll_0" data-dummy="216.27273559570312">
+                                                    <div class="my-dining-item-wrap">
+                                                        <div class="my-dining-item completed">
+                                                            <!--                                                            <a th:href="@{'/mydining/reserve/bistroDetail/'+${list.resIdx}}">-->
+                                                            <div class="my-dining-item-header">
+                                                                <div class="my-dining-status">
+                                                                    <div class="badge" th:text="${list.resStatus.description}">방문완료</div>
+                                                                    <!--                                                                    <div class="desc">총 1회 방문</div>-->
                                                                 </div>
-                                                                <div class="info">
-                                                                    <h3>스시소요</h3>
-                                                                    <div class="meta">
-                                                                        <span>스시오마카세 · 부천</span>
+                                                                <div class="restaurant-info">
+                                                                    <div class="tb"><img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s20174/20174_2143012474882250.jpg?small220">
                                                                     </div>
-                                                                    <div class="date">2022.7.17 오후 8:00 2명</div>
-                                                                    <div><!--                                                                        <p class="notice ebold"-->
-                                                                        <!--                                                                           style="margin-top: 5px;">결제 취소 및 환불까지 평균-->
-                                                                        <!--                                                                            3~10일이 걸립니다.</p>-->
+                                                                    <div class="info">
+                                                                        <h3 th:text="${list.resAdmin.resaBisName}"></h3>
+                                                                        <div class="meta"><span>[[${list.bistroInfo.bisCategory}]] · [[${list.bistroInfo.bisRegion}]]</span></div>
+                                                                        <div class="date"><div>[[${list.resMonth}]]월 [[${list.resDay}]]일 [[${list.resTime}]]시 [[${list.resPerson}]]명</div></div>
                                                                     </div>
                                                                 </div>
+                                                                <!--                                                                <a class="btn-delete">삭제</a>-->
                                                             </div>
-                                                            <a class="btn-delete">삭제</a>
+                                                            <!--                                                            </a>-->
+                                                            <div class="my-dining-item-body" th:if="${list.revStatus == true}">
+                                                                <div class="txt-center">
+                                                                    <a href="#" class="btn btn-blue">
+                                                                        <span class="label arrow font-13" >
+                                                                           내 리뷰 보러가기
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="my-dining-item-body"  th:if="${list.revStatus == false}">
+                                                                <div class="txt-center">
+                                                                    <a href="#" class="btn btn-blue" th:href="@{'/mydining/reserve/doneDetail/'+${list.resIdx}}">
+                                                                        <span class="label arrow font-13">
+                                                                            리뷰 작성하기
+                                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
-                                                        <div class="my-dining-item-body">
-                                                            <div class="txt-center">
-                                                                <a href="#" class="btn btn-blue">
-                                                                    <span class="label arrow font-13">내 리뷰 보러가기</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <!-- <div th:replace="fragment/review_write :: review_write"/>-->
-                                                        <div class="review">
-                                                            <div class="review-header">
-                                                                <div class="review-title">
-                                                                    리뷰 작성
-                                                                    <span style="color:rgb(255, 61, 0)">*</span>
-                                                                </div>
-                                                                <p class="descrption" style="padding: 12px 0 0 0;">레스토랑과 관련된 사진을 업로드 해주세요.</p>
-                                                                <p class="descrption" style="padding: 8px 0;">초상권 침해 사진의 경우 삭제할 수 있습니다.</p>
-                                                            </div>
-                                                        </div>
-                                                        <form action="/mydining/done" method="post" enctype="multipart/form-data">
-                                                            <div class="star-wrapper" style="margin: 0 0 15px 0;">
-                                                                <div class="star-header" style="padding-left: 16px;">평균 별점</div>
-                                                                <div class="star">
-                                                                    ★★★★★
-                                                                    <span class="star">★★★★★</span>
-                                                                    <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10" name="revScore">
-                                                                </div>
-                                                            </div>
-                                                            <div class="review-main" style="padding: 0 12px 12px 17px;">
-                                                                            <textarea id="review-content" class="review-content" cols="30" rows="10" placeholder="레스토랑과 유저들에게 도움이 되는 따뜻한 리뷰를 작성해주세요." style="width: 98%;font-size: 13px;
-                                                                                        padding-left: 6px;" name="revContent"></textarea>
-                                                                <div class="review-content">
-                                                                    <div class="upload-wrapper">
-                                                                        <div class="upload">
-                                                                            <div class="photo">
-                                                                                <input type="file" name="file" class="hidden">
-                                                                                <input type="file" multiple="multiple" name="files" id="images" class="hidden">
-                                                                                <div class="image-wrapper" style="padding: 8px 0;">
-                                                                                    <label for="images"><img style="width:30px; height:30px; cursor: pointer; margin-top: 8px;" src="/images/file.png" alt=""></label>
-                                                                                    <p class="upload-description">업로드</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="review-footer" style="padding: 0 32px 25px 17px;justify-content: right;">
-                                                                <!--            <div class="review-footer-revisit">-->
-                                                                <!--                <button class="review-footer-revisit" type="button">✔ 재방문 할래요</button>-->
-                                                                <!--            </div>-->
-                                                                <div class="review-footer-register"> <button class="review-footer-register" style="width: 140px;"><input type="submit" class="hidden"/>✔ 등록</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -266,13 +250,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
+
                 </div>
             </section>
         </main>
     </div>
-    wrapper 끝
     <div th:replace="fragment/footer :: footer"/>
 </div>
 <script>
@@ -285,5 +268,6 @@
         }%`;
     }
 </script>
+
 </body>
 </html>

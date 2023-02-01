@@ -32,7 +32,7 @@ public record BistroDetailDto(
                 bistroDetail.getBdHome(),
                 BistroInfoDto.from(bistroDetail.getBistroInfo())
 
-                );
+        );
     }
 
 }

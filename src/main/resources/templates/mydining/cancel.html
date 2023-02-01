@@ -164,7 +164,7 @@
                 <div class="container gutter-sm" th:if="${#lists.isEmpty(list)}">
                     <div class="section-body ">
                         <div class="my-dining-list">
-                            <p class="txt-center plain-txt font-16 bold color-gray3 mt-70 mb-20">방문예정이 없습니다.
+                            <p class="txt-center plain-txt font-16 bold color-gray3 mt-70 mb-20">취소내역이 없습니다.
                                 <br>캐치테이블을 통해 편리하게 예약해 보세요!</p>
                             <div class="centered-btn">
                                 <a href="#" class="btn-blue">
@@ -180,7 +180,7 @@
                 </div>
                 <div class="container gutter-sm mt-24">
                     <div class="section-header" th:if="${!#lists.isEmpty(list)}">
-                        <h3 class="section-title section-title-sm">총 1건</h3>
+                        <h3 class="section-title section-title-sm">총 [[${#lists.size(list)}]]건</h3>
                         <!--                            <div class="utils"><a href="#" class="btn-sort desc">예약일자</a></div>-->
                     </div>
                     <div class="section-body" th:each="list: ${list}">
@@ -194,11 +194,11 @@
                                                 <div class="my-dining-item completed" style="margin: 24px 5px">
                                                     <div class="my-dining-item-header" >
                                                         <div class="my-dining-status">
-                                                            <div class="badge danger" th:text="${list.resStatus.description}">예약취소</div>
+                                                            <div class="badge danger" th:text="${list.resStatus.description}"></div>
                                                             <div class="desc">
                                                                 <div class="cancel">
                                                                     <span class="label">예약취소</span>
-                                                                    <span class="date">12.08(목) 오후 8:06</span>
+                                                                    <span class="date" >[[${#temporals.month(list.updateDate)}]].[[${#temporals.day(list.updateDate)}]]([[${#temporals.dayOfWeekNameShort(list.updateDate)}]])  [[${#temporals.format(list.updateDate, 'HH:mm')}]]</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -209,12 +209,12 @@
                                                                 />
                                                             </div>
                                                             <div class="info">
-                                                                <h3>리마스터 인 피아 라운지</h3>
-                                                                <div class="meta"><span>이탈리아음식 · 광화문</span></div>
-                                                                <div class="date"><del>2022.12.24 오후 4:30 3명</del></div>
+                                                                <h3 th:text="${list.resAdmin.resaBisName}">리마스터 인 피아 라운지</h3>
+                                                                <div class="meta"><span>[[${list.bistroInfo.bisCategory}]] · [[${list.bistroInfo.bisRegion}]]</span></div>
+                                                                <div class="date"><del>[[${list.resMonth}]]월[[${list.resDay}]]일 [[${list.resTime}]]시 [[${list.resPerson}]]명</del></div>
                                                             </div>
                                                         </div>
-                                                        <a class="btn-delete">삭제</a>
+                                                        <!--                                                        <a class="btn-delete">삭제</a>-->
                                                     </div>
                                                 </div>
                                             </div>

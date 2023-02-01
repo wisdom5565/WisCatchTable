@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>즐거운 미식 생활의 시작, 캐치테이블</title>
     <div th:replace="fragment/link :: link"/>
+    <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/collection_detail.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -16,6 +17,7 @@
     <header id="header">
         ㅎㄷㅎㄷ
     </header>
+    <div th:replace="fragment/timeline_header :: timeline_header"/>
     <div class="wrapper" id="wrapperDiv">
         <div class="wrapper">
             <main id="main">
@@ -28,17 +30,17 @@
                                         <article class="__my-review-post" style="overflow-x: hidden;">
                                             <div class="__header">
                                                 <div class="__user-info"><a class="profile">
-                                                        <div class="profile-pic">
-                                                            <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/noimg/profile_default_v2.png"
-                                                                alt="" class="img"></div>
-                                                        <h4 class="name username"><span class="txt">박건</span></h4>
-                                                    </a></div>
+                                                    <div class="profile-pic">
+                                                        <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/noimg/profile_default_v2.png"
+                                                             alt="" class="img"></div>
+                                                    <h4 class="name username"><span class="txt">박건</span></h4>
+                                                </a></div>
                                             </div>
                                             <div class="__body" style="position: relative; padding: 0px 16px;">
                                                 <div id="shopReviewCardImgList_1272868" class="v-scroll">
                                                     <div class="v-scroll-inner">
                                                         <div id="shopReviewCardImgList_1272868" class="__photos"
-                                                            style="display: flex; flex-wrap: nowrap;">
+                                                             style="display: flex; flex-wrap: nowrap;">
                                                             <div class="swiper-slide" style="margin-right: 8px;"><img
                                                                     src="https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/rv/sO6fBQwSGiEyU7i_JwMLzdg/221215190359712_rv.jpg?small220"
                                                                     alt=""></div>
@@ -57,7 +59,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                    
+
                                                 <div class="timeline-post-content">
                                                     <div class="__post-meta">
                                                         <div class="__rating">5.0</div>
@@ -65,31 +67,42 @@
                                                     </div>
                                                     <h3 class="__title"></h3>
                                                     <div class="__content ">
-                                                        <div id="__content0_1422474" class="">대박.... 리모델링 하기 전부터 회사 회식 할때 마다 왔었는데  바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ 분위기도 좋고 친절 하고 .. 심지어 집근처... 자주 갈듯요!!  </div>
+                                                        <div id="__content0_1422474" class="">대박.... 리모델링 하기 전부터 회사 회식
+                                                            할때 마다 왔었는데 바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ 분위기도 좋고 친절 하고 .. 심지어
+                                                            집근처... 자주 갈듯요!!
+                                                        </div>
                                                     </div>
                                                     <a class="__toggle">전체보기</a>
                                                     <div class="restaurant-info">
-                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220" alt="" class="thumb">
+                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220"
+                                                             alt="" class="thumb">
                                                         <div class="__info">
                                                             <h4 class="__name">
                                                                 <span>미래회관 한남</span></h4>
-                                                                <div class="__meta">돼지고기구이 • 한남</div>
-                                                            </div>
-                                                            <img src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/icon_arrow/arrow_left_black.svg" alt="">
+                                                            <div class="__meta">돼지고기구이 • 한남</div>
                                                         </div>
+                                                        <img src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/icon_arrow/arrow_left_black.svg"
+                                                             alt="">
                                                     </div>
-                                                    <div class="timeline-post-footer"><div class="__post-meta"><span class="__like">0</span><span class="__comment">0</span>
+                                                </div>
+                                                <div class="timeline-post-footer">
+                                                    <div class="__post-meta"><span class="__like">0</span><span
+                                                            class="__comment">0</span>
                                                         <!-- <a class="__more">MORE</a> -->
-                                                        <div class="__more" >
-                                                            <div class="header-right"><a  href="#layer2" class="__more-profile" id="btn-example">MORE</a>
+                                                        <div class="__more">
+                                                            <div class="header-right"><a href="#layer2"
+                                                                                         class="__more-profile"
+                                                                                         id="btn-example">MORE</a>
                                                             </div>
                                                             <div class="dim-layer">
                                                                 <div class="dimBg"></div>
                                                                 <div id="layer2" class="pop-layer">
                                                                     <div class="pop-container">
                                                                         <div class="pop-conts">
-                                                                            <p class="ctxt mb20" onclick="location.href='./reportReview.html'">리뷰 신고</p>
-                                                                            
+                                                                            <p class="ctxt mb20"
+                                                                               onclick="location.href='./reportReview.html'">
+                                                                                리뷰 신고</p>
+
                                                                             <br>
                                                                             <div class="btn-r">
                                                                                 <a class="btn-layerClose">
@@ -97,35 +110,34 @@
                                                                                 </a>
                                                                             </div>
                                                                         </div>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
-                                                    
                                                     </div>
-                                                    
-                                                
+
+
+                                                </div>
+
+
                                             </div>
                                         </article>
-
 
 
                                         <article class="__my-review-post" style="overflow-x: hidden;">
                                             <div class="__header">
                                                 <div class="__user-info"><a class="profile">
-                                                        <div class="profile-pic">
-                                                            <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/noimg/profile_default_v2.png"
-                                                                alt="" class="img"></div>
-                                                        <h4 class="name username"><span class="txt">김건우</span></h4>
-                                                    </a></div>
+                                                    <div class="profile-pic">
+                                                        <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/noimg/profile_default_v2.png"
+                                                             alt="" class="img"></div>
+                                                    <h4 class="name username"><span class="txt">김건우</span></h4>
+                                                </a></div>
                                             </div>
                                             <div class="__body" style="position: relative; padding: 0px 16px;">
                                                 <div id="shopReviewCardImgList_1272868" class="v-scroll">
                                                     <div class="v-scroll-inner">
                                                         <div id="shopReviewCardImgList_1272868" class="__photos"
-                                                            style="display: flex; flex-wrap: nowrap;">
+                                                             style="display: flex; flex-wrap: nowrap;">
                                                             <div class="swiper-slide" style="margin-right: 8px;"><img
                                                                     src="https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/rv/sO6fBQwSGiEyU7i_JwMLzdg/221215190359712_rv.jpg?small220"
                                                                     alt=""></div>
@@ -144,7 +156,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                    
+
                                                 <div class="timeline-post-content">
                                                     <div class="__post-meta">
                                                         <div class="__rating">5.0</div>
@@ -152,21 +164,29 @@
                                                     </div>
                                                     <h3 class="__title"></h3>
                                                     <div class="__content ">
-                                                        <div id="__content0_1422474" class="">대박.... 리모델링 하기 전부터 회사 회식 할때 마다 왔었는데  바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ 분위기도 좋고 친절 하고 .. 심지어 집근처... 자주 갈듯요!!  </div>
+                                                        <div id="__content0_1422474" class="">대박.... 리모델링 하기 전부터 회사 회식
+                                                            할때 마다 왔었는데 바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ 분위기도 좋고 친절 하고 .. 심지어
+                                                            집근처... 자주 갈듯요!!
+                                                        </div>
                                                     </div>
                                                     <a class="__toggle">전체보기</a>
                                                     <div class="restaurant-info">
-                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220" alt="" class="thumb">
+                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220"
+                                                             alt="" class="thumb">
                                                         <div class="__info">
                                                             <h4 class="__name">
                                                                 <span>미래회관 한남</span></h4>
-                                                                <div class="__meta">돼지고기구이 • 한남</div>
-                                                            </div>
-                                                            <img src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/icon_arrow/arrow_left_black.svg" alt="">
+                                                            <div class="__meta">돼지고기구이 • 한남</div>
                                                         </div>
+                                                        <img src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/icon_arrow/arrow_left_black.svg"
+                                                             alt="">
                                                     </div>
-                                                    <div class="timeline-post-footer"><div class="__post-meta"><span class="__like">0</span><span class="__comment">0</span>
-                                                        <a class="__more">MORE</a></div></div>
+                                                </div>
+                                                <div class="timeline-post-footer">
+                                                    <div class="__post-meta"><span class="__like">0</span><span
+                                                            class="__comment">0</span>
+                                                        <a class="__more">MORE</a></div>
+                                                </div>
                                             </div>
                                         </article>
                                     </div>
@@ -180,7 +200,7 @@
     </div>
     <div th:replace="fragment/footer :: footer"/>
 </div>
-        <script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
 <script type="text/javascript" src="/js/header.js.js"></script>
 </body>
 

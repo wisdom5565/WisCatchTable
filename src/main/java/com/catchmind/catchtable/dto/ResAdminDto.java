@@ -24,4 +24,14 @@ public record ResAdminDto(
                 resAdmin.getRegDate()
         );
     }
+
+    public static ResAdminDto of(String resaBisName) {
+        return new ResAdminDto(null,null,null,null,null,resaBisName,null);
+    }
+
+    public ResAdmin toEntity() {
+        return ResAdmin.ofBisName(
+                resaBisName
+        );
+    }
 }

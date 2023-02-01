@@ -1,19 +1,22 @@
 package com.catchmind.catchtable.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import com.catchmind.catchtable.dto.ProfileDto;
+import com.catchmind.catchtable.dto.network.request.FollowRequest;
+import com.catchmind.catchtable.dto.network.request.ProfileRequest;
+import lombok.*;
+import org.springframework.context.event.EventListener;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
 
-@EqualsAndHashCode(callSuper = true)
+
+//@Table(name = "profile")
+@ToString(callSuper = true)
 @Entity
 @Data
-@ToString(callSuper = true)
-public class Profile extends AuditingFields{
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prIdx;
@@ -30,11 +33,14 @@ public class Profile extends AuditingFields{
     private int prNoshow;
     private boolean prBlock;
     private int prPoint;
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
 
     public Profile(){}
 
-    public Profile(Long prIdx, String prNick, String prName, String prIntro, String prRegion, String prHp, String prUserpw, String prGender, String prBirth, String prMemo, int prReview, int prNoshow, boolean prBlock, int prPoint) {
-        this.prIdx = prIdx;
+    @Builder
+    public Profile(String prNick, String prName, String prIntro, String prRegion, String prHp, String prUserpw, String prGender, String prBirth, String prMemo, int prReview, int prNoshow, boolean prBlock, int prPoint, MemberRole role) {
+
         this.prNick = prNick;
         this.prName = prName;
         this.prIntro = prIntro;
@@ -48,5 +54,35 @@ public class Profile extends AuditingFields{
         this.prNoshow = prNoshow;
         this.prBlock = prBlock;
         this.prPoint = prPoint;
+        this.role = role;
     }
+
+
+    public static Profile createMember(ProfileRequest request, PasswordEncoder passwordEncoder) {
+        Profile profile = Profile.builder()
+                .prNick(request.prNick())
+                .prName(request.prName())
+                .prUserpw(passwordEncoder.encode(request.prUserpw()))  //암호화처리
+                .prIntro(request.prIntro())
+                .role(MemberRole.USER)
+                .prGender(request.prGender())
+                .prRegion(request.prRegion())
+                .prBirth(request.prBirth())
+                .prHp(request.prHp())
+                .build();
+        return profile;
+    }
+
+    public static Profile of(String prNick, String prName, String prIntro, String prRegion, String prHp, String prUserpw, String prGender, String prBirth, String prMemo, int prReview, int prNoshow, boolean prBlock, int prPoint, MemberRole role) {
+        return new Profile(prNick, prName, prIntro, prRegion, prHp, prUserpw, prGender, prBirth, prMemo, prReview, prNoshow, prBlock, prPoint, role);
+    }
+
+    public Profile(Long prIdx){
+        this.prIdx = prIdx;
+    }
+
+    public static Profile ofIdx(Long prIdx) {
+        return new Profile(prIdx);
+    }
+
 }
