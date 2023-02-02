@@ -1,27 +1,27 @@
 // 프로필 팔로잉
-let profile = document.querySelector('.profile-follow');
+let profile = document.querySelector('.isfollow');
 let login = document.querySelector('.login-idx');
 let timeLine = document.querySelector('.timeline-idx');
-console.log(profile);
-console.log(login);
-console.log(timeLine);
+console.log(profile.value);
 
-if(profile.value == true) {
+if(profile.value == 'true') {
+    console.log("⭕")
     let profilebtn = "<button type='button' onclick ='follow(" + login.value + "," + timeLine.value + ")' class='btn btn-md btn-outline-orange btn-rounded full-width t"
         + timeLine.value + "'>" +
-        "<span class='label "+login.value+"'>팔로잉</span>" +
+        "<span class='label'>팔로잉</span>" +
         "</button>"
     $('.profile').append(profilebtn);
 } else {
+    console.log("❌")
     let profilebtn = "<button type='button' onclick ='follow(" + login.value + "," + timeLine.value + ")' class='btn btn-md btn-orange btn-rounded full-width t"
         + timeLine.value + "'>" +
-        "<span class='label "+timeLine.value+"'>팔로우</span>" +
+        "<span class='label'>팔로우</span>" +
         "</button>"
     $('.profile').append(profilebtn);
 }
 
 function follow(prIdx, timeLineIdx) {
-    const spanText = $('.' + timeLineIdx).text();
+    const spanText = $('.label').text();
     console.log(spanText);
     if (spanText == '팔로우') {
         following(true, prIdx, timeLineIdx);
@@ -44,7 +44,7 @@ function following(check, prIdx, timeLineIdx) {
                 if (data == 'OK') {
                     $('.t' + timeLineIdx).addClass('btn-outline-orange');
                     $('.t' + timeLineIdx).removeClass('btn-orange');
-                    $('.' + timeLineIdx).text('팔로잉');
+                    $('.label').text('팔로잉');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -62,7 +62,7 @@ function following(check, prIdx, timeLineIdx) {
                 if (data == 'OK') {
                     $('.t' + timeLineIdx).addClass('btn-orange');
                     $('.t' + timeLineIdx).removeClass('btn-outline-orange');
-                    $('.' + timeLineIdx).text('팔로우');
+                    $('.label').text('팔로우');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {

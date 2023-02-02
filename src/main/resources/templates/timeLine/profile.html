@@ -85,15 +85,19 @@
                                                                         th:text="${profile.prNick}">준숑이</span>
                                         </h4>
                                         <div class="meta">
-                                            <dl>
-                                                <dt>팔로잉</dt>
-                                                <dd id="result" th:text="${profile.followingNum}">1</dd>
-                                            </dl>
+                                            <a th:href="'/timeline/following/'+ ${timeLineIdx}">
+                                                <dl>
+                                                    <dt>팔로잉</dt>
+                                                    <dd id="result" th:text="${profile.followingNum}">1</dd>
+                                                </dl>
+                                            </a>
                                             <span>|</span>
-                                            <dl>
-                                                <dt>팔로워</dt>
-                                                <dd th:text="${profile.followerNum}">0</dd>
-                                            </dl>
+                                            <a th:href="'/timeline/follower/'+ ${timeLineIdx}">
+                                                <dl>
+                                                    <dt>팔로워</dt>
+                                                    <dd th:text="${profile.followerNum}">0</dd>
+                                                </dl>
+                                            </a>
                                         </div>
 
                                     </div>
@@ -103,7 +107,7 @@
                                         </div>
                                         <th:block th:if="${timeLineIdx != prIdx}">
                                             <div th:class="profile">
-                                                <input type="hidden" class="profile-follow" th:value="${isFollow}">
+                                                <input type="hidden" class="isfollow" th:value="${isFollow}">
                                                 <input type="hidden" class="login-idx" th:value="${prIdx}">
                                                 <input type="hidden" class="timeline-idx" th:value="${timeLineIdx}">
                                             </div>

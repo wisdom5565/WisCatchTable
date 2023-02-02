@@ -11,7 +11,6 @@ import com.catchmind.catchtable.service.NoticeService;
 import com.catchmind.catchtable.service.PaginationService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

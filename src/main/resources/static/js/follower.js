@@ -5,30 +5,20 @@ let size = document.querySelector('.size').value;
 
 for (let i = 0; i < size; i++) {
     console.log(listPrIdx[i].value)
-    if (isFollow[i].value == true) {
+    console.log(isFollow[i])
+    if (isFollow[i].value == 'true') {
+        console.log("⭕")
         let btn = "<button type='button' onclick ='follow(" + prIdx[i].value + "," + listPrIdx[i].value + ")' class='btn btn-md btn-outline-orange btn-rounded full-width t" + listPrIdx[i].value + "'>" +
-            "<span class='label "+listPrIdx[i].value+"'>팔로잉</span>" +
+            "<span class='label " + listPrIdx[i].value + "'>팔로잉</span>" +
             "</button>"
         $('.following' + listPrIdx[i].value).append(btn);
     } else {
+        console.log("❌")
         let btn = "<button type='button' onclick ='follow(" + prIdx[i].value + "," + listPrIdx[i].value + ")' class='btn btn-md btn-orange btn-rounded full-width t" + listPrIdx[i].value + "'>" +
-            "<span class='label "+listPrIdx[i].value+"'>팔로우</span>" +
+            "<span class='label " + listPrIdx[i].value + "'>팔로우</span>" +
             "</button>"
         $('.following' + listPrIdx[i].value).append(btn);
     }
-}
-if(profile.value == true) {
-    let profilebtn = "<button type='button' onclick ='follow(" + login.value + "," + timeLine.value + ")' class='btn btn-md btn-outline-orange btn-rounded full-width t"
-        + timeLine.value + "'>" +
-        "<span class='label "+login.value+"'>팔로잉</span>" +
-        "</button>"
-    $('.profile').append(profilebtn);
-} else {
-    let profilebtn = "<button type='button' onclick ='follow(" + login.value + "," + timeLine.value + ")' class='btn btn-md btn-orange btn-rounded full-width t"
-        + timeLine.value + "'>" +
-        "<span class='label "+timeLine.value+"'>팔로우</span>" +
-        "</button>"
-    $('.profile').append(profilebtn);
 }
 
 function follow(prIdx, timeLineIdx) {

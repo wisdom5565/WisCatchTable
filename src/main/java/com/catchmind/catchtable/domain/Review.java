@@ -56,11 +56,18 @@ public class Review extends AuditingFields{
     public Review(Long id) {
         this.revIdx = id;
     }
+    public Review(Long id, Long revLike) {
+        this.revIdx = id;
+        this.revLike = revLike;
+    }
 
     public static Review of(Profile profile,String revContent, double revScore, ResAdmin resAdmin, Reserve reserve) {
         return new Review(profile,revContent,revScore,resAdmin,reserve);
     }
-    public static Review of(Long revIdx) {
+    public static Review ofIdx(Long revIdx) {
         return new Review(revIdx);
+    }
+    public static Review ofLike(Long revIdx, Long revLike) {
+        return new Review(revIdx, revLike);
     }
 }

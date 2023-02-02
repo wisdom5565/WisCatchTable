@@ -14,4 +14,17 @@ public record ReviewHeartDto(
                 ReviewDto.from(heart.getReview())
         );
     }
+
+    public static ReviewHeartDto of(
+            ProfileDto profileDto,
+            ReviewDto reviewDto
+    ) {
+        return new ReviewHeartDto(null, profileDto, reviewDto);
+    }
+
+    public ReviewHeart toEntity() {
+        return ReviewHeart.of(
+                profileDto.toEntityIdx(), reviewDto.toEntityLike()
+        );
+    }
 }

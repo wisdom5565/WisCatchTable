@@ -13,46 +13,47 @@
 </head>
 <style>
     .page_nation {
-        display:flex;
+        display: flex;
         justify-content: center;
     }
+
     .page_nation a {
-        display:block;
-        margin:0 3px;
-        float:left;
-        border:1px solid #e6e6e6;
-        width:35px;
-        height:35px;
-        line-height:34px;
-        text-align:center;
-        background-color:#fff;
-        font-size:18px;
-        color:#999999;
-        text-decoration:none;
+        display: block;
+        margin: 0 3px;
+        float: left;
+        border: 1px solid #e6e6e6;
+        width: 35px;
+        height: 35px;
+        line-height: 34px;
+        text-align: center;
+        background-color: #fff;
+        font-size: 18px;
+        color: #999999;
+        text-decoration: none;
     }
 
     .page_nation a.page-prev {
-        background: url("/images/icon.svg") no-repeat center center ;
+        background: url("/images/icon.svg") no-repeat center center;
         -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
-        margin-left:7px;
+        margin-left: 7px;
         background-size: 10px;
     }
 
     .page_nation a.page-next {
         background: url("/images/icon.svg") no-repeat center center;
-        margin-left:7px;
+        margin-left: 7px;
         background-size: 10px;
     }
 
     .active {
         background-color: rgb(236 78 39) !important;
-        color:#fff !important;
-        border:1px solid  rgb(236 78 39) !important;
+        color: #fff !important;
+        border: 1px solid rgb(236 78 39) !important;
     }
 
-    .page_nation a.page-disabled{
+    .page_nation a.page-disabled {
         pointer-events: none;
     }
 </style>
@@ -71,6 +72,7 @@
                             <div class="__my-review-list ml--20 mr--20">
                                 <div id="shopReviewListScroll">
                                     <div id="shopReviewListScroll_0" data-dummy="495.6363830566406">
+                                        <input type="hidden" id="prIdx" th:value="${prIdx}">
                                         <article class="__my-review-post" style="overflow-x: hidden;"
                                                  th:each="review : ${reviews}">
                                             <div class="__header">
@@ -83,7 +85,7 @@
                                                         <h4 class="name username"><span class="txt"
                                                                                         th:text="${review.profileDto.prNick}">박건</span>
                                                         </h4>
-                                                        <p th:text="${review.revIdx}" ></p>
+                                                        <p th:text="${review.revIdx}"></p>
                                                     </a>
                                                 </div>
                                             </div>
@@ -116,9 +118,9 @@
                                                     </div>
                                                     <a class="__toggle">전체보기</a>
                                                     <div class="restaurant-info">
-                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220"
-                                                             alt="" class="thumb">
-                                                        <div class="__info">
+                                                        <!--                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220"-->
+                                                        <!--                                                             alt="" class="thumb">-->
+                                                        <div class="__info" style="padding: 10px; font-size: 14px">
                                                             <h4 class="__name">
                                                                 <span th:text="${review.resAdminDto.resaBisName}">미래회관 한남</span>
                                                             </h4>
@@ -131,9 +133,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="timeline-post-footer">
-                                                    <div class="__post-meta"><span class="__like">0</span><span
-                                                            class="__comment">0</span>
-                                                        <!-- <a class="__more">MORE</a> -->
+                                                    <div class="__post-meta">
+                                                        <div th:class="'heart'+${review.revIdx}">
+                                                        </div>
                                                         <div class="__more">
                                                             <div class="header-right"><a href="#layer2"
                                                                                          class="__more-profile"
@@ -145,7 +147,7 @@
                                                                     <div class="pop-container">
                                                                         <div class="pop-conts">
                                                                             <p class="ctxt mb20"
-                                                                               onclick="location.href='./reportReview.html'">
+                                                                               onclick="location.href='reportReview.html'">
                                                                                 리뷰 신고</p>
 
                                                                             <br>
@@ -164,7 +166,7 @@
                                             </div>
                                             <hr class="hairline">
                                         </article>
-<!--                                        <div th:replace="fragment/comment :: comment"/>-->
+                                        <!--                                        <div th:replace="fragment/comment :: comment"/>-->
                                     </div>
                                 </div>
                             </div>
@@ -190,6 +192,7 @@
     <div th:replace="fragment/footer :: footer"/>
 </div>
 <script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/reviewHeart.js"></script>
 </body>
 
 </html>

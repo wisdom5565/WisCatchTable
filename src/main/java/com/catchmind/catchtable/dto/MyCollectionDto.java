@@ -1,8 +1,8 @@
 package com.catchmind.catchtable.dto;
 
-import com.catchmind.catchtable.domain.Collection;
+import com.catchmind.catchtable.domain.MyCollection;
 
-public record CollectionDto(
+public record MyCollectionDto(
       Long colIdx,
       String colTitle,
       String colContent,
@@ -10,8 +10,8 @@ public record CollectionDto(
       ProfileDto profileDto,
       String bisIdx
 ) {
-    public static CollectionDto from(Collection collection) {
-        return new CollectionDto(
+    public static MyCollectionDto from(MyCollection collection) {
+        return new MyCollectionDto(
                 collection.getColIdx(),
                 collection.getColTitle(),
                 collection.getColContent(),

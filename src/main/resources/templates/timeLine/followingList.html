@@ -54,22 +54,24 @@
                                                     <div class="img"
                                                          style="background-image: url(&quot;https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png&quot;); border: 0px;"></div>
                                                 </div>
-                                                <div class="mypage-profile-meta">
-
-                                                    <h4 class="name username">
+                                                <a th:href="'/timeline/profile/'+${list.prIdx}">
+                                                    <div class="mypage-profile-meta">
+                                                        <h4 class="name username">
                                                         <span class="txt"
                                                               th:text="${list.prNick}">hjkjhy
                                                         </span>
-                                                    </h4>
-                                                    <p class="__desc" th:text="${list.prIntro}"></p></div>
+                                                        </h4>
+                                                        <p class="__desc" th:text="${list.prIntro}"></p>
+                                                    </div>
+                                                </a>
                                             </div>
                                             <th:block th:if="${prIdx != list.prIdx}">
-                                                    <div th:class="'following' + ${list.prIdx}">
-                                                        <input type="hidden" class="is-follow" th:value="${list.isFollow}">
-                                                        <input type="hidden" class="size" th:value="${followings.size()}">
-                                                        <input type="hidden" class="pr-idx" th:value="${prIdx}">
-                                                        <input type="hidden" class="list-pridx" th:value="${list.prIdx}">
-                                                    </div>
+                                                <div th:class="'following' + ${list.prIdx}">
+                                                    <input type="hidden" class="is-follow" th:value="${list.isFollow}">
+                                                    <input type="hidden" class="size" th:value="${followings.size()}">
+                                                    <input type="hidden" class="pr-idx" th:value="${prIdx}">
+                                                    <input type="hidden" class="list-pridx" th:value="${list.prIdx}">
+                                                </div>
                                             </th:block>
                                         </div>
                                     </div>
