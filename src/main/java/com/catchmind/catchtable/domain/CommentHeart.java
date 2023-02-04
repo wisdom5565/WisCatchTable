@@ -21,4 +21,17 @@ public class CommentHeart {
     @ManyToOne
     @JoinColumn(name="com_idx")
     private Comment comment;
+
+    protected CommentHeart() {}
+
+    public CommentHeart(Profile profile, Review review, Comment comment) {
+        this.profile = profile;
+        this.comment = comment;
+        this.review = review;
+    }
+
+    public static CommentHeart of(Profile profile, Review review, Comment comment){
+        return new CommentHeart(profile,review,comment);
+    }
 }
+

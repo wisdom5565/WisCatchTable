@@ -1,8 +1,9 @@
 package com.catchmind.catchtable.controller;
 
+import com.catchmind.catchtable.domain.Comment;
 import com.catchmind.catchtable.domain.Follow;
-import com.catchmind.catchtable.domain.ReviewHeart;
 import com.catchmind.catchtable.dto.*;
+import com.catchmind.catchtable.dto.network.request.CommentHeartRequest;
 import com.catchmind.catchtable.dto.network.request.FollowRequest;
 import com.catchmind.catchtable.dto.network.request.ReviewHeartRequest;
 import com.catchmind.catchtable.dto.network.response.*;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -132,6 +134,7 @@ public class TimelineController {
             for (FollowDto login : loginDtos) {
                 if (follow.following().prIdx() == login.following().prIdx()) {
                     isFollow = true;
+                    break;
                 }
             }
             FollowResponse response = new FollowResponse(follow.following().prIdx(), follow.following().prNick(), follow.following().prIntro(), isFollow);
@@ -163,6 +166,7 @@ public class TimelineController {
             for (FollowDto login : loginDtos) {
                 if (follow.follower().prIdx() == login.following().prIdx()) {
                     isFollow = true;
+                    break;
                 }
             }
             FollowResponse response = new FollowResponse(follow.follower().prIdx(), follow.follower().prNick(), follow.follower().prIntro(), isFollow);
@@ -203,17 +207,15 @@ public class TimelineController {
         return "NO";
     }
 
-    // 좋아요 리스트
-    @GetMapping("/review/heart")
+    // 좋아요 및 댓글 갯수 리스트
+    @GetMapping("/review/total")
     @ResponseBody
-    public List<ReviewHeartResponse> heartList(@AuthenticationPrincipal CatchPrincipal principal) {
-        System.out.println("⭕");
+    public List<ReviewHeartWithCommResponse> heartWithComm(@AuthenticationPrincipal CatchPrincipal principal) {
         Long prIdx = principal.prIdx();
         List<ReviewDto> reviews = timeLineService.reviews();
         List<ReviewHeartDto> hearts = timeLineService.getReviewHeart(prIdx);
         List<Long> revIdxs = new ArrayList<>();
-        List<ReviewHeartResponse> heartList = new ArrayList<>();
-        List<ReviewDto> heartNum = new ArrayList<>();
+        List<ReviewHeartWithCommResponse> totalList = new ArrayList<>();
 
         for (ReviewDto review : reviews) {
             boolean isLike = false;
@@ -221,39 +223,112 @@ public class TimelineController {
             for (ReviewHeartDto heart : hearts) {
                 if (review.revIdx() == heart.reviewDto().revIdx()) {
                     isLike = true;
+                    break;
                 }
             }
-            ReviewHeartResponse response = new ReviewHeartResponse(prIdx, review.revIdx(), isLike, review.revLike());
-            heartList.add(response);
+            ReviewHeartWithCommResponse response = new ReviewHeartWithCommResponse(prIdx, review.revIdx(), isLike, review.revLike(), review.revComm());
+            totalList.add(response);
         }
-        System.out.println("좋아요 여부 검사 후 리스트 : " + heartList);
-        return heartList;
+        System.out.println("좋아요 여부 검사 후 리스트 : " + totalList);
+        return totalList;
+    }
+
+
+    // 리뷰별 댓글 리스트
+    @GetMapping("/review/comment")
+    @ResponseBody
+    public List<CommentResponse> commentList(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        Long prIdx = catchPrincipal.prIdx();
+        List<CommentDto> comments = timeLineService.getComments();
+        List<CommentHeartDto> comHeart = timeLineService.getComHeart(prIdx);
+        List<CommentResponse> comList = new ArrayList<>();
+
+        for (CommentDto com : comments) {
+            boolean isComm = com.profileDto().prIdx().equals(prIdx);
+            boolean isComLike = false;
+            for (CommentHeartDto heart : comHeart) {
+                if (com.comIdx().equals(heart.commentDto().comIdx())) {
+                    isComLike = true;
+                    break;
+                }
+            }
+            CommentResponse response = new CommentResponse(com.comIdx(),
+                    com.profileDto().prNick(), com.profileDto().prIdx(), com.comContent(), com.reviewDto().revIdx(), com.regDate(),
+                    com.comLike(), isComm, isComLike);
+            comList.add(response);
+        }
+        System.out.println("리뷰별 댓글 리스트 " + comList);
+        return comList;
     }
 
 
     // 좋아요 기능
     @PostMapping(path = "/new/heart")
     @ResponseBody
-    public String newHeart(@RequestBody ReviewHeartRequest request) {
-        System.out.println("이거왜안찍어?" + request);
-        ReviewHeart response = timeLineService.newHeart(request);
-        if (response != null) {
-            return "OK";
-        }
-        return "NO";
+    public Long newHeart(@RequestBody ReviewHeartRequest request) {
+        System.out.println("❤️" + request.revLike());
+        Long response = timeLineService.newHeart(request);
+        System.out.println(response);
+        return response;
     }
 
+    //좋아요 삭제
     @PostMapping(path = "/del/heart")
     @ResponseBody
-    public String deleteHeart(@RequestBody ReviewHeartRequest request) {
+    public Long deleteHeart(@RequestBody ReviewHeartRequest request) {
+        System.out.println("💙" + request.revLike());
         System.out.println(request);
-        Optional<ReviewHeart> response = timeLineService.delHeart(request);
-        if (response != null) {
-            return "OK";
-        }
-        return "NO";
+        Long response = timeLineService.delHeart(request);
+        return response;
     }
 
+    // 댓글 등록
+    @PostMapping(path = "/new/comment")
+    @ResponseBody
+    public Long newComment(@RequestBody CommentHeartRequest request) {
+        System.out.println(request);
+        Long response = timeLineService.newComment(request);
+        return response;
+    }
 
+    // 댓글 삭제
+    @GetMapping("/del/comment/{comIdx}/{revIdx}")
+    @ResponseBody
+    public Long delComm(@PathVariable Long comIdx, @PathVariable Long revIdx) {
+        System.out.println("삭제" + comIdx);
+        System.out.println("삭제" + revIdx);
+        Long com = timeLineService.delComment(comIdx, revIdx);
+        return com;
+    }
+
+    // 댓글 좋아요
+    @PostMapping("/new/comment/heart")
+    @ResponseBody
+    public Long newComHeart(@RequestBody CommentHeartRequest request) {
+        System.out.println("❤️" + request.comLike());
+        Long response = timeLineService.newComHeart(request);
+        System.out.println(response);
+        return response;
+    }
+
+    // 댓글 좋아요
+    @PostMapping("/del/comment/heart")
+    @ResponseBody
+    public Long delComHeart(@RequestBody CommentHeartRequest request) {
+        System.out.println("💙" + request.comLike());
+        Long response = timeLineService.delComHeart(request);
+        System.out.println(response);
+        return response;
+    }
+    // 새로운 댓글
+//    @GetMapping(path = "/review/get/comment/{comIdx}")
+//    @ResponseBody
+//    public CommentResponse getComment(@PathVariable Long comIdx) {
+//        System.out.println(comIdx);
+//        CommentDto response = timeLineService.getComment(comIdx);
+//        CommentResponse newCom = new CommentResponse(response.comIdx(), response.profileDto().prNick(),
+//                response.comContent(), response.reviewDto().revIdx(), response.regDate(), response.comLike(), true, false);
+//        return newCom;
+//    }
 
 }

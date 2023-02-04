@@ -8,6 +8,7 @@ public record ReviewDto(
         Long revIdx,
         ProfileDto profileDto,
         Long revLike,
+        Long revComm,
         String revContent,
         double revScore,
         ResAdminDto resAdminDto,
@@ -22,6 +23,7 @@ public record ReviewDto(
                 review.getRevIdx(),
                 ProfileDto.from(review.getProfile()),
                 review.getRevLike(),
+                review.getRevComm(),
                 review.getRevContent(),
                 review.getRevScore(),
                 ResAdminDto.from(review.getResAdmin()),
@@ -38,18 +40,20 @@ public record ReviewDto(
             ResAdminDto resAdminDto,
             ReserveDto reserveDto
     ) {
-        return new ReviewDto(0L, profileDto, 0L, revContent, revScore, resAdminDto,null,null, reserveDto);
+        return new ReviewDto(0L, profileDto, 0L, 0L, revContent, revScore, resAdminDto, null, null, reserveDto);
     }
+
     public static ReviewDto ofIdx(
             Long revIdx
     ) {
-        return new ReviewDto(revIdx, null, 0L, null, 0, null,null,null, null);
+        return new ReviewDto(revIdx, null, 0L, 0L, null, 0, null, null, null, null);
     }
+
     public static ReviewDto ofLike(
             Long revIdx,
             Long revLike
     ) {
-        return new ReviewDto(revIdx, null, revLike, null, 0, null,null,null, null);
+        return new ReviewDto(revIdx, null, revLike, 0L, null, 0, null, null, null, null);
     }
 
 
@@ -69,6 +73,7 @@ public record ReviewDto(
                 revIdx
         );
     }
+
     public Review toEntityLike() {
         return Review.ofLike(
                 revIdx,

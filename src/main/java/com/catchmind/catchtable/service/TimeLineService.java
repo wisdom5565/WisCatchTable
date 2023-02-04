@@ -1,9 +1,8 @@
 package com.catchmind.catchtable.service;
 
-import com.catchmind.catchtable.domain.Follow;
-import com.catchmind.catchtable.domain.Review;
-import com.catchmind.catchtable.domain.ReviewHeart;
+import com.catchmind.catchtable.domain.*;
 import com.catchmind.catchtable.dto.*;
+import com.catchmind.catchtable.dto.network.request.CommentHeartRequest;
 import com.catchmind.catchtable.dto.network.request.FollowRequest;
 import com.catchmind.catchtable.dto.network.request.ReviewHeartRequest;
 import com.catchmind.catchtable.dto.network.response.ReviewResponse;
@@ -14,7 +13,12 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +71,7 @@ public class TimeLineService {
                 .stream().map(ReviewDto::from).toList();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
+        // 리뷰 별 사진 리스트
         for (int i = 0; i < reviewDtos.size(); i++) {
             List<ReviewPhotoDto> photoList = new ArrayList<>();
             for (int j = 0; j < photoDtos.size(); j++) {
@@ -79,26 +84,29 @@ public class TimeLineService {
                     photoList.add(real);
                 }
             }
-            if (photoList.isEmpty()) {
+            if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
-                        reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx());
+                        reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate(), null, reviewDtos.get(i).revComm());
                 reviewList.add(response);
             } else {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
-                        reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx());
+                        reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate()
+                        , reviewDtos.get(i).updateDate(), reviewDtos.get(i).revComm());
                 reviewList.add(response);
             }
         }
 
-        final int start = (int)pageable.getOffset();
+        final int start = (int) pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), reviewList.size());
-        PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end),pageable,reviewList.size());
+        PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end), pageable, reviewList.size());
         return reviewResponsePage;
     }
 
 
     // 개인리뷰 조회
-    public Page<ReviewResponse> getReview(Long prIdx,Pageable pageable) {
+    public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {
         List<ReviewResponse> reviewList = new ArrayList<>();
         List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
@@ -116,26 +124,42 @@ public class TimeLineService {
                     photoList.add(real);
                 }
             }
-            if (photoList.isEmpty()) {
+            if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
-                        reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx());
+                        reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate(), null, reviewDtos.get(i).revComm());
                 reviewList.add(response);
             } else {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
-                        reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx());
+                        reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate()
+                        , reviewDtos.get(i).updateDate(),
+                        reviewDtos.get(i).revComm());
                 reviewList.add(response);
             }
-        System.out.println("i" + i + reviewList.get(i).photo());
+            System.out.println("i" + i + reviewList.get(i).photo());
         }
 
-        final int start = (int)pageable.getOffset();
+        final int start = (int) pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), reviewList.size());
-        PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end),pageable,reviewList.size());
+        PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end), pageable, reviewList.size());
         return reviewResponsePage;
     }
+
     // 전체 리뷰 조회
-    public List<ReviewDto> reviews () {
+    public List<ReviewDto> reviews() {
         return reviewRepository.findAll().stream().map(ReviewDto::from).toList();
+    }
+
+    // 리뷰별 댓글 리스트
+    public List<CommentDto> getComments() {
+        List<CommentDto> commentDtos = commentRepository.findAll().stream().map(CommentDto::from).toList();
+        return commentDtos;
+    }
+
+    public CommentDto getComment(Long comIdx) {
+        CommentDto comment = commentRepository.findById(comIdx).map(CommentDto::from).orElseThrow();
+        return comment;
     }
 
 
@@ -159,17 +183,18 @@ public class TimeLineService {
                 .stream().map(FollowDto::from).toList();
         return followerList;
     }
-    
-    // 로그인한 회원의 좋아요리스트
+
+    // 로그인한 회원의 리뷰 좋아요리스트
     public List<ReviewHeartDto> getReviewHeart(Long prIdx) {
         List<ReviewHeartDto> heartDtos = reviewHeartRepository.findAllByProfile_prIdx(prIdx)
                 .stream().map(ReviewHeartDto::from).toList();
 
         return heartDtos;
     }
-
-    public Long getHeartNum (Long revIdx) {
-        return reviewHeartRepository.countByReview_revIdx(revIdx);
+    //로그인한 회원의 댓글 좋아요 리스트
+    public List<CommentHeartDto> getComHeart(Long prIdx) {
+        List<CommentHeartDto> commentHeartDtos = commentHeartRepository.findAllByProfile_PrIdx(prIdx).stream().map(CommentHeartDto::from).toList();
+        return commentHeartDtos;
     }
 
     // 팔로우 기능
@@ -189,32 +214,93 @@ public class TimeLineService {
     }
 
     // 좋아요 기능
-    public ReviewHeart newHeart(ReviewHeartRequest request) {
+    public Long newHeart(ReviewHeartRequest request) {
         Long revIdx = request.revIdx();
         Long revLike = request.revLike();
-        Optional<Review> optionalReview = reviewRepository.findById(revIdx);
-        optionalReview.ifPresent(
-                review -> {
-                    review.setRevLike(revLike);
-                }
-        );
-
-        return reviewHeartRepository.save(request.toDto().toEntity());
+        Review findReview = reviewRepository.findById(revIdx).orElse(null);
+        findReview.setRevLike(revLike + 1);
+        Long newLike = reviewRepository.save(findReview).getRevLike();
+        System.out.println("❤️" + newLike);
+        reviewHeartRepository.save(request.toDto().toEntity());
+        return newLike;
     }
 
+    // 좋아요 삭제
     @Transactional
-    public Optional<ReviewHeart> delHeart(ReviewHeartRequest request) {
+    public Long delHeart(ReviewHeartRequest request) {
         Long revIdx = request.revIdx();
         Long prIdx = request.prIdx();
         Long revLike = request.revLike();
-        Optional<Review> optionalReview = reviewRepository.findById(revIdx);
-        optionalReview.ifPresent(
-                review -> {
-                    review.setRevLike(revLike);
-                }
-        );
-        return reviewHeartRepository.deleteByProfile_PrIdxAndReview_RevIdx(prIdx, revIdx);
+        Review findReview = reviewRepository.findById(revIdx).orElse(null);
+        findReview.setRevLike(revLike);
+
+        Long newLike = reviewRepository.save(findReview).getRevLike();
+        System.out.println("💙" + newLike);
+        reviewHeartRepository.deleteByProfile_PrIdxAndReview_RevIdx(prIdx, revIdx);
+        return newLike;
     }
+
+    // 댓글 등록
+    public Long newComment(CommentHeartRequest request) {
+        Long revIdx = request.revIdx();
+        Long revCom = reviewRepository.findById(revIdx).get().getRevComm();
+        Review findReview = reviewRepository.findById(revIdx).orElse(null);
+        // 리뷰 댓글 수 업데이트
+        findReview.setRevComm(revCom + 1);
+        reviewRepository.save(findReview);
+        // 댓글 저장
+        System.out.println(request.toDto());
+        System.out.println(request.toDto().toEntity());
+        Long saveCom = commentRepository.save(request.toDto().toEntity()).getComIdx();
+        return saveCom;
+    }
+
+    @Transactional
+    public Long delComment(Long comIdx,Long revIdx) {
+        Review findReview = reviewRepository.findById(revIdx).orElse(null);
+        findReview.setRevComm(findReview.getRevComm() - 1);
+
+        Long com = reviewRepository.save(findReview).getRevComm();
+        System.out.println("📒" + com);
+        commentRepository.deleteById(comIdx);
+        return com;
+    }
+
+    // 댓글 좋아요
+    public Long newComHeart(CommentHeartRequest request) {
+        Long comIdx = request.comIdx();
+        Long comLike = request.comLike();
+        Comment findComment = commentRepository.findById(comIdx).orElse(null);
+        findComment.setComLike(comLike + 1);
+        Long newLike = commentRepository.save(findComment).getComLike();
+        System.out.println("❤️" + newLike);
+        CommentHeart newHeart = new CommentHeart(Profile.ofIdx(request.prIdx()), Review.ofIdx(request.revIdx()), Comment.ofIdx(request.comIdx()));
+        commentHeartRepository.save(newHeart);
+        return newLike;
+    }
+
+    // 댓글 좋아요 삭제
+    @Transactional
+    public Long delComHeart(CommentHeartRequest request) {
+        Long comIdx = request.comIdx();
+        Long prIdx = request.prIdx();
+        Long comLike = request.comLike();
+        System.out.println("-----------댓글 삭제-------------");
+        System.out.println(comIdx);
+        System.out.println(prIdx);
+        System.out.println(comLike);
+        System.out.println("-----------댓글 삭제-------------");
+        Comment findComment = commentRepository.findById(comIdx).orElse(null);
+        findComment.setComLike(comLike);
+
+        Long newLike = commentRepository.save(findComment).getComLike();
+        System.out.println("💙" + newLike);
+        commentHeartRepository.deleteByProfile_PrIdxAndComment_comIdx(prIdx, comIdx);
+        return newLike;
+    }
+
+
+
 
 
 }

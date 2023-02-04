@@ -19,7 +19,7 @@
         ㅎㄷㅎㄷ
     </header>
     <!-- header 끝 -->
-    <div class="wrapper">
+    <div class="wrapper" style="min-height: 85%;">
         <div class="css-2b29tl eug5r8l2">
             <div class="css-luwwab eug5r8l1">
                 <div class="css-833hqy ecbxmj4">
@@ -68,6 +68,19 @@
 
         </div>
     </div>
+    <!--페이징 처리-->
+    <div class="page_wrap">
+        <div class="page_nation" aria-label="Page navigation example">
+            <a class="pagine2" th:href="@{/report/review/list(page=${notice.number - 1})}"
+               th:class="'page-prev' + (${notice.number} <= 0 ? ' page-disabled':'')"></a>
+            <span class="pagine" th:each="pageNumber : ${paginationBarNumbers}">
+                        <a th:text="${pageNumber + 1}" th:href="@{/report/review/list(page=${pageNumber})}"
+                           th:class="(${pageNumber} == ${notice.number} ? 'active' : '')">1</a></span>
+            <a th:href="@{/report/review/list(page=${notice.number + 1})}" th:class="'page-next' +
+                    (${notice.number} >= ${notice.totalPages - 1} ? '':' page-disabled')"></a>
+        </div>
+    </div>
+    <!--페이징 끝-->
     <div th:replace="fragment/footer :: footer"/>
 </div>
 </body>

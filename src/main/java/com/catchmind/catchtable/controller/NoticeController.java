@@ -2,9 +2,12 @@ package com.catchmind.catchtable.controller;
 
 
 import com.catchmind.catchtable.domain.Ask;
+import com.catchmind.catchtable.domain.Improvement;
+import com.catchmind.catchtable.domain.Notice;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.AskRequest;
 import com.catchmind.catchtable.dto.network.request.ImprovementRequest;
+import com.catchmind.catchtable.dto.network.response.ReviewResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.*;
 import com.catchmind.catchtable.service.NoticeService;
@@ -12,6 +15,7 @@ import com.catchmind.catchtable.service.PaginationService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -40,9 +44,14 @@ public class NoticeController {
 
     // 공지사항 리스트 페이지
     @GetMapping("/notice")
-    public String notice(Model model) {
-        List<NoticeDto> noticeDtoList = noticeRepository.findAll().stream().map(NoticeDto::from).toList();
+    public String notice(Model model, @PageableDefault(size=10, sort="noIdx", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<NoticeDto> noticeDtoList = noticeRepository.findAll(pageable).map(NoticeDto::from);
+//        final int start = (int)pageable.getOffset();
+//        final int end = Math.min((start + pageable.getPageSize()), noticeDtoList.size());
+//        PageImpl<NoticeDto> page = new PageImpl<>(noticeDtoList.subList(start, end), pageable, noticeDtoList.size());
+        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), noticeDtoList.getTotalPages());
         model.addAttribute("notice", noticeDtoList);
+        model.addAttribute("paginationBarNumbers", barNumbers);
         return "notice/notice";
     }
 
@@ -154,9 +163,12 @@ public class NoticeController {
 
     // 개선제안 리스트
     @GetMapping("/support/improve")
-    public String improve(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+    public String improve(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="impIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        List<ImprovementDto> improvementDtoList = improvementRepository.findAllByProfile_PrIdx(prIdx).stream().map(ImprovementDto::from).toList();
+//        List<ImprovementDto> improvementDtoList = improvementRepository.findAllByProfile_PrIdx(prIdx).stream().map(ImprovementDto::from).toList();
+        Page<Improvement> improvementDtoList = noticeService.listImp(pageable, prIdx);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), improvementDtoList.getTotalPages());
+        model.addAttribute("paginationBarNumbers", barNumbers);
         model.addAttribute("notice", improvementDtoList);
         return "notice/improve1";
     }
@@ -177,31 +189,36 @@ public class NoticeController {
     }
     // 리뷰 신고내역
     @GetMapping("/report/review/list")
-    public String reportList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+    public String reportList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="derIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        List<DeclareReviewDto> declareReviewDto = declareReviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(DeclareReviewDto::from).toList();
+        Page<DeclareReviewDto> declareReviewDto = noticeService.listDe(pageable, prIdx);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), declareReviewDto.getTotalPages());
         model.addAttribute("notice", declareReviewDto);
+        model.addAttribute("paginationBarNumbers", barNumbers);
         return "notice/report_list";
     }
 
+    // 댓글 신고내역
     @GetMapping("/report/comment/list")
-    public String reportCommentList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+    public String reportCommentList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="decIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        List<DeclareCommentDto> declareCommentDto = declareCommentRepository.findAllByProfile_PrIdx(prIdx).stream().map(DeclareCommentDto::from).toList();
+        Page<DeclareCommentDto> declareCommentDto = noticeService.listDec(pageable, prIdx);
+        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), declareCommentDto.getTotalPages());
         model.addAttribute("notice", declareCommentDto);
+        model.addAttribute("paginationBarNumbers", barNumbers);
         return "notice/report_list_comment";
     }
 
 
     // 리뷰 신고
-    @GetMapping("/report/review")
-    public ModelAndView reportReview() {
+    @GetMapping("/report/review/{revIdx}")
+    public ModelAndView reportReview(@PathVariable(name="revIdx")Long revIdx) {
         return new ModelAndView("notice/report_review");
     }
 
     // 댓글 신고
-    @GetMapping("/report/comment")
-    public ModelAndView reportReply() {
+    @GetMapping("/report/comment/{comIdx}")
+    public ModelAndView reportReply(@PathVariable(name="comIdx")Long comIdx) {
         return new ModelAndView("notice/report_comment");
     }
 }

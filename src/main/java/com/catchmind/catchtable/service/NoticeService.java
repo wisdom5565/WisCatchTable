@@ -2,14 +2,10 @@ package com.catchmind.catchtable.service;
 
 import com.catchmind.catchtable.domain.Ask;
 import com.catchmind.catchtable.domain.Improvement;
-import com.catchmind.catchtable.dto.AskDto;
-import com.catchmind.catchtable.dto.ImprovementDto;
-import com.catchmind.catchtable.dto.NoticeDto;
+import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.AskRequest;
 import com.catchmind.catchtable.dto.network.request.ImprovementRequest;
-import com.catchmind.catchtable.repository.AskRepository;
-import com.catchmind.catchtable.repository.ImprovementRepository;
-import com.catchmind.catchtable.repository.NoticeRepository;
+import com.catchmind.catchtable.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,10 +24,24 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final AskRepository askRepository;
     private final ImprovementRepository improvementRepository;
+    private final DeclareReviewRepository declareReviewRepository;
+    private final DeclareCommentRepository declareCommentRepository;
 
     @Transactional(readOnly = true)
     public Page<Ask> list(Pageable pageable, Long prIdx) {
         return askRepository.findAllByProfile_PrIdx(prIdx, pageable);
+    }
+
+    public Page<Improvement> listImp(Pageable pageable, Long prIdx) {
+        return improvementRepository.findAllByProfile_PrIdx(prIdx, pageable);
+    }
+
+    public Page<DeclareReviewDto> listDe(Pageable pageable, Long prIdx){
+        return declareReviewRepository.findAllByProfile_PrIdx(prIdx, pageable).map(DeclareReviewDto::from);
+    }
+
+    public Page<DeclareCommentDto> listDec(Pageable pageable, Long prIdx){
+        return declareCommentRepository.findAllByProfile_PrIdx(pageable, prIdx).map(DeclareCommentDto::from);
     }
 
     public AskDto getDetail(Long askIdx){
@@ -67,11 +77,11 @@ public class NoticeService {
     public void updateWrite(Long askIdx, AskRequest askRequest){
         Optional<Ask> ask = askRepository.findById(askIdx);
         ask.ifPresent(
-            newRes -> {
-                newRes.setAskTitle(askRequest.askTitle());
-                newRes.setAskContent(askRequest.askContent());
-                askRepository.save(newRes);
-            }
+                newRes -> {
+                    newRes.setAskTitle(askRequest.askTitle());
+                    newRes.setAskContent(askRequest.askContent());
+                    askRepository.save(newRes);
+                }
         );
     }
 
@@ -80,11 +90,11 @@ public class NoticeService {
     public void updateImpWrite(Long impIdx, ImprovementRequest improvementRequest){
         Optional<Improvement> improvement = improvementRepository.findById(impIdx);
         improvement.ifPresent(
-            newRes -> {
-                newRes.setImpTitle(improvementRequest.impTitle());
-                newRes.setImpContent(improvementRequest.impContent());
-                improvementRepository.save(newRes);
-            }
+                newRes -> {
+                    newRes.setImpTitle(improvementRequest.impTitle());
+                    newRes.setImpContent(improvementRequest.impContent());
+                    improvementRepository.save(newRes);
+                }
         );
     }
 

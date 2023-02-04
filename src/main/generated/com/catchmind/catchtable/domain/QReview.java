@@ -33,6 +33,8 @@ public class QReview extends EntityPathBase<Review> {
 
     public final QReserve reserve;
 
+    public final NumberPath<Long> revComm = createNumber("revComm", Long.class);
+
     public final StringPath revContent = createString("revContent");
 
     public final NumberPath<Long> revIdx = createNumber("revIdx", Long.class);

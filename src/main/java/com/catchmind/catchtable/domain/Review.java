@@ -5,8 +5,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,6 +21,7 @@ public class Review extends AuditingFields{
     @JoinColumn(name = "pr_idx")
     private Profile profile;
     private Long revLike;
+    private Long revComm;
     private String revContent;
     private double revScore;
     @ManyToOne(optional = false)

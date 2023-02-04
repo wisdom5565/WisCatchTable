@@ -3,6 +3,7 @@ package com.catchmind.catchtable.dto.network.request;
 import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.ReviewDto;
 import com.catchmind.catchtable.dto.ReviewHeartDto;
+import lombok.Setter;
 
 public record ReviewHeartRequest(
         Long prIdx,

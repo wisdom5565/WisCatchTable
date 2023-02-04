@@ -30,7 +30,7 @@ public record ResAdminDto(
     }
 
     public ResAdmin toEntity() {
-        return ResAdmin.ofBisName(
+        return ResAdmin.of1(
                 resaBisName
         );
     }

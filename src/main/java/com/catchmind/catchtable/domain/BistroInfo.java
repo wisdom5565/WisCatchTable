@@ -22,5 +22,8 @@ public class BistroInfo extends AuditingField{
     private String bisRegion;   // 식당이 있는 지역
     private String bisLunch;    // 점심 시간대 가격
     private String bisDinner;   // 저녁 시간대 가격
+    // 테이블에서 빠짐 -> 편의시설 테이블로
+//    private String bisConvenience;  // 편의시설
+
 
 }

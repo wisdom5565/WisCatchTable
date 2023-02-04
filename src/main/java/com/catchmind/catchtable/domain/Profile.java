@@ -1,15 +1,10 @@
 package com.catchmind.catchtable.domain;
 
-import com.catchmind.catchtable.dto.ProfileDto;
-import com.catchmind.catchtable.dto.network.request.FollowRequest;
 import com.catchmind.catchtable.dto.network.request.ProfileRequest;
 import lombok.*;
-import org.springframework.context.event.EventListener;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 
 //@Table(name = "profile")

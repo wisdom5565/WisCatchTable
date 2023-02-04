@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>즐거운 미식 생활의 시작, 캐치테이블</title>
+  <div th:replace="fragment/link :: link"/>
+  <link rel="stylesheet" href="/css/mypage.css">
+  <link rel="stylesheet" href="/css/collection_detail.css">
+
+</head>
+<body>
+<div id="root">
+  <!--  header 시작-->
+  <header id="header">
+    ㅎㄷㅎㄷ
+  </header>
+  <!--header 끝-->
+  <!--  mypageHeader-->
+  <div th:replace="fragment/mypage_header :: mypage_header"/>
+  <!--  /mypageHeader-->
+  <div class="css-luwwab eug5r8l1 wrapper">
+
+    <div th:replace="fragment/mypage_aside :: mypage_aside"/>
+
+    <div class="css-171zbec eug5r8l0">
+      <div class="css-j0lifa ed9qr673">
+        <div class="css-fhxb3m ed9qr672">
+          <h2 class="css-1268zpe ed9qr671">나의 컬렉션</h2>
+        </div>
+        <a class="btn btn-lg btn-outline full-width mb-8" href="/mypage/collection/new">
+          <span class="add">새 컬렉션 만들기</span>
+        </a>
+      </div>
+
+      <main id="main" class="__d-flex" style="height: auto">
+        <section class="section pt-24 __d-flex f-d-column flex-grow" style="padding-top: 0;">
+          <div
+                  class="collection-wrap container gutter-sm __d-flex flex-grow f-d-column"
+          >
+            <div
+                    class="section-header collection-list-header __d-flex __v-center"
+            >
+              <h3 class="section-title font-16">
+                내가 만든 컬렉션 <span class="count">1</span>
+              </h3>
+
+            </div>
+            <div class="__mypage-collection-list">
+              <div class="collection-list-item-sm">
+                <div class="collection-slides-sm" style="display: block">
+                  <div class="collection-list-item-sm">
+                    <a href="mycollectionDetail.html">
+                      <div class="collection-list-item-in">
+                        <div class="imgs">
+                          <div
+                                  class="img"
+                                  style="
+                                  background-image: url('https://image.toast.com/aaaaaqx/catchtable/shopinfo/s20676/20676_2161013243969631_thumbMenuImage.jpg');
+                                "
+                          ></div>
+                        </div>
+                        <div class="__meta">
+                          <h4 class="__title">
+                            <strong>나</strong>의 컬렉션
+                          </h4>
+                          <div class="__count">
+                            <button
+                                    class="bookmark-button on"
+                                    type="button"
+                            ></button>
+                            0
+                          </div>
+                        </div>
+                      </div>
+                      <div class="collection__meta">
+                        <h4 class="__title private">
+                          스시오마카세!
+                        </h4>
+                        <div class="__count">10</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+                  class="collection-wrap container gutter-sm __d-flex flex-grow f-d-column"
+          >
+            <div
+                    class="section-header collection-list-header __d-flex __v-center"
+            >
+              <h3 class="section-title font-16">
+                저장한 컬렉션 <span class="count">0</span>
+              </h3>
+
+            </div>
+            <div class="nodata font-16 mt-80 mb-120">
+              등록된 컬렉션이 없습니다.
+            </div>
+          </div>
+        </section>
+      </main>
+
+    </div>
+  </div>
+
+  <div th:replace="fragment/footer :: footer"/><
+</div>
+</body>
+</html>

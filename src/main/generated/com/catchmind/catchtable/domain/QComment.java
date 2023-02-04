@@ -28,6 +28,8 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final NumberPath<Long> comIdx = createNumber("comIdx", Long.class);
 
+    public final NumberPath<Long> comLike = createNumber("comLike", Long.class);
+
     public final QProfile profile;
 
     //inherited

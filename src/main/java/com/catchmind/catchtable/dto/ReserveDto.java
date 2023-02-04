@@ -1,4 +1,5 @@
 package com.catchmind.catchtable.dto;
+import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.domain.Reserve;
 
 import java.time.LocalDateTime;
@@ -55,7 +56,7 @@ public record ReserveDto(
         return new ReserveDto(resIdx,null,null,null,null,null,null,null,null,null,null,null,null,0L,null,null,null,null, false);
     }
 
-    public static ReserveDto of1(boolean revStatus) {
+    public static ReserveDto of(boolean revStatus) {
         return new ReserveDto(0L,null,null,null,null,null,null,null,null,null,null,null,null,0L,null,null,null,null, revStatus);
     }
 

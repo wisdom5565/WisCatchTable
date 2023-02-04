@@ -21,13 +21,24 @@ public class Comment extends AuditingField {
     @ManyToOne(optional = false)
     @JoinColumn(name = "rev_idx")
     private Review review;                  // 리뷰 번호
+    private Long comLike;       // 댓글 좋아요 갯수
 
     protected Comment() {}
 
-    public Comment(Long comIdx, Profile profile, String comContent, Review review) {
-        this.comIdx = comIdx;
-        this.profile = profile;
+    public Comment(Profile profile, String comContent, Review review, Long comLike){
         this.comContent = comContent;
+        this.profile = profile;
         this.review = review;
+        this.comLike = comLike;
+    }
+    public Comment(Long comIdx){
+        this.comIdx = comIdx;
+    }
+
+    public static Comment of(Profile profile, String comContent, Review review, Long comLike) {
+        return new Comment(profile,comContent,review, comLike);
+    }
+    public static Comment ofIdx(Long comIdx) {
+        return new Comment(comIdx);
     }
 }

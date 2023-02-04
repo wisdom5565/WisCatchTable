@@ -40,6 +40,15 @@ public class MydiningController {
         return "/mydining/planned";
     }
 
+//    @GetMapping("/collection")
+//    public ModelAndView myCollection(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+//        Long prIdx = catchPrincipal.prIdx();
+//        System.out.println(catchPrincipal.prIdx());
+//        ProfileDto profile = profileLogicService.getProfileElements(prIdx);
+//        ModelAndView modelAndView = new ModelAndView("/mypage/mycollection");
+//        modelAndView.addObject("profile",profile);
+//        return modelAndView;
+//    }
 
     @GetMapping("/reserve/plannedDetail/{resIdx}")
     public String detail(Model model, @PathVariable("resIdx") Long resIdx) {
@@ -50,6 +59,14 @@ public class MydiningController {
         return "/mydining/plannedDetail";
     }
 
+//    @GetMapping("/reserve/bistroDetail/{resIdx}")
+//    public String bistroDetail(Model model, @PathVariable("resIdx") Long resIdx) {
+//        System.out.println(resIdx);
+//        ReserveDto reserveDto = mydiningService.getDetail(resIdx);
+//        model.addAttribute("detail", reserveDto);
+//        System.out.println("reserveDTO->" + reserveDto);
+//        return "/mydining/bistroDetail";
+//    }
 
 
     @GetMapping("/done")

@@ -49,6 +49,7 @@ public class MypageController {
             return modelAndView;
         }
         Long prIdx = catchPrincipal.prIdx();
+        System.out.println(catchPrincipal.prIdx());
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         ModelAndView modelAndView = new ModelAndView("/mypage/mypage_main");
         modelAndView.addObject("profile",profile);
@@ -58,6 +59,7 @@ public class MypageController {
     @GetMapping("/modify")
     public ModelAndView myMainModify(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
+        System.out.println(catchPrincipal.prIdx());
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         ModelAndView modelAndView = new ModelAndView("/mypage/mypage_main_modify");
         modelAndView.addObject("profile",profile);
@@ -66,6 +68,7 @@ public class MypageController {
     @GetMapping("/point")
     public ModelAndView myPoint(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
+        System.out.println(catchPrincipal.prIdx());
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         ModelAndView modelAndView = new ModelAndView("/mypage/point");
         modelAndView.addObject("profile",profile);
@@ -76,6 +79,7 @@ public class MypageController {
     @GetMapping("/review")
     public ModelAndView myReview(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
+        System.out.println(catchPrincipal.prIdx());
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         ModelAndView modelAndView = new ModelAndView("/mypage/myReview");
         modelAndView.addObject("profile",profile);

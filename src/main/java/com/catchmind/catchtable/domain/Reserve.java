@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Data
 @ToString(callSuper = true)
 public class Reserve extends AuditingFields{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resIdx;    // 예약 번호
@@ -46,6 +47,7 @@ public class Reserve extends AuditingFields{
     private BistroDetail bistroDetail;  // 예약 상세 정보 Fk bd_idx
 
     private boolean revStatus;      // 예약 상태 default 0(false)
+
 
 
     protected Reserve() {}

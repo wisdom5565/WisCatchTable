@@ -46,7 +46,7 @@ public class ResAdmin extends AuditingField{
     public ResAdmin(String resaBisName) {
         this.resaBisName = resaBisName;
     }
-    public static ResAdmin ofBisName(String resaBisName) {
+    public static ResAdmin of1(String resaBisName) {
         return new ResAdmin(resaBisName);
     }
 

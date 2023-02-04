@@ -1,7 +1,6 @@
 package com.catchmind.catchtable.service;
 
 import com.catchmind.catchtable.domain.Reserve;
-import com.catchmind.catchtable.domain.Review;
 import com.catchmind.catchtable.domain.type.ReservationType;
 import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.ReviewDto;
@@ -39,7 +38,7 @@ public class MydiningService {
     }
 
     @Transactional
-    public void updateCancel(Long resIdx) {
+    public void updateCancel(Long resIdx){
         Optional<Reserve> reserve = reserveRepository.findById(resIdx);
         reserve.ifPresent(
                 newRes -> {
@@ -88,5 +87,4 @@ public class MydiningService {
         }
         return phIdx;
     }
-
 }

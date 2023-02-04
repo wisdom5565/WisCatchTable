@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QCollection is a Querydsl query type for Collection
+ * QMyCollection is a Querydsl query type for MyCollection
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QCollection extends EntityPathBase<Collection> {
+public class QMyCollection extends EntityPathBase<MyCollection> {
 
-    private static final long serialVersionUID = 1709575355L;
+    private static final long serialVersionUID = -657146809L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QCollection collection = new QCollection("collection");
+    public static final QMyCollection myCollection = new QMyCollection("myCollection");
 
     public final QAuditingFields _super = new QAuditingFields(this);
 
@@ -42,23 +42,23 @@ public class QCollection extends EntityPathBase<Collection> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updateDate = _super.updateDate;
 
-    public QCollection(String variable) {
-        this(Collection.class, forVariable(variable), INITS);
+    public QMyCollection(String variable) {
+        this(MyCollection.class, forVariable(variable), INITS);
     }
 
-    public QCollection(Path<? extends Collection> path) {
+    public QMyCollection(Path<? extends MyCollection> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QCollection(PathMetadata metadata) {
+    public QMyCollection(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QCollection(PathMetadata metadata, PathInits inits) {
-        this(Collection.class, metadata, inits);
+    public QMyCollection(PathMetadata metadata, PathInits inits) {
+        this(MyCollection.class, metadata, inits);
     }
 
-    public QCollection(Class<? extends Collection> type, PathMetadata metadata, PathInits inits) {
+    public QMyCollection(Class<? extends MyCollection> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.profile = inits.isInitialized("profile") ? new QProfile(forProperty("profile")) : null;
     }

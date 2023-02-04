@@ -24,8 +24,8 @@ public record ImprovementDto(
                 improvement.isImpStatus(),
                 improvement.getRegDate(),
                 improvement.getUpdateDate()
-                );
-}
+        );
+    }
 
     public static ImprovementDto of(
             String impTitle,

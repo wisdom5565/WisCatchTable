@@ -22,7 +22,7 @@
         ㅎㄷㅎㄷ
     </header>
     <!-- header 끝 -->
-    <div class="wrapper">
+    <div class="wrapper" style="min-height: 85%;">
         <div class="css-2b29tl eug5r8l2">
             <div class="css-luwwab eug5r8l1">
                 <div class="css-833hqy ecbxmj4">
@@ -51,7 +51,7 @@
                                     <div class="css-wqw6mu e1cfowvj2">
                                         <div class="css-4l2co e1vd1n2i2"  id="services" th:text="${notice.impTitle}">안녕하세요 <i class="fa fa-caret-down"></i></div>
                                     </div>
-                                    <div class="css-8e1vc1 e1cfowvj2"><span class="css-14kcwq8 e1vd1n2i1" th:text="${#temporals.format(notice.regDate(), 'yyyy.MM.dd')}">2022.12.29</span></div>
+                                    <div class="css-8e1vc1 e1cfowvj2"><span class="css-14kcwq8 e1vd1n2i1" th:text="${#temporals.format(notice.regDate, 'yyyy.MM.dd')}">2022.12.29</span></div>
                                     <div class="css-8e1vc1 e1cfowvj2" th:if="${notice.impStatus == false}"><span color="#999" class="css-14kcwq8 e1hz5ei00" >답변대기</span></div>
                                     <div class="css-8e1vc1 e1cfowvj2" th:if="${notice.impStatus == true}"><span color="#999" class="css-14kcwq8 e1hz5ei00" >답변완료</span></div>
                                 </div>
@@ -113,6 +113,19 @@
             </div>
         </div>
     </div>
+    <!--페이징 처리-->
+    <div class="page_wrap">
+        <div class="page_nation" aria-label="Page navigation example">
+            <a class="pagine2" th:href="@{/support/improve(page=${notice.number - 1})}"
+               th:class="'page-prev' + (${notice.number} <= 0 ? ' page-disabled':'')"></a>
+            <span class="pagine" th:each="pageNumber : ${paginationBarNumbers}">
+                        <a th:text="${pageNumber + 1}" th:href="@{/support/improve(page=${pageNumber})}"
+                           th:class="(${pageNumber} == ${notice.number} ? 'active' : '')">1</a></span>
+            <a th:href="@{/support/improve(page=${notice.number + 1})}" th:class="'page-next' +
+                    (${notice.number} >= ${notice.totalPages - 1} ? '':' page-disabled')"></a>
+        </div>
+    </div>
+    <!--페이징 끝-->
     <!-- footer 시작 -->
     <div th:replace="fragment/footer :: footer"/>
     <!-- footer 끝 -->
