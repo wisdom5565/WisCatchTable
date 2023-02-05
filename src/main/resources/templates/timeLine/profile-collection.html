@@ -17,7 +17,7 @@
     <header id="header">
         ㅎㄷㅎㄷ
     </header>
-    <div th:replace="fragment/timeline_header :: timeline_header"/>
+<!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
     <div class="css-luwwab eug5r8l1">
         <div class="css-833hqy ecbxmj4">
             <div class="css-1v4whg ecbxmj3">컬렉션</div>
@@ -26,7 +26,7 @@
         <div class="css-171zbec eug5r8l0">
             <div class="css-j0lifa ed9qr673">
                 <div class="css-fhxb3m ed9qr672">
-                    <h2 class="css-1268zpe ed9qr671">[[${profile.prNick}]]님의 컬렉션 보기</h2>
+                    <h2 class="css-1268zpe ed9qr671">[[${prNick}]]님의 컬렉션 보기</h2>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                         </section>
                         <section class="section container gutter-sm">
                             <div class="section-header mt-24" style="justify-content: space-between;">
-                                <h3 class="section-title font-16">컬렉션 <span class="count">1</span>
+                                <h3 class="section-title font-16">컬렉션 <span th:value="${#lists.size(collections)}" class="count"></span>
                                 </h3>
                             </div>
                             <div class="__mypage-collection-list">
@@ -78,7 +78,7 @@
                                                         </div>
                                                         <div class="__meta">
                                                             <h4 class="__title">
-                                                                <strong th:text="${profile.prNick}">나</strong>의 컬렉션
+                                                                <strong th:text="${prNick}">나</strong>의 컬렉션
                                                             </h4>
                                                             <div class="__count">
                                                                 <button
@@ -98,15 +98,14 @@
                                                 </a>
                                             </div>
                                         </th:block>
-                                        <th:block th:if="${collection.colLock==true}">
-                                            <div class="collection-slides-sm">
-                                                <div class="nodata font-16 mb-36">공개된 컬렉션이 없습니다.</div>
-                                            </div>
-                                        </th:block>
                                     </div>
                                 </div>
-
                             </div>
+                                <th:block th:if="${collections.isEmpty()}">
+                                    <div class="collection-slides-sm">
+                                        <div class="nodata font-16 mb-36">공개된 컬렉션이 없습니다.</div>
+                                    </div>
+                                </th:block>
 
 
                         </section>

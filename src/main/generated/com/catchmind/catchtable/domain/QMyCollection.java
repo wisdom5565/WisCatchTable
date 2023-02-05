@@ -24,7 +24,7 @@ public class QMyCollection extends EntityPathBase<MyCollection> {
 
     public final QAuditingFields _super = new QAuditingFields(this);
 
-    public final StringPath bisIdx = createString("bisIdx");
+    public final StringPath bisNames = createString("bisNames");
 
     public final StringPath colContent = createString("colContent");
 

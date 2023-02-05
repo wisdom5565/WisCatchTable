@@ -1,19 +1,45 @@
 //리뷰 신고
-function reportReview(revIdx) {
-    $('.' + revIdx).css("display", "flex");
-    $('.btn' + revIdx).click(function () {
-        $.ajax({
-            type: 'GET',
-            url: "/report/review/" + revIdx,
-            success: function (data) {
-                console.log(data);
-                location.href = "/report/review/" + revIdx;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("ERROR : " + textStatus + " : " + errorThrown);
-            }
+function reportReview(revIdx, resIdx, isReview) {
+    // 리뷰작성자가 아닌경우
+    if(!isReview) {
+        $('.' + revIdx).css("display", "flex");
+        $('.btn' + revIdx).click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/report/review/" + revIdx,
+                success: function (data) {
+                    console.log(data);
+                    location.href = "/report/review/" + revIdx;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("ERROR : " + textStatus + " : " + errorThrown);
+                }
+            })
         })
-    })
+
+    } else {
+        $('.isRev' + revIdx).text("해당 리뷰를 삭제하시겠습니까?");
+        $('.btn' + revIdx).text("리뷰 삭제하기");
+        $('.' + revIdx).css("display", "flex");
+        $('.btn' + revIdx).click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/timeline/del/review/" + revIdx + "/" + resIdx,
+                success: function (data) {
+                    console.log(data);
+                    if(data != null) {
+                        $('.' + revIdx).css("display", "none");
+                        alert('삭제 완료!')
+                        location.href="/mydining/done";
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("ERROR : " + textStatus + " : " + errorThrown);
+                }
+            })
+        })
+    }
+
 }
 
 // 댓글 신고 및 삭제

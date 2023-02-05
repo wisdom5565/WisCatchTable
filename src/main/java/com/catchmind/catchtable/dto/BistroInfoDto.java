@@ -12,7 +12,6 @@ public record BistroInfoDto(
         String bisRegion,
         String bisLunch,
         String bisDinner,
-//        String bisConvenience,
         LocalDateTime regDate
 ) {
     public static BistroInfoDto from(BistroInfo bistroInfo){

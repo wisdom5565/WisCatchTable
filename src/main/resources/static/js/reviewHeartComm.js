@@ -189,11 +189,9 @@ function showComment(review) {
         if (revComIdx[i] == review) {
             let comment;
             if (isCommLike[i]) {
-                console.log("isCommLike true")
-                console.log(i+'번째..')
-                console.log(isCommLike[i])
-                console.log(comLike[i])
-                console.log(comIdx[i])
+                console.log('댓글 좋아요 여부 : ' + isCommLike[i] + " i : " + i);
+                console.log('댓글 번호 : ' + comIdx[i] + " i : " + i);
+                console.log('댓글 좋아요 개수 : ' + comLike[i] + " i : " + i);
                 comment = "<div class='__user-info'> " +
                     "<a class='profile'> <div class='profile-pic'> " +
                     "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
@@ -212,11 +210,9 @@ function showComment(review) {
                     "<a class='__more' onclick='reportComment(" + comIdx[i] + "," + isComm[i] + "," + revComIdx[i] + "," + ")'>MORE</a></div>" +
                     "<hr class='hairline'>";
             } else {
-                console.log("isCommLike false")
-                console.log(i+'번째..')
-                console.log(isCommLike[i])
-                console.log(comLike[i])
-                console.log(comIdx[i])
+                console.log('댓글 좋아요 여부 : ' + isCommLike[i] + " i : " + i);
+                console.log('댓글 번호 : ' + comIdx[i] + " i : " + i);
+                console.log('댓글 좋아요 개수 : ' + comLike[i] + " i : " + i);
                 comment = "<div class='__user-info'> " +
                     "<a class='profile'> <div class='profile-pic'> " +
                     "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
@@ -235,7 +231,7 @@ function showComment(review) {
                     "<a class='__more' onclick='reportComment(" + comIdx[i] + "," + isComm[i] + "," + revComIdx[i] + ")'>MORE</a></div>" +
                     "<hr class='hairline'>";
             }
-            // 댓글 신고 및 삭제
+            // 댓글 신고 및 삭제 모달 창
             let reportCom = "<div><div class='modal " + comIdx[i] + " modal-overlay'> <div class='modal-window'>" +
                 "<div class='close-area close" + comIdx[i] + "' onclick='closeCom(" + comIdx[i] + ")'>X</div> <div class='content'> <div class='drawer-box'> " +
                 "<div class='drawer-box-header mb--20' style='padding: 0 20px 27px 0'> <h2 class='drawer-box-title ml-10 isCom" + comIdx[i] + "' style='margin-bottom: 10px;'> " +
@@ -250,31 +246,30 @@ function showComment(review) {
 }
 
 // 댓글 좋아요 여부 판단
-function comHeart(comIdx, comHeartNum, isComLike, revComIdx, comPrIdx) {
-    if (isComLike) {
-        comHearting(comIdx, false, comHeartNum, revComIdx, comPrIdx);       // 좋아요 취소
+function comHeart(comIdx, comLike, isCommLike, revComIdx, comPrIdx) {
+    if (isCommLike) {
+        comHearting(comIdx, comLike, false, revComIdx, comPrIdx);       // 좋아요 취소
     } else {
-        comHearting(comIdx, true, comHeartNum, revComIdx, comPrIdx);
+        comHearting(comIdx, comLike, true, revComIdx, comPrIdx);
     }
 }
 
 // 댓글 좋아요 기능
-function comHearting(comIdx, check, comHeartNum, revIdx, prIdx) {
+function comHearting(comIdx, comLike, check, revIdx, prIdx) {
     if (check) {
-        console.log('❤️' + comHeartNum);
-        let param = {"comIdx": comIdx, 'comLike': comHeartNum, 'prIdx': prIdx, "revIdx": revIdx};
+        console.log('댓글 좋아요 증가 ❤️' + comLike);
+        let param = {"comIdx": comIdx, 'comLike': comLike, 'prIdx': prIdx, "revIdx": revIdx};
         $.ajax({
             type: 'POST',
             data: JSON.stringify(param),
             url: "/timeline/new/comment/heart",
             contentType: "application/json",
             success: function (data) {
-                console.log(data);
+                console.log("디비 거친 후 좋아요 수 : " +data);
                 let liked = "<span class='__like __on comLike" + comIdx + "'" +
-                    "onclick='comHeart(" + comIdx + "," + comHeartNum + "," + true + "," + revIdx + "," + prIdx + ")'>"
+                    "onclick='comHeart(" + comIdx + "," + comLike + "," + true + "," + revIdx + "," + prIdx + ")'>"
                     + (data) + "</span>"
                 $('.comLike' + comIdx).replaceWith(liked);
-
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("ERROR : " + textStatus + " : " + errorThrown);
@@ -282,17 +277,17 @@ function comHearting(comIdx, check, comHeartNum, revIdx, prIdx) {
         });
     } else {
         // 좋아요 취소
-        console.log('💙' + comHeartNum);
-        let del = {"comIdx": comIdx, 'comLike': comHeartNum, 'prIdx': prIdx, "revIdx": revIdx};
+        console.log('댓글 좋아요 감소💙' + comLike);
+        let del = {"comIdx": comIdx, 'comLike': comLike, 'prIdx': prIdx, "revIdx": revIdx};
         $.ajax({
                 type: 'POST',
                 data: JSON.stringify(del),
                 url: "/timeline/del/comment/heart",
                 contentType: "application/json",
                 success: function (data) {
-                    console.log(data);
+                    console.log("디비 거친 후 좋아요 수 : " +data);
                     let unliked = "<span class='__like comLike" + comIdx + "'" +
-                        "onclick='comHeart(" + comIdx + "," + comHeartNum + "," + false + "," + revIdx + "," + prIdx + ")'>"
+                        "onclick='comHeart(" + comIdx + "," + comLike + "," + false + "," + revIdx + "," + prIdx + ")'>"
                         + (data) + "</span>"
                     $('.comLike' + comIdx).replaceWith(unliked);
                 },

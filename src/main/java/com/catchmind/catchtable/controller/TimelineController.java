@@ -11,6 +11,7 @@ import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.service.PaginationService;
 import com.catchmind.catchtable.service.TimeLineService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,6 +29,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("timeline")
 @RequiredArgsConstructor
+@Slf4j
 public class TimelineController {
     private final TimeLineService timeLineService;
     private final PaginationService paginationService;
@@ -40,22 +42,20 @@ public class TimelineController {
 
     // 전체 리뷰 페이지
     @GetMapping("")
-    public String timeline(ModelMap map,
-                           @AuthenticationPrincipal CatchPrincipal catchPrincipal,
+    public String timeline(ModelMap map, @AuthenticationPrincipal CatchPrincipal catchPrincipal,
                            @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        TimeLineResponse header = header(prIdx);
-        Page<ReviewResponse> reviews = timeLineService.getReviews(pageable);
+        Page<ReviewResponse> reviews = timeLineService.getReviews(pageable, prIdx);
         List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
 
-        map.addAttribute("header", header);
+//        map.addAttribute("header", header);
         map.addAttribute("reviews", reviews);
         map.addAttribute("prIdx", prIdx);
         map.addAttribute("paginationBarNumbers", barNumbers);
         return "timeline/timeline-main";
     }
 
-    // 전체에서 다른사람 프로필 선택시 페이지
+    // 프로필페이지
     @GetMapping("/profile/{timeLineIdx}")
     public String profile(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
         Long prIdx = catchPrincipal.prIdx();
@@ -80,27 +80,21 @@ public class TimelineController {
         return "timeline/profile";
     }
 
-    // 다른 사람 컬렉션
+    // 공개된 컬렉션 페이지
     @GetMapping("/collection/{timeLineIdx}")
     public String collection(@PathVariable Long timeLineIdx,
-                             @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable
-            , @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
-        Long prIdx = catchPrincipal.prIdx();
-        List<MyCollectionDto> collectionDtos = timeLineService.getCollection(timeLineIdx, pageable);
+                             @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map) {
+        Page<MyCollectionDto> collectionDtos = timeLineService.getCollection(timeLineIdx, pageable);
 //        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), collectionDtos.getTotalPages());
-        TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
-        TimeLineResponse header = header(prIdx);
-
+        String prNick = timeLineService.getHeader(timeLineIdx).prNick();
         map.addAttribute("collections", collectionDtos);
-        map.addAttribute("header", header);
-        map.addAttribute("profile", profile);
-        map.addAttribute("prIdx", prIdx);
+        map.addAttribute("prNick", prNick);
 //        map.addAttribute("paginationBarNumbers",barNumbers);
         System.out.println(collectionDtos);
         return "timeline/profile-collection";
     }
 
-    // 다른사람 리뷰
+    // 프로필 리뷰 페이지
     @GetMapping("/review/{timeLineIdx}")
     public String review(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
                          @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -151,7 +145,7 @@ public class TimelineController {
         return "timeline/followingList";
     }
 
-    // 팔로우 리스트
+    // 팔로워 리스트
     @GetMapping("/follower/{timeLineIdx}")
     public String follower(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
         Long prIdx = catchPrincipal.prIdx();
@@ -213,43 +207,42 @@ public class TimelineController {
     public List<ReviewHeartWithCommResponse> heartWithComm(@AuthenticationPrincipal CatchPrincipal principal) {
         Long prIdx = principal.prIdx();
         List<ReviewDto> reviews = timeLineService.reviews();
-        List<ReviewHeartDto> hearts = timeLineService.getReviewHeart(prIdx);
-        List<Long> revIdxs = new ArrayList<>();
+        List<ReviewHeartDto> hearts = timeLineService.getReviewHeart(prIdx);        // 좋아요 여부 판단을 위한 코드
         List<ReviewHeartWithCommResponse> totalList = new ArrayList<>();
 
         for (ReviewDto review : reviews) {
             boolean isLike = false;
-            revIdxs.add(review.revIdx());
             for (ReviewHeartDto heart : hearts) {
-                if (review.revIdx() == heart.reviewDto().revIdx()) {
+                if (review.revIdx().equals(heart.reviewDto().revIdx())) {
                     isLike = true;
-                    break;
                 }
             }
             ReviewHeartWithCommResponse response = new ReviewHeartWithCommResponse(prIdx, review.revIdx(), isLike, review.revLike(), review.revComm());
             totalList.add(response);
         }
-        System.out.println("좋아요 여부 검사 후 리스트 : " + totalList);
+        log.warn("좋아요 여부 검사 후 전체 리뷰 리스트 : " + totalList);
         return totalList;
     }
 
 
-    // 리뷰별 댓글 리스트
+    // 전체 댓글 리스트, 좋아요 여부 판단
     @GetMapping("/review/comment")
     @ResponseBody
     public List<CommentResponse> commentList(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
         List<CommentDto> comments = timeLineService.getComments();
-        List<CommentHeartDto> comHeart = timeLineService.getComHeart(prIdx);
+        List<CommentHeartDto> comHeart = timeLineService.getComHeart(prIdx);        // 로그인한 유저의 좋아요 판별
         List<CommentResponse> comList = new ArrayList<>();
 
         for (CommentDto com : comments) {
-            boolean isComm = com.profileDto().prIdx().equals(prIdx);
+            boolean isComm = false;
+            if (com.profileDto().prIdx().equals(prIdx)) {
+                isComm = true;
+            }
             boolean isComLike = false;
             for (CommentHeartDto heart : comHeart) {
                 if (com.comIdx().equals(heart.commentDto().comIdx())) {
                     isComLike = true;
-                    break;
                 }
             }
             CommentResponse response = new CommentResponse(com.comIdx(),
@@ -257,7 +250,7 @@ public class TimelineController {
                     com.comLike(), isComm, isComLike);
             comList.add(response);
         }
-        System.out.println("리뷰별 댓글 리스트 " + comList);
+        log.warn("댓글 작성 유무 및 좋아요 판별 댓글 리스트 " + comList);
         return comList;
     }
 
@@ -311,7 +304,7 @@ public class TimelineController {
         return response;
     }
 
-    // 댓글 좋아요
+    // 댓글 좋아요삭제
     @PostMapping("/del/comment/heart")
     @ResponseBody
     public Long delComHeart(@RequestBody CommentHeartRequest request) {
@@ -320,6 +313,17 @@ public class TimelineController {
         System.out.println(response);
         return response;
     }
+
+    // 리뷰삭제
+    @GetMapping("/del/review/{revIdx}/{resIdx}")
+    @ResponseBody
+    public String delReview(@PathVariable Long revIdx, @PathVariable Long resIdx) {
+        System.out.println("삭제" + revIdx);
+        System.out.println("삭제" + resIdx);
+        timeLineService.delReview(revIdx, resIdx);
+        return "OK";
+    }
+
     // 새로운 댓글
 //    @GetMapping(path = "/review/get/comment/{comIdx}")
 //    @ResponseBody

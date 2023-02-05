@@ -13,12 +13,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +29,7 @@ public class TimeLineService {
     private final CommentRepository commentRepository;
     private final MyCollectionRepository collectionRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
+    private final ReserveRepository reserveRepository;
 
     // 타임라인 헤더
     @Transactional
@@ -65,10 +61,11 @@ public class TimeLineService {
 
 
     // 전체 리뷰 페이지
-    public Page<ReviewResponse> getReviews(Pageable pageable) {
-        List<ReviewResponse> reviewList = new ArrayList<>();
+    public Page<ReviewResponse> getReviews(Pageable pageable, Long prIdx) {
         List<ReviewDto> reviewDtos = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "revIdx"))
                 .stream().map(ReviewDto::from).toList();
+        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewResponse> reviewList = new ArrayList<>();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
         // 리뷰 별 사진 리스트
@@ -84,20 +81,27 @@ public class TimeLineService {
                     photoList.add(real);
                 }
             }
+            boolean isReview = false;
+            for(ReviewDto login : loginReview){
+                isReview = false;
+                if(reviewDtos.get(i).revIdx().equals(login.revIdx())){
+                    isReview = true;
+                }
+            }
             if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
-                        reviewDtos.get(i).regDate(), null, reviewDtos.get(i).revComm());
+                        reviewDtos.get(i).regDate(), null,isReview);
                 reviewList.add(response);
             } else {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
                         reviewDtos.get(i).regDate()
-                        , reviewDtos.get(i).updateDate(), reviewDtos.get(i).revComm());
+                        , reviewDtos.get(i).updateDate(),isReview);
                 reviewList.add(response);
             }
         }
-
+        System.out.println("검증 후 리뷰 리스트 : " + reviewList);
         final int start = (int) pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), reviewList.size());
         PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end), pageable, reviewList.size());
@@ -127,14 +131,14 @@ public class TimeLineService {
             if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
-                        reviewDtos.get(i).regDate(), null, reviewDtos.get(i).revComm());
+                        reviewDtos.get(i).regDate(), null, true);
                 reviewList.add(response);
             } else {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
                         reviewDtos.get(i).regDate()
                         , reviewDtos.get(i).updateDate(),
-                        reviewDtos.get(i).revComm());
+                        true);
                 reviewList.add(response);
             }
             System.out.println("i" + i + reviewList.get(i).photo());
@@ -164,9 +168,8 @@ public class TimeLineService {
 
 
     // 컬렉션 리스트
-    public List<MyCollectionDto> getCollection(Long prIdx, Pageable pageable) {
-        List<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdx(prIdx)
-                .stream().map(MyCollectionDto::from).toList();
+    public Page<MyCollectionDto> getCollection(Long timeLineIdx, Pageable pageable) {
+        Page<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx,false,pageable).map(MyCollectionDto::from);
         return collectionDtos;
     }
 
@@ -232,9 +235,9 @@ public class TimeLineService {
         Long prIdx = request.prIdx();
         Long revLike = request.revLike();
         Review findReview = reviewRepository.findById(revIdx).orElse(null);
-        findReview.setRevLike(revLike);
-
+        findReview.setRevLike(revLike-1);
         Long newLike = reviewRepository.save(findReview).getRevLike();
+
         System.out.println("💙" + newLike);
         reviewHeartRepository.deleteByProfile_PrIdxAndReview_RevIdx(prIdx, revIdx);
         return newLike;
@@ -255,6 +258,7 @@ public class TimeLineService {
         return saveCom;
     }
 
+    // 댓글 삭제
     @Transactional
     public Long delComment(Long comIdx,Long revIdx) {
         Review findReview = reviewRepository.findById(revIdx).orElse(null);
@@ -285,21 +289,25 @@ public class TimeLineService {
         Long comIdx = request.comIdx();
         Long prIdx = request.prIdx();
         Long comLike = request.comLike();
-        System.out.println("-----------댓글 삭제-------------");
-        System.out.println(comIdx);
-        System.out.println(prIdx);
-        System.out.println(comLike);
-        System.out.println("-----------댓글 삭제-------------");
-        Comment findComment = commentRepository.findById(comIdx).orElse(null);
-        findComment.setComLike(comLike);
+
+        Long findLike = commentRepository.findById(comIdx).get().getComLike();
+        Comment findComment = commentRepository.findById(comIdx).orElseThrow();
+        System.out.println("디비에서 찾은 좋아요 개수 :" + findLike);
+        findComment.setComLike(findLike-1);
 
         Long newLike = commentRepository.save(findComment).getComLike();
-        System.out.println("💙" + newLike);
+        System.out.println("삭제 후 좋아요 수 💙" + newLike);
         commentHeartRepository.deleteByProfile_PrIdxAndComment_comIdx(prIdx, comIdx);
         return newLike;
     }
 
+    @Transactional
+    public void delReview(Long revIdx, Long resIdx){
+        Reserve findReserve = reserveRepository.findById(resIdx).orElse(null);
+        findReserve.setRevStatus(false);
 
+        reviewRepository.deleteById(revIdx);
+    }
 
 
 
