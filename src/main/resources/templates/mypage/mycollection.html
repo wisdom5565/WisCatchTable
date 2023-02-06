@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>즐거운 미식 생활의 시작, 캐치테이블</title>
   <div th:replace="fragment/link :: link"/>
   <link rel="stylesheet" href="/css/mypage.css">
@@ -35,6 +35,7 @@
       </div>
 
       <main id="main" class="__d-flex" style="height: auto">
+        <!--                <input id="colIdx" type="hidden" name="colIdx" th:value="${list.colIdx}">-->
         <section class="section pt-24 __d-flex f-d-column flex-grow" style="padding-top: 0;">
           <div
                   class="collection-wrap container gutter-sm __d-flex flex-grow f-d-column"
@@ -43,15 +44,15 @@
                     class="section-header collection-list-header __d-flex __v-center"
             >
               <h3 class="section-title font-16">
-                내가 만든 컬렉션 <span class="count">1</span>
+                내가 만든 컬렉션 <span class="count">count써야됨</span>
               </h3>
 
             </div>
-            <div class="__mypage-collection-list">
+            <div class="__mypage-collection-list" th:each="list:${list}">
               <div class="collection-list-item-sm">
                 <div class="collection-slides-sm" style="display: block">
                   <div class="collection-list-item-sm">
-                    <a href="mycollectionDetail.html">
+                    <a th:href="'/mypage/collection/detail/' + ${list.colIdx}">
                       <div class="collection-list-item-in">
                         <div class="imgs">
                           <div
@@ -63,22 +64,22 @@
                         </div>
                         <div class="__meta">
                           <h4 class="__title">
-                            <strong>나</strong>의 컬렉션
+                            <strong th:text="${profile.prName}">나</strong>의 컬렉션
                           </h4>
                           <div class="__count">
                             <button
                                     class="bookmark-button on"
                                     type="button"
                             ></button>
-                            0
+                            count써야됨
                           </div>
                         </div>
                       </div>
                       <div class="collection__meta">
-                        <h4 class="__title private">
+                        <h4 class="__title private" th:text="${list.colTitle}">
                           스시오마카세!
                         </h4>
-                        <div class="__count">10</div>
+                        <div class="__count">count써야됨</div>
                       </div>
                     </a>
                   </div>
@@ -88,6 +89,7 @@
           </div>
           <div
                   class="collection-wrap container gutter-sm __d-flex flex-grow f-d-column"
+                  th:if="${list.size()==0}"
           >
             <div
                     class="section-header collection-list-header __d-flex __v-center"
@@ -107,7 +109,8 @@
     </div>
   </div>
 
-  <div th:replace="fragment/footer :: footer"/><
+  <div th:replace="fragment/footer :: footer"/>
+  <
 </div>
 </body>
 </html>

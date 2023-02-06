@@ -35,6 +35,7 @@
                             <!-- <span class="css-a3vgo2 ed9qr670">캐치 테이블의 새로운 소식들과 유용한 정보들을 한곳에서 확인하세요.</span> -->
                         </div>
                     </div>
+
                     <div class="container gutter-sm" th:if="${#lists.isEmpty(notice)}">
                         <div class="section-body ">
                             <div class="my-dining-list">
@@ -54,7 +55,7 @@
                             <div class="css-14yglsw e1cfowvj4">
                                 <div class="css-3o6rrk e1cfowvj2" th:text="${notice.derIdx}">1</div>
                                 <div class="css-3d2kks e1cfowvj2">리뷰</div>
-                                <div class="css-fzefrb e1cfowvj2" th:text="${notice.derTitle}">리뷰 내용이 너무 홍보성 가득함</div>
+                                <div class="css-fzefrb e1cfowvj2" th:text="${notice.derContent}">리뷰 내용이 너무 홍보성 가득함</div>
                                 <div class="css-b1hszl e1cfowvj2" th:text="${#temporals.format(notice.regDate, 'yyyy.MM.dd')}">2022.12.20</div>
                             </div>
                         </a>
@@ -68,19 +69,19 @@
 
         </div>
     </div>
-    <!--페이징 처리-->
-    <div class="page_wrap">
-        <div class="page_nation" aria-label="Page navigation example">
-            <a class="pagine2" th:href="@{/report/review/list(page=${notice.number - 1})}"
-               th:class="'page-prev' + (${notice.number} <= 0 ? ' page-disabled':'')"></a>
-            <span class="pagine" th:each="pageNumber : ${paginationBarNumbers}">
-                        <a th:text="${pageNumber + 1}" th:href="@{/report/review/list(page=${pageNumber})}"
-                           th:class="(${pageNumber} == ${notice.number} ? 'active' : '')">1</a></span>
-            <a th:href="@{/report/review/list(page=${notice.number + 1})}" th:class="'page-next' +
-                    (${notice.number} >= ${notice.totalPages - 1} ? '':' page-disabled')"></a>
-        </div>
-    </div>
-    <!--페이징 끝-->
+<!--    &lt;!&ndash;페이징 처리&ndash;&gt;-->
+<!--    <div class="page_wrap">-->
+<!--        <div class="page_nation" aria-label="Page navigation example">-->
+<!--            <a class="pagine2" th:href="@{/report/review/list(page=${notice.number - 1})}"-->
+<!--               th:class="'page-prev' + (${notice.number} <= 0 ? ' page-disabled':'')"></a>-->
+<!--            <span class="pagine" th:each="pageNumber : ${paginationBarNumbers}">-->
+<!--                        <a th:text="${pageNumber + 1}" th:href="@{/report/review/list(page=${pageNumber})}"-->
+<!--                           th:class="(${pageNumber} == ${notice.number} ? 'active' : '')">1</a></span>-->
+<!--            <a th:href="@{/report/review/list(page=${notice.number + 1})}" th:class="'page-next' +-->
+<!--                    (${notice.number} >= ${notice.totalPages - 1} ? '':' page-disabled')"></a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;페이징 끝&ndash;&gt;-->
     <div th:replace="fragment/footer :: footer"/>
 </div>
 </body>

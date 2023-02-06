@@ -73,7 +73,7 @@ public record CatchPrincipal(
     }
 
     public ProfileDto toDto(){
-        return ProfileDto.ofAuth(
+        return ProfileDto.of(
                 prIdx,
                 prNick,
                 prName,

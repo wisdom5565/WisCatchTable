@@ -1,11 +1,11 @@
 package com.catchmind.catchtable.controller;
 
 
-import com.catchmind.catchtable.domain.Ask;
-import com.catchmind.catchtable.domain.Improvement;
-import com.catchmind.catchtable.domain.Notice;
+import com.catchmind.catchtable.domain.*;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.AskRequest;
+import com.catchmind.catchtable.dto.network.request.DeclareCommentRequest;
+import com.catchmind.catchtable.dto.network.request.DeclareReviewRequest;
 import com.catchmind.catchtable.dto.network.request.ImprovementRequest;
 import com.catchmind.catchtable.dto.network.response.ReviewResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
@@ -40,6 +40,9 @@ public class NoticeController {
     private final DeclareReviewRepository declareReviewRepository;
     private final DeclareCommentRepository declareCommentRepository;
     private final PaginationService paginationService;
+    private final ReviewRepository reviewRepository;
+    private final CommentRepository commentRepository;
+
 
 
     // 공지사항 리스트 페이지
@@ -189,36 +192,86 @@ public class NoticeController {
     }
     // 리뷰 신고내역
     @GetMapping("/report/review/list")
-    public String reportList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="derIdx", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String reportList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
-        Page<DeclareReviewDto> declareReviewDto = noticeService.listDe(pageable, prIdx);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), declareReviewDto.getTotalPages());
+        List<DeclareReviewDto> declareReviewDto = noticeService.listDe(prIdx);
         model.addAttribute("notice", declareReviewDto);
-        model.addAttribute("paginationBarNumbers", barNumbers);
         return "notice/report_list";
     }
 
     // 댓글 신고내역
     @GetMapping("/report/comment/list")
-    public String reportCommentList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="decIdx", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String reportCommentList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
-        Page<DeclareCommentDto> declareCommentDto = noticeService.listDec(pageable, prIdx);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), declareCommentDto.getTotalPages());
+        List<DeclareCommentDto> declareCommentDto = noticeService.listDec(prIdx);
         model.addAttribute("notice", declareCommentDto);
-        model.addAttribute("paginationBarNumbers", barNumbers);
         return "notice/report_list_comment";
     }
 
 
     // 리뷰 신고
     @GetMapping("/report/review/{revIdx}")
-    public ModelAndView reportReview(@PathVariable(name="revIdx")Long revIdx) {
-        return new ModelAndView("notice/report_review");
+    public String reportReview(Model model, @PathVariable(name="revIdx")Long revIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        Long prIdx = catchPrincipal.prIdx();
+        System.out.println("🍋" + prIdx);
+        System.out.println("🍌" + revIdx);
+        Review review = reviewRepository.findByRevIdx(revIdx);
+        System.out.println("❤️" + review.getProfile().getPrNick());
+        model.addAttribute("prIdx", prIdx);
+        model.addAttribute("review", review);
+        return"notice/report_review";
+    }
+
+    // 리뷰 신고 작성
+    @PostMapping("/report/review")
+    public String reportReviewWrite(DeclareReviewRequest declareReviewRequest) {
+        noticeService.saveDeclareReview(declareReviewRequest);
+        System.out.println("🎁" + declareReviewRequest);
+        return "redirect:/report/review/list";
     }
 
     // 댓글 신고
     @GetMapping("/report/comment/{comIdx}")
-    public ModelAndView reportReply(@PathVariable(name="comIdx")Long comIdx) {
-        return new ModelAndView("notice/report_comment");
+    public String reportReply(Model model, @PathVariable(name="comIdx")Long comIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        Long prIdx = catchPrincipal.prIdx();
+        String prHp = catchPrincipal.prHp();
+        System.out.println("🍋" + prIdx);
+        System.out.println("🍌" + comIdx);
+        System.out.println("🍊" + prHp);
+        Comment comment = commentRepository.findByComIdx(comIdx);
+        System.out.println("🍎" + comment.getReview().getRevIdx());
+        model.addAttribute("prHp", prHp);
+        model.addAttribute("prIdx", prIdx);
+        model.addAttribute("comment", comment);
+        return "notice/report_comment";
+    }
+
+    // 댓글 신고 작성
+    @PostMapping("/report/comment")
+    public String reportReplyWrite(DeclareCommentRequest declareCommentRequest){
+        noticeService.saveDeclareComment(declareCommentRequest);
+        System.out.println("🗡️" + declareCommentRequest);
+        return "redirect:/report/comment/list";
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

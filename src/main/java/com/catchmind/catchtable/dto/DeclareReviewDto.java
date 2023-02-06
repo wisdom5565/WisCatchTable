@@ -24,4 +24,24 @@ public record DeclareReviewDto(
                 declareReview.getRegDate()
         );
     }
+
+    public static DeclareReviewDto of(
+            ReviewDto reviewDto,
+            String derNick,
+            ProfileDto profileDto,
+            String derTitle,
+            String derContent){
+        return new DeclareReviewDto(0L, reviewDto, derNick, profileDto, derTitle, derContent, null);
+    }
+
+    public DeclareReview toEntity(){
+        return DeclareReview.of(
+                reviewDto.toEntityIdx(),
+                derNick,
+                profileDto.toEntityIdx(),
+                derTitle,
+                derContent
+        );
+    }
+
 }

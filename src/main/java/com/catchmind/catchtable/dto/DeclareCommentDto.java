@@ -26,4 +26,25 @@ public record DeclareCommentDto(
                 declareComment.getRegDate()
         );
     }
+
+    public static DeclareCommentDto of(
+            ReviewDto reviewDto,
+            CommentDto commentDto,
+            String decNick,
+            ProfileDto profileDto,
+            String decTitle,
+            String decContent){
+        return new DeclareCommentDto(0L, reviewDto, commentDto, decNick, profileDto, decTitle, decContent, null);
+    }
+
+    public DeclareComment toDeclareCommentEntity(){
+        return DeclareComment.of(
+                reviewDto.toEntityIdx(),
+                commentDto.toEntityIdx(),
+                decNick,
+                profileDto.toEntityIdx(),
+                decTitle,
+                decContent
+        );
+    }
 }

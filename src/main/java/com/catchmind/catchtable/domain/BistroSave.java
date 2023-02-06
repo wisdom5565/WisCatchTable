@@ -1,9 +1,10 @@
 package com.catchmind.catchtable.domain;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @ToString
 @Entity
@@ -21,14 +22,17 @@ public class BistroSave {
     @ManyToOne(optional = false) @JoinColumn(name = "bdIdx")
     private BistroDetail bistroDetail;
 
+    private Long colIdx;
+
     protected BistroSave () {}
 
     @Builder
-    public BistroSave(Long saveIdx, ResAdmin resAdmin, Profile profile, BistroDetail bistroDetail) {
+    public BistroSave(Long saveIdx, ResAdmin resAdmin, Profile profile, BistroDetail bistroDetail,Long colIdx) {
         this.saveIdx = saveIdx;
         this.resAdmin = resAdmin;
         this.profile = profile;
         this.bistroDetail = bistroDetail;
+        this.colIdx = colIdx;
     }
 
 

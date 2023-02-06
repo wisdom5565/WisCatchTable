@@ -9,7 +9,10 @@ import com.catchmind.catchtable.dto.network.response.ReviewResponse;
 import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
 import com.catchmind.catchtable.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +54,12 @@ public class TimeLineService {
         String prNick = profileDto.prNick();
         String prRegion = profileDto.prRegion();
         String prIntro = profileDto.prIntro();
-        double avgScore = totalScore / reviewDtos.size();
+        double avgScore = 0;
+        if (totalScore == 0) {
+            avgScore = 0;
+        } else {
+            avgScore = totalScore / reviewDtos.size();
+        }
 
 
         TimeLineResponse timeLineResponse = new TimeLineResponse(prName, prNick, prRegion, prIntro, followingNum, followerNum, snsList, avgScore);

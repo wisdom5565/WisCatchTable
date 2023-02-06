@@ -24,6 +24,8 @@ public class QBistroSave extends EntityPathBase<BistroSave> {
 
     public final QBistroDetail bistroDetail;
 
+    public final NumberPath<Long> colIdx = createNumber("colIdx", Long.class);
+
     public final QProfile profile;
 
     public final QResAdmin resAdmin;

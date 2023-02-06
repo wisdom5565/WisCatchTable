@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.controller;
 
 import com.catchmind.catchtable.domain.Reserve;
+import com.catchmind.catchtable.domain.TalkAdmin;
 import com.catchmind.catchtable.domain.type.ReservationType;
 import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.ReserveDto;
@@ -8,9 +9,11 @@ import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.network.request.ReviewRequest;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.ReserveRepository;
+import com.catchmind.catchtable.repository.TalkAdminRepository;
 import com.catchmind.catchtable.service.MydiningService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,26 +32,17 @@ public class MydiningController {
     private final ReserveRepository reserveRepository;
     private final MydiningService mydiningService;
     private final ProfileLogicService profileLogicService;
+    private final TalkAdminRepository talkAdminRepository;
 
 
     @GetMapping("/planned")
     public String planned(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
-        List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.PLANNED, prIdx);
+        List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.PLANNED, prIdx, Sort.by(Sort.Direction.DESC, "updateDate"));
         System.out.println(reserves);
         model.addAttribute("list", reserves);
         return "/mydining/planned";
     }
-
-//    @GetMapping("/collection")
-//    public ModelAndView myCollection(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
-//        Long prIdx = catchPrincipal.prIdx();
-//        System.out.println(catchPrincipal.prIdx());
-//        ProfileDto profile = profileLogicService.getProfileElements(prIdx);
-//        ModelAndView modelAndView = new ModelAndView("/mypage/mycollection");
-//        modelAndView.addObject("profile",profile);
-//        return modelAndView;
-//    }
 
     @GetMapping("/reserve/plannedDetail/{resIdx}")
     public String detail(Model model, @PathVariable("resIdx") Long resIdx) {
@@ -59,21 +53,11 @@ public class MydiningController {
         return "/mydining/plannedDetail";
     }
 
-//    @GetMapping("/reserve/bistroDetail/{resIdx}")
-//    public String bistroDetail(Model model, @PathVariable("resIdx") Long resIdx) {
-//        System.out.println(resIdx);
-//        ReserveDto reserveDto = mydiningService.getDetail(resIdx);
-//        model.addAttribute("detail", reserveDto);
-//        System.out.println("reserveDTO->" + reserveDto);
-//        return "/mydining/bistroDetail";
-//    }
-
-
     @GetMapping("/done")
     public String done(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
-        List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.DONE, prIdx);
+        List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.DONE, prIdx, Sort.by(Sort.Direction.DESC, "updateDate"));
         System.out.println(reserves);
         model.addAttribute("list", reserves);
 //        model.addAttribute()
@@ -115,26 +99,21 @@ public class MydiningController {
         return "redirect:/mydining/cancel";
     }
 
-//    @PostMapping("/reserve/plannedDetail")
-//    public String updateCancel(Model model, ReserveDto reserveDto)  {
-////        ReserveDto reserveDto = mydiningService.getDetail(resIdx);
-////        model.addAttribute("resIdx", resIdx);
-//        mydiningService.updateCancel(reserveDto);
-//        return "redirect:/mydining/cancel";
-//    }
-
     @GetMapping("/cancel")
     public String cancel(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
-        List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.CANCEL, prIdx);
+        List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.CANCEL, prIdx, Sort.by(Sort.Direction.DESC, "updateDate"));
         System.out.println(reserves);
         model.addAttribute("list", reserves);
         return "mydining/cancel";
     }
 
     @GetMapping("/emptySlot")
-    public ModelAndView emptySlot() {
-        return new ModelAndView("mydining/emptySlot");
+    public String emptySlot(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        Long prIdx = catchPrincipal.prIdx();
+        List<TalkAdmin> talkAdmins = talkAdminRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "taaIdx"));
+        model.addAttribute("list", talkAdmins);
+        return "mydining/emptySlot";
     }
     @GetMapping("/reserveOpen")
     public ModelAndView reserveOpen() {

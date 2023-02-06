@@ -44,4 +44,19 @@ public class DeclareComment extends AuditingField {
         this.decTitle = decTitle;
         this.decContent = decContent;
     }
+
+
+    public DeclareComment(Review review, Comment comment, String decNick, Profile profile, String decTitle, String decContent) {
+        this.review = review;
+        this.comment = comment;
+        this.decNick = decNick;
+        this.profile = profile;
+        this.decTitle = decTitle;
+        this.decContent = decContent;
+    }
+
+    public static  DeclareComment of(Review review, Comment comment, String decNick, Profile profile, String decTitle, String decContent){
+        return new DeclareComment(review, comment, decNick, profile, decTitle, decContent);
+    }
+
 }

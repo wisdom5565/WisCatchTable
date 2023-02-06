@@ -18,7 +18,7 @@ public class ReviewPhoto {
     String savedPath;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="rev_idx")
+     @JoinColumn(name="rev_idx")
     Review review;
 
     public ReviewPhoto(String orgNm, String savedNm, String savedPath, Review review) {

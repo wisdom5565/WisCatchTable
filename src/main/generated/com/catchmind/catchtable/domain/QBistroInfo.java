@@ -36,6 +36,8 @@ public class QBistroInfo extends EntityPathBase<BistroInfo> {
 
     public final StringPath bisRegion = createString("bisRegion");
 
+    public final QPhoto photo;
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
@@ -59,6 +61,7 @@ public class QBistroInfo extends EntityPathBase<BistroInfo> {
 
     public QBistroInfo(Class<? extends BistroInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.photo = inits.isInitialized("photo") ? new QPhoto(forProperty("photo"), inits.get("photo")) : null;
         this.resAdmin = inits.isInitialized("resAdmin") ? new QResAdmin(forProperty("resAdmin")) : null;
     }
 

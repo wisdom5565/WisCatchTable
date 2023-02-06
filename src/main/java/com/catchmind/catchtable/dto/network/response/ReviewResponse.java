@@ -1,6 +1,5 @@
 package com.catchmind.catchtable.dto.network.response;
 
-import com.catchmind.catchtable.dto.BistroInfoDto;
 import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.ResAdminDto;
 import com.catchmind.catchtable.dto.ReviewPhotoDto;

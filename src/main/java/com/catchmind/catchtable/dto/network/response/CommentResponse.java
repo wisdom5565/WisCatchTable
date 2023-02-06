@@ -1,9 +1,6 @@
 package com.catchmind.catchtable.dto.network.response;
 
-import com.catchmind.catchtable.dto.ReviewDto;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 public record CommentResponse(
         Long comIdx,

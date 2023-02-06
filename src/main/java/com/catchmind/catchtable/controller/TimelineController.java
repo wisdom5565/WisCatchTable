@@ -1,6 +1,5 @@
 package com.catchmind.catchtable.controller;
 
-import com.catchmind.catchtable.domain.Comment;
 import com.catchmind.catchtable.domain.Follow;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.CommentHeartRequest;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

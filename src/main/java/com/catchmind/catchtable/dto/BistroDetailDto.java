@@ -16,7 +16,11 @@ public record BistroDetailDto(
         String bdHome,
         BistroInfoDto bistroInfoDto
 ) {
-    public static BistroDetailDto from(BistroDetail bistroDetail){
+    public static BistroDetailDto of(ResAdminDto resAdminDto, Long bdIdx, String bdNotice, String bdPark, String bdAddr, String bdHp, String bdIntro, String bdCaution, String bdHour, String bdHoliday, String bdHome, BistroInfoDto bistroInfoDto) {
+        return new BistroDetailDto(resAdminDto, bdIdx, bdNotice, bdPark, bdAddr, bdHp, bdIntro, bdCaution, bdHour, bdHoliday, bdHome, bistroInfoDto);
+    }
+
+    public static BistroDetailDto from(BistroDetail bistroDetail) {
         return new BistroDetailDto(
                 ResAdminDto.from(bistroDetail.getResAdmin()),
 //                bistroDetail.getResAdmin().getResaBisName(),

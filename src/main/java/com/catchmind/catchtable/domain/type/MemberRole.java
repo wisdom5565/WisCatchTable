@@ -1,4 +1,4 @@
-package com.catchmind.catchtable.domain;
+package com.catchmind.catchtable.domain.type;
 
 import lombok.Getter;
 

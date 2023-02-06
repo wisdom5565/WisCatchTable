@@ -47,7 +47,7 @@ public class QProfile extends EntityPathBase<Profile> {
 
     public final StringPath prUserpw = createString("prUserpw");
 
-    public final EnumPath<MemberRole> role = createEnum("role", MemberRole.class);
+    public final EnumPath<com.catchmind.catchtable.domain.type.MemberRole> role = createEnum("role", com.catchmind.catchtable.domain.type.MemberRole.class);
 
     public QProfile(String variable) {
         super(Profile.class, forVariable(variable));

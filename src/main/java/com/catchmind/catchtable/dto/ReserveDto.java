@@ -1,5 +1,4 @@
 package com.catchmind.catchtable.dto;
-import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.domain.Reserve;
 
 import java.time.LocalDateTime;
@@ -70,6 +69,10 @@ public record ReserveDto(
         return Reserve.of(
                 revStatus
         );
+    }
+    public static ReserveDto of(Long resIdx, ResAdminDto resAdminDto, BistroInfoDto bistroInfoDto,ProfileDto profileDto, BistroDetailDto bistroDetailDto, String prName, String resHp, String resRequest, String visitName, String visitHp,
+                                String resMonth, String resDay, String resReason, Long resPerson, String resTime, String resStatus, LocalDateTime regDate, LocalDateTime updateDate, boolean revStatus){
+        return new ReserveDto(resIdx,resAdminDto,bistroInfoDto,profileDto,bistroDetailDto,prName,resHp,resRequest,visitName,visitHp,resMonth,resDay,resReason,resPerson,resTime,resStatus,regDate,updateDate,revStatus);
     }
 
 

@@ -3,7 +3,10 @@ package com.catchmind.catchtable.domain;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Getter
@@ -14,21 +17,17 @@ public class Notice extends AuditingFields{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long noIdx;             // 공지사항 번호
     private String noTitle;         // 공지사항 제목
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "ad_idx")   // ad_idx로 관리자이름 찾기
-    private Admin admin;            // 관리자 이름(CatchTable로 고정)
     private String noContent;       // 공지사항 내용
 
     protected Notice() {}
 
-    public Notice(String noTitle, Admin admin, String noContent) {
+    public Notice(String noTitle, String noContent) {
         this.noTitle = noTitle;
-        this.admin = admin;
         this.noContent = noContent;
     }
 
-    public static Notice of(String noTitle, Admin admin, String noContent){
-        return new Notice(noTitle, admin, noContent);
+    public static Notice of(String noTitle, String noContent){
+        return new Notice(noTitle, noContent);
     }
 
     @Override

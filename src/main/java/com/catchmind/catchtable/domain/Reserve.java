@@ -1,7 +1,6 @@
 package com.catchmind.catchtable.domain;
 
 import com.catchmind.catchtable.domain.type.ReservationType;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

@@ -37,7 +37,12 @@
                     <header id="header" class="opaque_1">
                         <div class="header-right">
                     </header>
-                    <main id="main">
+                    <form action="/report/comment" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="decNick" th:value="${comment.getProfile().getPrNick()}"/>
+                    <input type="hidden" name="comIdx" th:value="${comment.getComIdx()}">
+                    <input type="hidden" name="revIdx" th:value="${comment.getReview().getRevIdx()}">
+                    <input type="hidden" name="prIdx" th:value="${prIdx}"/>
+                        <main id="main">
                         <section class="section pt-20">
                             <div class="container gutter-sm">
                                 <div class="form-block mb-15">
@@ -48,27 +53,27 @@
                                     <div class="form-block-body">
                                         <div class="checkbox-group">
                                             <label class="label-checkbox">
-                                                <input type="checkbox" class="form-checkbox">
+                                                <input type="checkbox" class="form-checkbox" name="decTitle" value="신뢰하기 어려운 홍보성 댓글">
                                                 <span class="label strong">신뢰하기 어려운 홍보성 댓글</span>
                                             </label>
                                             <label class="label-checkbox">
-                                                <input type="checkbox" class="form-checkbox">
+                                                <input type="checkbox" class="form-checkbox" name="decTitle" value="음란성,욕설 등 부적절한 내용">
                                                 <span class="label strong">음란성,욕설 등 부적절한 내용</span>
                                             </label>
                                             <label class="label-checkbox">
-                                                <input type="checkbox" class="form-checkbox">
+                                                <input type="checkbox" class="form-checkbox" name="decTitle" value="허위사실 또는 비방이 포함">
                                                 <span class="label strong">허위사실 또는 비방이 포함</span>
                                             </label>
                                             <label class="label-checkbox">
-                                                <input type="checkbox" class="form-checkbox">
+                                                <input type="checkbox" class="form-checkbox" name="decTitle" value="저작권 침해 혹은 개인정보 유출">
                                                 <span class="label strong">저작권 침해 혹은 개인정보 유출</span>
                                             </label>
                                             <label class="label-checkbox">
-                                                <input type="checkbox" class="form-checkbox">
+                                                <input type="checkbox" class="form-checkbox" name="decTitle" value="리뷰와 관계없는 댓글">
                                                 <span class="label strong">리뷰와 관계없는 댓글</span>
                                             </label>
                                             <label class="label-checkbox">
-                                                <input type="checkbox" class="form-checkbox">
+                                                <input type="checkbox" class="form-checkbox" name="decTitle" value="기타 (상세 내용으로 작성해주세요)">
                                                 <span class="label strong">기타 (상세 내용으로 작성해주세요)</span>
                                             </label>
                                         </div>
@@ -79,24 +84,18 @@
                                         <h3 class="form-block-title">상세 내용</h3>
                                     </div>
                                     <div class="form-block-body">
-                                                <textarea rows="8" class="form-input autogrow"
+                                                <textarea rows="8" class="form-input autogrow" name="decContent"
                                                           placeholder="타당한 사유가 없는 허위 신고 시 이용에 제한이 가해질 수 있으므로, 신중하게 제보해 주세요. 신고된 내용은 7일 이내의 검수과정을 거친 후 적용됩니다."></textarea>
                                     </div>
                                 </div>
                                 <div class="sticky-bottom-btns">
                                     <button class="btn btn-lg btn-outline">취소</button>
-                                    <button class="btn btn-lg btn-red" disabled="">등록하기</button>
+                                    <button class="btn btn-lg btn-red" type="submit">등록하기</button>
                                 </div>
                             </div>
                         </section>
                     </main>
-                    <div class="css-1kbzkwh e14yho7m0">
-                        <div class="css-sxxs1g eytury60"><button type="button" class="css-rzcdhr e1hbwyso0" disabled="">
-                            <div class="css-7qb0sc e1ilyb3p0">이전</div>
-                        </button><button type="button" class="css-1jwilit e1pk9060">
-                            <div class="css-7qb0sc e1ilyb3p0">다음</div>
-                        </button></div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

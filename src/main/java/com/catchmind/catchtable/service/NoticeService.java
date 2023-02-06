@@ -4,15 +4,19 @@ import com.catchmind.catchtable.domain.Ask;
 import com.catchmind.catchtable.domain.Improvement;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.AskRequest;
+import com.catchmind.catchtable.dto.network.request.DeclareCommentRequest;
+import com.catchmind.catchtable.dto.network.request.DeclareReviewRequest;
 import com.catchmind.catchtable.dto.network.request.ImprovementRequest;
 import com.catchmind.catchtable.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j  // 로그를 찍기 위해서 사용하는 어노테이션
@@ -36,12 +40,12 @@ public class NoticeService {
         return improvementRepository.findAllByProfile_PrIdx(prIdx, pageable);
     }
 
-    public Page<DeclareReviewDto> listDe(Pageable pageable, Long prIdx){
-        return declareReviewRepository.findAllByProfile_PrIdx(prIdx, pageable).map(DeclareReviewDto::from);
+    public List<DeclareReviewDto> listDe(Long prIdx){
+        return declareReviewRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "derIdx")).stream().map(DeclareReviewDto::from).toList();
     }
 
-    public Page<DeclareCommentDto> listDec(Pageable pageable, Long prIdx){
-        return declareCommentRepository.findAllByProfile_PrIdx(pageable, prIdx).map(DeclareCommentDto::from);
+    public List<DeclareCommentDto> listDec(Long prIdx){
+        return declareCommentRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "decIdx")).stream().map(DeclareCommentDto::from).toList();
     }
 
     public AskDto getDetail(Long askIdx){
@@ -109,4 +113,31 @@ public class NoticeService {
     public void impDeletePost(Long impIdx) {
         improvementRepository.deleteById(impIdx);
     }
+
+
+    public String saveDeclareReview(DeclareReviewRequest declareReviewRequest) {
+        DeclareReviewDto newDeclareReview = declareReviewRequest.of(
+                declareReviewRequest.revIdx(),
+                declareReviewRequest.derNick(),
+                declareReviewRequest.prIdx(),
+                declareReviewRequest.derTitle(),
+                declareReviewRequest.derContent()
+        ).toDto();
+        declareReviewRepository.save(newDeclareReview.toEntity());
+        return null;
+    }
+
+    public void saveDeclareComment(DeclareCommentRequest declareCommentRequest) {
+        DeclareCommentDto newDeclareComment = declareCommentRequest.of(
+                declareCommentRequest.revIdx(),
+                declareCommentRequest.comIdx(),
+                declareCommentRequest.decNick(),
+                declareCommentRequest.prIdx(),
+                declareCommentRequest.decTitle(),
+                declareCommentRequest.decContent()
+        ).toDto();
+        declareCommentRepository.save(newDeclareComment.toDeclareCommentEntity());
+    }
 }
+
+

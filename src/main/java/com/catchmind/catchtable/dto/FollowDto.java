@@ -21,7 +21,7 @@ public record FollowDto(
 
     public Follow toEntity() {
         return Follow.of(
-                following.toEntityIdx(), follower.toEntityIdx()
+            following.toEntityIdx(), follower.toEntityIdx()
         );
     }
 }

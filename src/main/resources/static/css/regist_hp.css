@@ -41,7 +41,7 @@ html {
 .wrapper {
     max-width: 640px;
     margin: 0 auto;
-    background: #fff;
+    /* background: #fff; */
     width: auto;
     position: relative;
     background: #fff;
@@ -784,7 +784,16 @@ button, input, optgroup, select, textarea {
     height: 44px;
     border-radius: 3px;
 }
-
+/* display: block;
+padding: 0px 10px;
+text-align: center;
+overflow: hidden;
+width: 100%;
+height: 52px;
+border-radius: 3px;
+color: rgb(95, 0, 128);
+background-color: rgb(255, 255, 255);
+border: 1px solid rgb(95, 0, 128); */
 .css-ufulao {
     display: block;
     padding: 0px 10px;
@@ -793,9 +802,9 @@ button, input, optgroup, select, textarea {
     width: 100%;
     height: 52px;
     border-radius: 3px;
-    /* color: white;
+    color: white;
     background-color: #ff3d00;    
-    border-color: #ff3d00; */
+    border-color: #ff3d00;
     color: #ff3d00;
     background-color: rgb(255, 255, 255);
     border: 1px solid #ff3d00;
@@ -822,6 +831,10 @@ button[disabled], input[disabled] {
     color: rgb(221, 221, 221);
 }
 
+button[disabled].css-18m884r {
+    color: white
+}
+
 .css-14wodj6 {
     display: flex;
     -webkit-box-pack: justify;
@@ -842,13 +855,14 @@ input[type=checkbox], input[type=radio] {
     padding: 0;
 }
 
-.css-1pes2r6 {
+/* radio 버튼 사라지는 원인 */
+/* .css-1pes2r6 {
     overflow: hidden;
     position: absolute;
     width: 1px;
     height: 1px;
     clip: rect(0px, 0px, 0px, 0px);
-}
+} */
 
 .css-14wodj6 > label > span {
     font-size: 14px;
@@ -880,13 +894,91 @@ input[type=checkbox], input[type=radio] {
     margin-left: 12px;
 }
 
-.css-5xw1m2 {
+/* 임시차단 */
+/* .css-5xw1m2 {
     min-width: 24px;
     min-height: 24px;
     display: inline-block;
     position: relative;
     border-radius: 50%;
     background-color: #ff3d00;
+} */
+
+/* radio 버튼 */
+[type=radio]{
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid rgb(221, 221, 221);
+    border-radius: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    transition: border 0.5s ease-in-out;
+}
+
+/* radio 버튼 */
+[type="radio"]:checked {
+    /* min-width: 24px;
+    min-height: 24px;
+    display: inline-block;
+    position: relative;
+    border-radius: 50%;
+    background-color: #ff3d00; */
+
+    /* border: 0.4em solid tomato; */
+    border: 0.4em solid #ff3d00;
+}
+
+
+
+/* 이용약관 버튼 */
+/* input[type="checkbox"] {
+    display:none;
+} */
+
+/* 살릴 것 */
+input[type="checkbox"] {
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid rgb(221, 221, 221);
+    border-radius: 50%;
+    width: 1.25em;
+    height: 1.25em;
+    transition: border 0.5s ease-in-out;
+}
+
+input[type="checkbox"] + label span.css-0 {
+    overflow: hidden;
+    position: absolute;
+    font-size: 0;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* 살릴 것 */
+input[type="checkbox"]:checked {
+    border: 0.4em solid #ff3d00;
+}
+
+/* 살릴 것 */
+input[type="checkbox"].active {
+    border: 0.4em solid #ff3d00;
+}
+
+/* input[type="checkbox"]:checked + label span.css-0 {
+    background: url('../images/checkbox_round_orange.png') no-repeat;
+} */
+
+span.TermsLining {
+    padding-left: 15px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.css-termsalign {
+    display: flex;
+    align-items: center;
 }
 
 .css-1vic0rk {
@@ -983,14 +1075,18 @@ input[type=checkbox], input[type=radio] {
     font-size: 18px;
 }
 
-.css-agvwxo {
+
+
+/* .css-agvwxo {
     overflow: hidden;
     position: absolute;
     clip: rect(0px, 0px, 0px, 0px);
     clip-path: inset(50%);
     width: 1px;
     height: 1px;
-}
+} */
+
+
 
 .css-1wfsi82 {
     display: inline-block;
@@ -1040,6 +1136,7 @@ canvas, img, video {
 
 .css-7chi73 {
     padding-right: 22px;
+    padding-bottom: 1px;
     color: #ff3d00;
     letter-spacing: 0px;
 }
@@ -1074,6 +1171,7 @@ a {
     line-height: normal;
     color: rgb(51, 51, 51);
     font-size: 14px;
+    bottom: 3px;
 }
 
 .css-e4ph5f {

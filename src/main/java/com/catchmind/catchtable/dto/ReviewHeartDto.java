@@ -14,7 +14,6 @@ public record ReviewHeartDto(
                 ReviewDto.from(heart.getReview())
         );
     }
-
     public static ReviewHeartDto of(
             ProfileDto profileDto,
             ReviewDto reviewDto

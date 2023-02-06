@@ -4,7 +4,6 @@ import com.catchmind.catchtable.domain.Reserve;
 import com.catchmind.catchtable.domain.type.ReservationType;
 import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.ReviewDto;
-
 import com.catchmind.catchtable.dto.ReviewPhotoDto;
 import com.catchmind.catchtable.dto.network.request.ReviewPhotoRequest;
 import com.catchmind.catchtable.dto.network.request.ReviewRequest;
@@ -52,7 +51,7 @@ public class MydiningService {
     public Long saveReview(ReviewRequest reviews) {
         ReviewRequest request = reviews;
         System.out.println(request);
-        ReviewDto newReview = request.of(request.prIdx(), request.revContent(), request.revScore(), request.resaBisName(), request.resIdx()).toDto();
+        ReviewDto newReview = request.of(request.prIdx(), request.revContent(), (request.revScore()*0.5), request.resaBisName(), request.resIdx()).toDto();
         Long saveIdx = reviewRepository.save(newReview.toEntity()).getRevIdx();
 
         if (saveIdx != null) {

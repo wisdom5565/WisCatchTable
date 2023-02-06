@@ -1,10 +1,7 @@
 package com.catchmind.catchtable.dto;
 
-import com.catchmind.catchtable.domain.MemberRole;
 import com.catchmind.catchtable.domain.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDateTime;
+import com.catchmind.catchtable.domain.type.MemberRole;
 
 public record ProfileDto(
         Long prIdx,
@@ -17,6 +14,7 @@ public record ProfileDto(
         String prGender,
         String prBirth,
         String prMemo,
+
         int prReview,
         int prNoshow,
         boolean prBlock,
@@ -32,7 +30,7 @@ public record ProfileDto(
         return new ProfileDto(prIdx,null,null,null,null,null,null,null,null,null,0,0,false,0,null);
     }
 
-    public static ProfileDto ofAuth(Long prIdx, String prNick, String prName, String prIntro, String prRegion, String prHp, String prUserpw, String prGender, String prBirth, String prMemo, int prReview, int prNoshow, boolean prBlock, int prPoint){
+    public static ProfileDto of(Long prIdx, String prNick, String prName, String prIntro, String prRegion, String prHp, String prUserpw, String prGender, String prBirth, String prMemo, int prReview, int prNoshow, boolean prBlock, int prPoint){
         return new ProfileDto(prIdx, prNick, prName, prIntro, prRegion, prHp, prUserpw, prGender, prBirth, prMemo,  prReview, prNoshow, prBlock, prPoint,null);
     }
 

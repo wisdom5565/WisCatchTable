@@ -18,13 +18,10 @@ public class DeclareReview extends AuditingField {
     @ManyToOne(optional = false)
     @JoinColumn(name = "rev_idx")
     private Review review;              // 리뷰 번호 FK
-
     private String derNick;         // 리뷰 신고당한 사람(derNick)       // 리뷰 객체 통해서 가져오기
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "pr_idx")    // pr_idx로 찾기
     private Profile profile;        // 리뷰 신고한 회원 닉네임(prNick) FK
-
     private String derTitle;// 신고 제목
     private String derContent;      // 신고 사유
 
@@ -38,4 +35,18 @@ public class DeclareReview extends AuditingField {
         this.derTitle = derTitle;
         this.derContent = derContent;
     }
+
+    public DeclareReview (Review review, String derNick, Profile profile,  String derTitle, String derContent){
+        this.review = review;
+        this.derNick = derNick;
+        this.profile = profile;
+        this.derTitle = derTitle;
+        this.derContent = derContent;
+    }
+
+    public static DeclareReview of(Review review, String derNick, Profile profile, String derTitle, String derContent){
+        return new DeclareReview(review, derNick, profile, derTitle, derContent);
+    }
+
+
 }

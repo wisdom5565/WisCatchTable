@@ -11,4 +11,5 @@ import java.util.List;
 @RepositoryRestResource
 public interface MyCollectionRepository extends JpaRepository<MyCollection,Long> {
     Page<MyCollection> findAllByProfile_PrIdxAndColLock(Long prIdx,boolean colLock, Pageable pageable);
+    List<MyCollection> findAllByProfile_PrIdx(Long prIdx);
 }

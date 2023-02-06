@@ -24,7 +24,7 @@ public record CommentDto(
     }
 
     public static CommentDto of(Long comIdx,ProfileDto profileDto, String comContent, ReviewDto reviewDto, Long comLike) {
-       return new CommentDto(comIdx,profileDto,comContent,reviewDto,comLike,null);
+        return new CommentDto(comIdx,profileDto,comContent,reviewDto,comLike,null);
     }
     public static CommentDto ofIdx(Long comIdx) {
         return new CommentDto(comIdx,null,null,null,0L,null);
