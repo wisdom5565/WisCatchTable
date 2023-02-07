@@ -9,8 +9,6 @@ public record CommentResponse(
         String comContent,
         Long revIdx,
         LocalDateTime regDate,
-        Long comLike,
-        boolean isComm,
-        boolean isComLike
+        boolean isComm
 ) {
 }

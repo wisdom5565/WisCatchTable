@@ -213,12 +213,13 @@ public class TimelineController {
             for (ReviewHeartDto heart : hearts) {
                 if (review.revIdx().equals(heart.reviewDto().revIdx())) {
                     isLike = true;
+                    break;
                 }
             }
             ReviewHeartWithCommResponse response = new ReviewHeartWithCommResponse(prIdx, review.revIdx(), isLike, review.revLike(), review.revComm());
             totalList.add(response);
         }
-        log.warn("좋아요 여부 검사 후 전체 리뷰 리스트 : " + totalList);
+        log.info("좋아요 여부 검사 후 전체 리뷰 리스트 : " + totalList);
         return totalList;
     }
 
@@ -229,26 +230,15 @@ public class TimelineController {
     public List<CommentResponse> commentList(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         Long prIdx = catchPrincipal.prIdx();
         List<CommentDto> comments = timeLineService.getComments();
-        List<CommentHeartDto> comHeart = timeLineService.getComHeart(prIdx);        // 로그인한 유저의 좋아요 판별
         List<CommentResponse> comList = new ArrayList<>();
 
         for (CommentDto com : comments) {
-            boolean isComm = false;
-            if (com.profileDto().prIdx().equals(prIdx)) {
-                isComm = true;
-            }
-            boolean isComLike = false;
-            for (CommentHeartDto heart : comHeart) {
-                if (com.comIdx().equals(heart.commentDto().comIdx())) {
-                    isComLike = true;
-                }
-            }
+            boolean isComm = com.profileDto().prIdx().equals(prIdx);
             CommentResponse response = new CommentResponse(com.comIdx(),
-                    com.profileDto().prNick(), com.profileDto().prIdx(), com.comContent(), com.reviewDto().revIdx(), com.regDate(),
-                    com.comLike(), isComm, isComLike);
+                    com.profileDto().prNick(), com.profileDto().prIdx(), com.comContent(), com.reviewDto().revIdx(), com.regDate(), isComm);
             comList.add(response);
         }
-        log.warn("댓글 작성 유무 및 좋아요 판별 댓글 리스트 " + comList);
+        log.info("댓글 작성 유무 및 좋아요 판별 댓글 리스트 " + comList);
         return comList;
     }
 
@@ -279,6 +269,7 @@ public class TimelineController {
     public Long newComment(@RequestBody CommentHeartRequest request) {
         System.out.println(request);
         Long response = timeLineService.newComment(request);
+        log.info("새로운 댓글 번호 : " + response);
         return response;
     }
 
@@ -292,25 +283,25 @@ public class TimelineController {
         return com;
     }
 
-    // 댓글 좋아요
-    @PostMapping("/new/comment/heart")
-    @ResponseBody
-    public Long newComHeart(@RequestBody CommentHeartRequest request) {
-        System.out.println("❤️" + request.comLike());
-        Long response = timeLineService.newComHeart(request);
-        System.out.println(response);
-        return response;
-    }
-
-    // 댓글 좋아요삭제
-    @PostMapping("/del/comment/heart")
-    @ResponseBody
-    public Long delComHeart(@RequestBody CommentHeartRequest request) {
-        System.out.println("💙" + request.comLike());
-        Long response = timeLineService.delComHeart(request);
-        System.out.println(response);
-        return response;
-    }
+//    // 댓글 좋아요
+//    @PostMapping("/new/comment/heart")
+//    @ResponseBody
+//    public Long newComHeart(@RequestBody CommentHeartRequest request) {
+//        System.out.println("❤️" + request.comLike());
+//        Long response = timeLineService.newComHeart(request);
+//        System.out.println(response);
+//        return response;
+//    }
+//
+//    // 댓글 좋아요삭제
+//    @PostMapping("/del/comment/heart")
+//    @ResponseBody
+//    public Long delComHeart(@RequestBody CommentHeartRequest request) {
+//        System.out.println("💙" + request.comLike());
+//        Long response = timeLineService.delComHeart(request);
+//        System.out.println(response);
+//        return response;
+//    }
 
     // 리뷰삭제
     @GetMapping("/del/review/{revIdx}/{resIdx}")
@@ -323,14 +314,15 @@ public class TimelineController {
     }
 
     // 새로운 댓글
-//    @GetMapping(path = "/review/get/comment/{comIdx}")
-//    @ResponseBody
-//    public CommentResponse getComment(@PathVariable Long comIdx) {
-//        System.out.println(comIdx);
-//        CommentDto response = timeLineService.getComment(comIdx);
-//        CommentResponse newCom = new CommentResponse(response.comIdx(), response.profileDto().prNick(),
-//                response.comContent(), response.reviewDto().revIdx(), response.regDate(), response.comLike(), true, false);
-//        return newCom;
-//    }
+    @GetMapping(path = "/review/get/comment/{comIdx}")
+    @ResponseBody
+    public CommentResponse getComment(@PathVariable Long comIdx) {
+        System.out.println(comIdx);
+        CommentDto response = timeLineService.getComment(comIdx);
+        CommentResponse newCom = new CommentResponse(response.comIdx(), response.profileDto().prNick(),response.profileDto().prIdx(),
+                response.comContent(), response.reviewDto().revIdx(), response.regDate(), true);
+        log.info(String.valueOf(newCom));
+        return newCom;
+    }
 
 }

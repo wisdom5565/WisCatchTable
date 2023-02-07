@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.domain;
 
 import com.catchmind.catchtable.domain.type.ReservationType;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -48,10 +49,9 @@ public class Reserve extends AuditingFields{
     private boolean revStatus;      // 예약 상태 default 0(false)
 
 
-
     protected Reserve() {}
 
-
+    @Builder
     public Reserve(Long resIdx, ResAdmin resAdmin, BistroInfo bistroInfo, Profile profile, String prName, String resHp, String resRequest, String visitName, String visitHp, String resMonth, String resDay, String resReason, Long resPerson, String resTime, ReservationType resStatus, BistroDetail bistroDetail, boolean revStatus) {
         this.resIdx = resIdx;
         this.resAdmin = resAdmin;
@@ -73,13 +73,38 @@ public class Reserve extends AuditingFields{
     }
 
 
-
     public Reserve(Long resIdx) {
         this.resIdx = resIdx;
     }
 
+    public Reserve(ResAdmin resAdmin, String prName, String resHp, String resRequest,
+                   Long resPerson, String resTime, String resMonth, String resDay,
+                   ReservationType resStatus,
+                   BistroInfo bistroInfo,
+                   BistroDetail bistroDetail,
+                   Profile profile) {
+        this.resAdmin = resAdmin;
+        this.prName = prName;
+        this.resHp = resHp;
+        this.resRequest = resRequest;
+        this.resPerson = resPerson;
+        this.resTime = resTime;
+        this.resMonth = resMonth;
+        this.resDay = resDay;
+        this.resStatus = resStatus.PLANNED;
+        this.bistroInfo = bistroInfo;
+        this.bistroDetail = bistroDetail;
+        this.profile = profile;
+    }
+
     public static Reserve of(Long resIdx) {
         return new Reserve(resIdx);
+    }
+
+
+
+    public static Reserve ofKakao(ResAdmin resAdmin, String prName, String resHp, String resRequest, Long resPerson, String resTime, String resMonth, String resDay,ReservationType resStatus, BistroInfo bistroInfo, BistroDetail bistroDetail, Profile profile){
+        return new Reserve(resAdmin,prName,resHp,resRequest,resPerson,resTime,resMonth,resDay,resStatus, bistroInfo, bistroDetail, profile);
     }
 
 
@@ -90,4 +115,5 @@ public class Reserve extends AuditingFields{
     public static Reserve of(boolean revStatus) {
         return new Reserve(revStatus);
     }
+
 }

@@ -73,7 +73,7 @@ function reportComment(comIdx, isComm, revComIdx) {        // 매개변수로 �
                     console.log(data);
                     if(data != null) {
                         $('.' + comIdx).css("display", "none");
-                        $('.comDiv'+comIdx).load();
+                        $('#comDetail'+comIdx).replaceWith("<div class='__content'>삭제된 댓글입니다.</div><hr class='hairline'>");
                         alert('삭제 완료!')
                     }
                 },

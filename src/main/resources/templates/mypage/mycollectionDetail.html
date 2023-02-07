@@ -26,19 +26,23 @@
     <div class="css-171zbec eug5r8l0">
       <div class="css-j0lifa ed9qr673" style="padding: 0;">
         <input id="colIdx" type="hidden" name="colIdx" th:value="${myCollection.colIdx}">
-        <section class="section pt-24 container gutter-sm">
-          <h2 class="collection-top-title private" th:text="${myCollection.colTitle}">스시오마카세</h2>
-        </section>
-        <a class="btn btn-lg btn-outline full-width mb-8"
-           th:href="@{'/mypage/collection/detail/'+${myCollection.colIdx}+'/modify'}">
-          <span>컬렉션 수정하기</span>
-        </a>
-        <button type="button" class="btn btn-lg btn-outline full-width mb-8" onclick="colDel()">
-          <span>컬렉션 삭제하기</span>
-        </button>
-        <a class="btn btn-lg btn-outline full-width mb-8" th:href="@{'/mypage/collection/saveList/'+${profile.prIdx}+'/'+${myCollection.colIdx()}}">
-          <span>레스토랑 추가하기</span>
-        </a>
+        <div>
+          <section class="section pt-24 container gutter-sm">
+            <h2 class="collection-top-title private" th:text="${myCollection.colTitle}">스시오마카세</h2>
+          </section>
+        </div>
+        <div style="display: flex">
+          <a class="btn btn-lg btn-outline full-width mb-8" style="width: 115px;"
+             th:href="@{'/mypage/collection/detail/'+${myCollection.colIdx}+'/modify'}">
+            <span>컬렉션 수정하기</span>
+          </a>
+          <button type="button" style="width: 115px;margin-left: 12px;" class="btn btn-lg btn-outline full-width mb-8" onclick="colDel()">
+            <span>컬렉션 삭제하기</span>
+          </button>
+          <a class="btn btn-lg btn-outline full-width mb-8" style="width: 115px;margin-left: 12px;" th:href="@{'/mypage/collection/saveList/'+${profile.prIdx}+'/'+${myCollection.colIdx()}}">
+            <span>레스토랑 추가하기</span>
+          </a>
+        </div>
       </div>
       <div class="my-list-detail-top" style="padding-left: 21px;">
         <dl>
@@ -46,25 +50,15 @@
         </dl>
         <p class="excerpt" th:text="${myCollection.colContent()}">스시가 맛있는 오마카세!</p>
       </div>
-
       <div class="saved-restaurant-list">
         <div id="collection-detail-infinity-scroll" style="padding-left: 21px;">
-
-          <!--                    한덩어리 시작 -->
-          <div
-                  id="collection-detail-infinity-scroll_0"
-                  data-dummy="187"
-                  th:each="list: ${list}"
-          >
+          <div id="collection-detail-infinity-scroll_0" ata-dummy="187" th:each="list: ${list}">
             <div class="saved-restaurant-list-item">
               <div class="restaurant-info">
                 <a href="#" class="tb">
-                  <div
-                          class="img"
-                          style="
+                  <div class="img" style="
                           background-image: url('https://image.toast.com/aaaaaqx/catchtable/shopinfo/s17888/17888_2071611361556439_thumbMenuImage.jpg');
-                        "
-                  ></div>
+                        "></div>
                 </a>
                 <a href="#" class="detail">
                   <input type="hidden" id="saveIdx" name="saveIdx" th:value="${list.saveIdx}">
@@ -79,15 +73,13 @@
                     <span class="price">점심&nbsp;[[${list.bistroDetailDto.bistroInfoDto.bisLunch}]]&nbsp;저녁&nbsp;[[${list.bistroDetailDto.bistroInfoDto.bisDinner}]]</span>
                   </div>
                 </a>
-                <button onclick="delColRes()" class="btn-bookmark active">북마크</button>
+                <button onclick="delColRes()" class="btn-bookmark active" style="margin-top: 37px;">북마크</button>
               </div>
               <div class="restaurant-meta mb-30"></div>
-
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
   <div th:replace="fragment/footer :: footer"/>

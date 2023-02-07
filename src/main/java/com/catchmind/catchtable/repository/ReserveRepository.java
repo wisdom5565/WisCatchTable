@@ -16,4 +16,6 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
 
     Reserve findByResIdx(Long resIdx);
 
+    List<Reserve> findAllByResMonthAndResDayAndResAdmin_ResaBisName(String month, String day, String resaBisName);
+
 }

@@ -28,7 +28,7 @@ public class QBistroDetail extends EntityPathBase<BistroDetail> {
 
     public final StringPath bdHoliday = createString("bdHoliday");
 
-    public final StringPath bdHome = createString("bdHome");
+    public final StringPath bdHomepage = createString("bdHomepage");
 
     public final StringPath bdHour = createString("bdHour");
 

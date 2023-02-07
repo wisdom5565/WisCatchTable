@@ -10,8 +10,7 @@
     <div class="header">
         <div class="headerMain">
             <div class="logo">
-                <a id="home" href="#"><img class="logoImg" src="/images/logo.png"/><span>행복한 미식 생활, 건강한 예약 문화</span></a>
-
+                <a id="home" href="/"><img class="logoImg" src="/images/logo.png"/><span>행복한 미식 생활, 건강한 예약 문화</span></a>
             </div>
             <div class="login">
                 <ul class="loginMenu">
@@ -19,7 +18,7 @@
                     <li><a id="login" role="button">로그인&nbsp;|</a></li>
                     <li><a id="logout" role="button">로그아웃&nbsp;|</a></li>
                     <li><a id="join" role="button">회원가입&nbsp;|</a></li>
-                    <li><a href="">고객센터</a></li>
+                    <li><a href="/notice">고객센터</a></li>
                 </ul>
             </div>
         </div>
@@ -36,7 +35,7 @@
                 <form>
                     <div class="searchWarp">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input class="searchText" type="text" placeholder="지역,음식,레스토랑명검색">
+                        <input class="searchText" type="text" placeholder="레스토랑명검색">
                     </div>
                 </form>
             </div>
@@ -50,7 +49,7 @@
             <div class="small_category">
                 <ul class="small_categoryList">
                     <li class="small_logo">
-                        <a href="#"><img class="small_logoImg" src="/images/small_logo.svg"/></a>
+                        <a href="/"><img class="small_logoImg" src="/images/small_logo.svg"/></a>
                     </li>
                     <li><a href="/timeline">타임라인</a></li>
                     <li><a href="/mydining">마이다이닝</a></li>
@@ -61,21 +60,19 @@
                 <form>
                     <div class="small_searchWarp">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input class="searchText" type="text" placeholder="지역,음식,레스토랑명검색">
+                        <input class="searchText" type="text" placeholder="레스토랑명검색">
                     </div>
                 </form>
             </div>
 
         </div>
         <hr class="lastLine">
-        <!-- 스크롤 헤더 드롭다운 -->
-<!--        <div class="small_dropdown_wrapper">-->
             <div class="small_dropdown">
                 <div class="drop_timeline">
                     <ul>
                         <li style="font-weight: 700"><a href="/timeline">타임라인</a></li>
-                        <li><a href="">추천</a></li>
-                        <li><a href="">팔로잉</a></li>
+                        <li><a href="/timeline">추천</a></li>
+                        <li><a href="/timeline/following">팔로잉</a></li>
                     </ul>
                 </div>
                 <div  class="drop_mydining">
@@ -102,16 +99,14 @@
                     </ul>
                 </div>
             </div>
-<!--        </div>-->
     </div>
-    <!-- 드롭다운 -->
-<!--    <div class="dropdown-wrapper">-->
+
         <div class="dropdown">
             <div class="drop_timeline">
                 <ul>
                     <li style="font-weight: 700"><a href="/timeline">타임라인</a></li>
-                    <li><a href="">추천</a></li>
-                    <li><a href="">팔로잉</a></li>
+                    <li><a href="/timeline">추천</a></li>
+                    <li><a href="/timeline/following">팔로잉</a></li>
                 </ul>
             </div>
             <div  class="drop_mydining">
@@ -131,14 +126,13 @@
             </div>
             <div class="drop_cs">
                 <ul>
-                    <li style="font-weight: 700"><a href="/notice/">고객센터</a></li>
+                    <li style="font-weight: 700"><a href="/notice">고객센터</a></li>
                     <li><a href="/support/contact">문의하기</a></li>
                     <li><a href="/support/improve">개선제안</a></li>
                     <li><a href="/report/list">신고내역</a></li>
                 </ul>
             </div>
         </div>
-<!--    </div>-->
 </header>
 </body>
 </html>

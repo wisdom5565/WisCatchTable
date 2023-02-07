@@ -140,4 +140,8 @@ public class ProfileLogicService {
     }
 
 
+    public Optional<Profile> checkNick(String prNick) {
+        Optional<Profile> profile = profileRepository.findByPrNick(prNick);
+        return profile;
+    }
 }

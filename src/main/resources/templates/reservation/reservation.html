@@ -53,7 +53,11 @@
             color: #fff;
             background: #ff3d00;
         }
-
+        .option-personnel label input:checked+span {
+            border-color: #ff3d00;
+            background-color: #ff3d00;
+            color: #fff;
+        }
        
     </style>
 </head>
@@ -78,27 +82,50 @@
                             <div id="optionPersonalCntList" class="v-scroll">
                                 <div class="v-scroll-inner">
                                     <div id="optionPersonalCntList" class="" style="display: flex; flex-wrap: nowrap;">
-                                        <label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="1"><span>1명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="2" checked=""><span>2명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="3"><span>3명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="4"><span>4명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="5"><span>5명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="6"><span>6명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="7"><span>7명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="8"><span>8명</span></label><label class="swiper-slide" style="margin-right: 6px;"><input type="radio" name="count" value="9"><span>9명</span></label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="1" onclick="sendRes()"><span>1명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="2" onclick="sendRes()"><span>2명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="3" onclick="sendRes()"><span>3명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="4" onclick="sendRes()"><span>4명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="5" onclick="sendRes()"><span>5명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="6" onclick="sendRes()"><span>6명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="7" onclick="sendRes()"><span>7명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="8" onclick="sendRes()"><span>8명</span>
+                                        </label>
+                                        <label class="swiper-slide" style="margin-right: 6px;">
+                                            <input class="count" type="radio" name="count" value="9" onclick="sendRes()"><span>9명</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="v-scroll" id="scrollContainer_1671430849_164" style="">
                             <div class="v-scroll-inner" style="display: flex;">
-                                <div class="timetable-list timetable-list-sm" style=""><button class="timetable-list-item"
-                                        style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span
-                                            class="time">오후 5:00</span></button><button class="timetable-list-item"
-                                        style="margin-bottom: auto; margin-top: auto; min-width: 70px;"><span
-                                            class="time">오후 5:00</span></button><button class="timetable-list-item"
-                                        style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span
-                                            class="time">오후 5:00</span></button><a href="#"
-                                        id="scrollContainer_1671430849_164_itemElem_17002" class="timetable-list-item empty"
-                                        style="margin-bottom: auto; margin-top: auto;"><span class="time">빈자리 알림
-                                            신청</span></a></div>
-                                <div class="timetable-list timetable-list-sm"><a class="timetable-list-item"
-                                        style="width: 1px; border-color: rgb(255, 255, 255);"><span class="time"
-                                            style="background-color: rgb(255, 255, 255);">&nbsp;</span><span
-                                            class="event">&nbsp;</span></a></div>
+                                <div id="timelist" class="timetable-list timetable-list-sm" style="">
+                                    <a href="#" id="scrollContainer_1671430849_164_itemElem_17002" class="timetable-list-item empty" style="margin-bottom: auto; margin-top: auto;">
+                                        <span class="time">빈자리 알림신청</span>
+                                    </a>
+                                </div>
+                                <div class="timetable-list timetable-list-sm">
+                                    <a class="timetable-list-item" style="width: 1px; border-color: rgb(255, 255, 255);">
+                                    <span class="time" style="background-color: rgb(255, 255, 255);">&nbsp;</span>
+                                    <span class="event">&nbsp;</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,26 +144,26 @@
                                 </dl>
                                 <dl class="">
                                     <dt>x 총 예약 인원</dt>
-                                    <dd>4명</dd>
+                                    <dd class="person_html">0명</dd>
                                 </dl>
                                 <hr class="hairline mt-20 mb-20">
                                 <dl class="dl-lg">
                                     <dt>합계</dt>
-                                    <dd>200,000원</dd>
+                                    <dd class="price_html">0원</dd>
                                 </dl>
                             </div>
                             <div class="well">
                                 <h4 class="font-11 mb-10">환불정책</h4>
                                 <p class="font-11 color-gray">·14일 전 취소: 100% 환불<br>·13일 전 취소: 50% 환불<br>·12일 전 취소: 50% 환불<br>·11일 전
                                     취소: 50% 환불<br>·10일 전 취소: 50% 환불<br>·9일 전 취소: 환불 불가<br>·8일 전 취소: 환불 불가<br>·7일 전 취소: 환불 불가<br>·6일
-                                    전 취소: 환불 불가<br>·5일 전 취소: 환불 불가<br>·4일 전 취소: 환불 불가<br>·3일 전 취소: 환불 불가<br>·2일 전 취소: 환불 불가<br>·1일 
+                                    전 취소: 환불 불가<br>·5일 전 취소: 환불 불가<br>·4일 전 취소: 환불 불가<br>·3일 전 취소: 환불 불가<br>·2일 전 취소: 환불 불가<br>·1일
                                     전
                                     취소: 환불 불가<br>·당일 취소: 환불 불가<br>·노쇼 시: 환불 불가<br></p>
                             </div>
                         </div>
                         <div class="drawer-box-footer">
-                            <div class="font-16 txt-center bold mb-20">총 예약금 <span class="color-red">200,000</span>원</div>
-                            <div class="btn-group"><button class="btn btn-lg btn-outline">이전</button><button class="btn btn-lg btn-red">확인</button></div>
+                            <div class="font-16 txt-center bold mb-20">총 예약금 <span class="color-red price_html">0원</span></div>
+                            <div class="btn-group"><button class="btn btn-lg btn-outline">이전</button><button class="btn btn-lg btn-red" onclick="sendPayment()">확인</button></div>
                         </div>
                     </div>
                 </section>
@@ -144,24 +171,5 @@
         </div>
         <div th:replace="fragment/footer :: footer"/>
     </div>
-
-<!--<script>-->
-<!--&lt;!&ndash; 캘린더를 위한 스크립트&ndash;&gt;-->
-<!--        $("#datepicker").datepicker({-->
-<!--          language: "ko",-->
-<!--        });-->
-
-<!--        $(function () {-->
-<!--          $("#datepicker").datepicker({-->
-<!--            onSelect: function (dateText) {-->
-<!--              //  $('#datepicker-display').datepicker("setDate", $(this).datepicker("getDate"));-->
-<!--              var date = $("#datepicker")-->
-<!--                .datepicker({ dateFormat: "yyyy.mm.dd" })-->
-<!--                .val();-->
-<!--              console.log(date);-->
-<!--            },-->
-<!--          });-->
-<!--        });-->
-<!--    </script>-->
 </body>
 </html>

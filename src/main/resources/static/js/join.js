@@ -14,7 +14,7 @@ const agreements = {
   // SignupEventAll: false
 };
 
-form.addEventListener('submit', (e) => e.preventDefault()); // 새로고침(submit) 되는 것 막음
+// form.addEventListener('submit', (e) => e.preventDefault()); // 새로고침(submit) 되는 것 막음
 
 checkBoxes.forEach((item) => item.addEventListener('input', toggleCheckbox));
 

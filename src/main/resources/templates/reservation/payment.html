@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>즐거운 미식 생활의 시작, 캐치테이블</title>
     <div th:replace="fragment/link :: link"/>
+    <script src="/js/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" href="/css/collection_detail.css" />
+    <script defer src="/js/payment.js"></script>
   </head>
 
   <body>
@@ -22,7 +24,9 @@
           <section class="section">
             <div class="container gutter-sm">
               <div class="section-header" style="margin-top: 18px;">
-                <h3 class="section-title font-18">스시도온 예약 정보</h3>
+                <h3 class="section-title font-18"><span id="resaBisName"></span>&nbsp;예약 정보</h3>
+                <input type="hidden" id="bdIdx" th:value="${bistro.bdIdx()}">
+                <input type="hidden" id="bisIdx" th:value="${bistro.bistroInfoDto().bisIdx()}">
               </div>
               <div class="section-body">
                 <div class="__checkout-reserv-info">
@@ -30,16 +34,20 @@
                     <div class="__more-info">
                       <dl>
                         <dt>정보</dt>
-                        <dd>내일(목) · 오후 5시 · 5명</dd>
+                        <dd>
+                          <span id="resInfo"></span>
+
+                        </dd>
                       </dl>
-                      <dl>
-                        <dt>테이블</dt>
-                        <dd>파티 테이블</dd>
-                      </dl>
+<!--                      <dl>-->
+<!--                        <dt>테이블</dt>-->
+<!--                        <dd>파티 테이블</dd>-->
+<!--                      </dl>-->
                       <div class="__more-info">
                         <dl>
                           <dt>예약자</dt>
-                          <dd>김동진 (010-5479-2884)</dd>
+                          <input type="hidden" id="prIdx" th:value="${profile.prIdx()}">
+                          <dd><span id="res_name" th:text="${profile.prName()}"></span> (<span id="res_hp" th:text="${profile.prHp()}"></span>)</dd>
                         </dl>
                       </div>
                     </div>
@@ -62,7 +70,7 @@
               </div>
               <div class="section-body">
                 <div class="__select-textarea">
-                  <textarea
+                  <textarea id="res_request"
                     class="form-input __active"
                     placeholder="레스토랑에 요청하실 내용을 입력해주세요."
                     rows="4"
@@ -78,7 +86,7 @@
                 <h3 class="section-title font-18">총 결제 금액</h3>
                 <div class="utils">
                   <strong class="ebold color-red font-18 mr-10"
-                    >200,000원</strong
+                    ><span class="resPrice" name="total_amount"></span>원</strong
                   ><a href="" class="__toggle __toggle-checkout-info __up"
                     >더보기</a
                   >
@@ -90,9 +98,9 @@
                   <table class="color-gray plain-txt">
                     <tbody>
                       <tr>
-                        <td class="pt-5 pb-5">1인 예약금(40,000원) x5</td>
+                        <td class="pt-5 pb-5">1인 예약금(50,000원)X <span id="resPerson"></span></td>
                         <td class="pt-5 pb-5 pl-5 align-middle txt-right">
-                          200,000원
+                          <span class="resPrice"></span>원
                         </td>
                       </tr>
                     </tbody>
@@ -166,8 +174,8 @@
             </div>
           </div>
           <div class="sticky-bottom-btns">
-            <button class="btn btn-lg btn-red full-width ebold">
-              200,000원 결제하기
+            <button id="btn-kakao-pay" class="btn btn-lg btn-red full-width ebold">
+              <span class="resPrice"></span>원 결제하기
             </button>
           </div>
         </main>

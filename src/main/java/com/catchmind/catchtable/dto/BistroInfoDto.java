@@ -19,6 +19,9 @@ public record BistroInfoDto(
     public static BistroInfoDto of(Long bisIdx,ResAdminDto resAdminDto, String bisDesc,String bisCategory,String bisRegion,String bisLunch,String bisDinner,LocalDateTime regDate,PhotoDto photoDto){
         return new BistroInfoDto(bisIdx,resAdminDto,bisDesc,bisCategory,bisRegion,bisLunch,bisDinner,regDate,photoDto);
     }
+    public static BistroInfoDto ofIdx(Long bisIdx){
+        return new BistroInfoDto(bisIdx,null,null,null,null,null,null,null,null);
+    }
     public static BistroInfoDto from(BistroInfo bistroInfo){
         return new BistroInfoDto(
                 bistroInfo.getBisIdx(),
@@ -32,5 +35,8 @@ public record BistroInfoDto(
                 PhotoDto.from(bistroInfo.getPhoto())
 //                bistroInfo.getBisConvenience(),
         );
+    }
+    public BistroInfo toEntityIdx() {
+        return BistroInfo.ofBisIdx(bisIdx);
     }
 }

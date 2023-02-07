@@ -1328,10 +1328,10 @@ button {
   justify-content: space-between;
 }
 
-.__mypage-collection-list .collection-slides-sm {
-  width: calc(30% - 3.5px);
-  margin-bottom: 20px;
-}
+/*.__mypage-collection-list .collection-slides-sm {*/
+/*  width: calc(30% - 3.5px);*/
+/*  margin-bottom: 20px;*/
+/*}*/
 
 .collection-list-item-sm a {
   display: block;

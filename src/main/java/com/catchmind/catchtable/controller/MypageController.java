@@ -1,17 +1,15 @@
 package com.catchmind.catchtable.controller;
 
 
-import com.catchmind.catchtable.domain.MyCollection;
-import com.catchmind.catchtable.dto.*;
-//import com.catchmind.catchtable.dto.network.request.MyCollectionRequest;
-//import com.catchmind.catchtable.dto.network.request.ProfileRequest;
+import com.catchmind.catchtable.dto.BistroSaveDto;
+import com.catchmind.catchtable.dto.MyCollectionDto;
+import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.network.request.MyCollectionRequest;
 import com.catchmind.catchtable.dto.network.request.ProfileRequest;
 import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.BistroSaveRepository;
 import com.catchmind.catchtable.repository.ProfileRepository;
-//import com.catchmind.catchtable.service.MypageLogicService;
 import com.catchmind.catchtable.service.PaginationService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import com.catchmind.catchtable.service.TimeLineService;

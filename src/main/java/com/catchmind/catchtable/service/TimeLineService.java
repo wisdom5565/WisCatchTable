@@ -90,22 +90,19 @@ public class TimeLineService {
                 }
             }
             boolean isReview = false;
-            for(ReviewDto login : loginReview){
-                isReview = false;
-                if(reviewDtos.get(i).revIdx().equals(login.revIdx())){
-                    isReview = true;
-                }
+            for (ReviewDto login : loginReview) {
+                isReview = reviewDtos.get(i).revIdx().equals(login.revIdx());
             }
             if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
-                        reviewDtos.get(i).regDate(), null,isReview);
+                        reviewDtos.get(i).regDate(), null, isReview);
                 reviewList.add(response);
             } else {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
                         reviewDtos.get(i).regDate()
-                        , reviewDtos.get(i).updateDate(),isReview);
+                        , reviewDtos.get(i).updateDate(), isReview);
                 reviewList.add(response);
             }
         }
@@ -177,7 +174,7 @@ public class TimeLineService {
 
     // 컬렉션 리스트
     public Page<MyCollectionDto> getCollection(Long timeLineIdx, Pageable pageable) {
-        Page<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx,false,pageable).map(MyCollectionDto::from);
+        Page<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx, false, pageable).map(MyCollectionDto::from);
         return collectionDtos;
     }
 
@@ -202,6 +199,7 @@ public class TimeLineService {
 
         return heartDtos;
     }
+
     //로그인한 회원의 댓글 좋아요 리스트
     public List<CommentHeartDto> getComHeart(Long prIdx) {
         List<CommentHeartDto> commentHeartDtos = commentHeartRepository.findAllByProfile_PrIdx(prIdx).stream().map(CommentHeartDto::from).toList();
@@ -243,7 +241,11 @@ public class TimeLineService {
         Long prIdx = request.prIdx();
         Long revLike = request.revLike();
         Review findReview = reviewRepository.findById(revIdx).orElse(null);
-        findReview.setRevLike(revLike-1);
+        if (revLike == 0) {
+            findReview.setRevLike(revLike);
+        } else {
+            findReview.setRevLike(revLike - 1);
+        }
         Long newLike = reviewRepository.save(findReview).getRevLike();
 
         System.out.println("💙" + newLike);
@@ -268,7 +270,7 @@ public class TimeLineService {
 
     // 댓글 삭제
     @Transactional
-    public Long delComment(Long comIdx,Long revIdx) {
+    public Long delComment(Long comIdx, Long revIdx) {
         Review findReview = reviewRepository.findById(revIdx).orElse(null);
         findReview.setRevComm(findReview.getRevComm() - 1);
 
@@ -301,7 +303,7 @@ public class TimeLineService {
         Long findLike = commentRepository.findById(comIdx).get().getComLike();
         Comment findComment = commentRepository.findById(comIdx).orElseThrow();
         System.out.println("디비에서 찾은 좋아요 개수 :" + findLike);
-        findComment.setComLike(findLike-1);
+        findComment.setComLike(findLike - 1);
 
         Long newLike = commentRepository.save(findComment).getComLike();
         System.out.println("삭제 후 좋아요 수 💙" + newLike);
@@ -310,13 +312,12 @@ public class TimeLineService {
     }
 
     @Transactional
-    public void delReview(Long revIdx, Long resIdx){
+    public void delReview(Long revIdx, Long resIdx) {
         Reserve findReserve = reserveRepository.findById(resIdx).orElse(null);
         findReserve.setRevStatus(false);
 
         reviewRepository.deleteById(revIdx);
     }
-
 
 
 }

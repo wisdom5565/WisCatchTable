@@ -1,5 +1,6 @@
 package com.catchmind.catchtable.dto;
 import com.catchmind.catchtable.domain.Reserve;
+import com.catchmind.catchtable.domain.type.ReservationType;
 
 import java.time.LocalDateTime;
 
@@ -59,9 +60,33 @@ public record ReserveDto(
         return new ReserveDto(0L,null,null,null,null,null,null,null,null,null,null,null,null,0L,null,null,null,null, revStatus);
     }
 
+    public static ReserveDto ofKaKao(
+            ResAdminDto resAdminDto, String prName, String resHp,
+            String resRequest, Long resPerson, String resTime,
+            String resMonth, String resDay, BistroInfoDto bistroInfoDto, BistroDetailDto bistroDetailDto, ProfileDto profileDto) {
+        return new ReserveDto(0L,resAdminDto,bistroInfoDto,profileDto,bistroDetailDto,prName,resHp,resRequest,null,null,resMonth,resDay,null,resPerson,resTime,"PLANNED",null,null, false);
+    }
+
     public Reserve toEntity() {
         return Reserve.of(
                 resIdx
+        );
+    }
+
+    public Reserve toEntityKaKao(){
+        return Reserve.ofKakao(
+                resAdminDto.toEntity(),
+                prName,
+                resHp,
+                resRequest,
+                resPerson,
+                resTime,
+                resMonth,
+                resDay,
+                ReservationType.valueOf(resStatus),
+                bistroInfoDto.toEntityIdx(),
+                bistroDetailDto.toEntityIdx(),
+                profileDto.toEntityIdx()
         );
     }
 

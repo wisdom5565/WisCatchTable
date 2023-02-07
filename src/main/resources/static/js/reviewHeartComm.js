@@ -1,9 +1,4 @@
-let isLike = []; // 좋아요 여부
-let prIdx = []; // 로그인한 회원
-let revIdx = []; // 리뷰 번호
-let heartNum = []; // 리뷰 좋아요 개수
 let data = [];
-let revComm = []; // 리뷰 댓글 개수
 totalList();    // 리뷰 좋아요 및 댓글 개수 호출
 comList();      // 리뷰별 댓글 호출
 
@@ -14,6 +9,11 @@ function totalList() {
         url: "/timeline/review/total",
         success: function (data) {
             console.log(data);
+            let isLike = []; // 좋아요 여부
+            let prIdx = []; // 로그인한 회원
+            let revIdx = []; // 리뷰 번호
+            let heartNum = []; // 리뷰 좋아요 개수
+            let revComm = []; // 리뷰 댓글 개수
             $.each(data, function (index, item) { // 데이터 =item
                 isLike.push(item.isLike);
                 prIdx.push(item.prIdx);
@@ -51,6 +51,7 @@ function totalList() {
 
 // 리뷰 좋아요 여부 판단
 function heart(prIdx, revIdx, isLike, heartNum) {
+    console.log("전체 하트" + heartNum);
     if (isLike) {
         console.log(isLike)
         hearting(prIdx, revIdx, false, heartNum);       // 좋아요 취소
@@ -74,7 +75,7 @@ function hearting(prIdx, revIdx, check, heartNum) {
             success: function (data) {
                 console.log(data);
                 let liked = "<span class='__like __on " + revIdx + "'" +
-                    "onclick='heart(" + prIdx + "," + revIdx + "," + true + "," + heartNum + ")'>"
+                    "onclick='heart(" + prIdx + "," + revIdx + "," + true + "," + data + ")'>"
                     + (data) + "</span>"
                 $('.' + revIdx).replaceWith(liked);
 
@@ -83,9 +84,9 @@ function hearting(prIdx, revIdx, check, heartNum) {
                 alert("ERROR : " + textStatus + " : " + errorThrown);
             }
         });
-    } else {
+    }
+    if (!check) {
         // 좋아요 취소
-        console.log('💙' + heartNum);
         let del = {"prIdx": prIdx, "revIdx": revIdx, 'revLike': heartNum}
         $.ajax({
                 type: 'POST',
@@ -95,7 +96,7 @@ function hearting(prIdx, revIdx, check, heartNum) {
                 success: function (data) {
                     console.log(data);
                     let unliked = "<span class='__like " + revIdx + "'" +
-                        "onclick='heart(" + prIdx + "," + revIdx + "," + false + "," + heartNum + ")'>"
+                        "onclick='heart(" + prIdx + "," + revIdx + "," + false + "," + data + ")'>"
                         + (data) + "</span>"
                     $('.' + revIdx).replaceWith(unliked);
                 },
@@ -116,9 +117,50 @@ let comRegDate = []; // 댓글 등록일
 let comIdx = []; // 댓글 번호
 let revComIdx = [];     // 댓글 리뷰 번호
 let isComm = [];    // 댓글 작성자 여부
-let isCommLike = [];    // 댓글 좋아요 여부
 let dataList = [];
 let comPrIdx = [];
+let newComm = '';
+
+// 댓글 번호찾기
+function list(comIdx) {
+   return $.ajax({
+        type: 'GET',
+        url: "/timeline/review/get/comment/" + comIdx,
+        contentType: "application/json",
+        success: function (data) {
+            console.log(data);
+            let comment = "<div id='comDetail" + data.comIdx + "'><div class='__user-info'> " +
+                "<a class='profile'> <div class='profile-pic'> " +
+                "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
+                "style='background: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;) center center no-repeat transparent;'>" +
+                "</div> " +
+                "<h4 class='name username'>" +
+                "<span class='txt'>" + data.prNick + "</span>" +
+                "</h4> " +
+                "<div class='__post-meta'> " +
+                "</div></a></div> " +
+                "<div class='__content'><p class='content'>" + data.comContent + "</p>" +
+                "</div><div class='__post-meta'> " +
+                "<span class='__date' style='font-size: 13px;flex-direction: row-reverse;'>" + data.regDate + "</span> " +
+                "<a class='__more' onclick='reportComment(" + data.comIdx + "," + data.isComm + "," + data.revIdx + "," + ")'>MORE</a></div>" +
+                "<hr class='hairline'></div>";
+
+            let reportCom = "<div><div class='modal " + data.comIdx  + " modal-overlay'> <div class='modal-window'>" +
+                "<div class='close-area close" + data.comIdx  + "' onclick='closeCom(" + data.comIdx  + ")'>X</div> <div class='content'> <div class='drawer-box'> " +
+                "<div class='drawer-box-header mb--20' style='padding: 0 20px 27px 0'> <h2 class='drawer-box-title ml-10 isCom" + data.comIdx + "' style='margin-bottom: 10px;'> " +
+                "해당 댓글을 신고하시겠습니까?</h2></div></div> " +
+                "<div class='drawer-box-footer'> <div class='btn-group'> <button class='btn btn-lg btn-red btn" + data.comIdx + "' type='button'style='width: 100%'>신고하기</button></div> " +
+                "</div></div></div></div></div>"
+            $('.newContent' + data.revIdx).val('');
+            $('.comDiv' + data.revIdx).append(comment);
+            $('.comReport').append(reportCom);
+            alert('댓글 등록 성공!');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("ERROR : " + textStatus + " : " + errorThrown);
+        }
+    })
+}
 
 // 전체 댓글 가져오기
 function comList() {
@@ -136,34 +178,16 @@ function comList() {
                 comLike.push(item.comLike);
                 comRegDate.push(item.regDate);
                 isComm.push(item.isComm);
-                isCommLike.push(item.isComLike);
                 comLike.push(item.comLike);
                 comPrIdx.push(item.prIdx);
             });
             dataList = data;
-            // isAction = true;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("ERROR : " + textStatus + " : " + errorThrown);
         }
     })
 }
-
-// // 댓글 번호찾기
-// function list(comIdx) {
-//     $.ajax({
-//         type: 'GET',
-//         url: "/timeline/review/get/comment/" + comIdx,
-//         contentType: "application/json",
-//         success: function (data) {
-//             console.log(data);
-//             return data;
-//         },
-//         error: function (jqXHR, textStatus, errorThrown) {
-//             alert("ERROR : " + textStatus + " : " + errorThrown);
-//         }
-//     })
-// }
 
 
 // 댓글div 열려있는지 여부 판단 및 열고 닫기
@@ -187,50 +211,22 @@ function showComment(review) {
     // 댓글 블록 안에 작성
     for (let i = 0; i < dataList.length; i++) {
         if (revComIdx[i] == review) {
-            let comment;
-            if (isCommLike[i]) {
-                console.log('댓글 좋아요 여부 : ' + isCommLike[i] + " i : " + i);
-                console.log('댓글 번호 : ' + comIdx[i] + " i : " + i);
-                console.log('댓글 좋아요 개수 : ' + comLike[i] + " i : " + i);
-                comment = "<div class='__user-info'> " +
-                    "<a class='profile'> <div class='profile-pic'> " +
-                    "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
-                    "style='background: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;) center center no-repeat transparent;'>" +
-                    "</div> " +
-                    "<h4 class='name username'>" +
-                    "<span class='txt'>" + comNick[i] + "</span>" +
-                    "</h4> " +
-                    "<div class='__post-meta'> " +
-                    "<span class='__like __on comLike" + comIdx[i] + "' onclick='comHeart(" + comIdx[i] + "," + comLike[i] + "," + isCommLike[i] + "," + revComIdx[i] + "," + comPrIdx[i] + ")'>"
-                    + comLike[i] + "</span> " +
-                    "</div></a></div> " +
-                    "<div class='__content'><p class='content'>" + comContent[i] + "</p>" +
-                    "</div><div class='__post-meta'> " +
-                    "<span class='__date' style='font-size: 13px;flex-direction: row-reverse;'>" + comRegDate[i] + "</span> " +
-                    "<a class='__more' onclick='reportComment(" + comIdx[i] + "," + isComm[i] + "," + revComIdx[i] + "," + ")'>MORE</a></div>" +
-                    "<hr class='hairline'>";
-            } else {
-                console.log('댓글 좋아요 여부 : ' + isCommLike[i] + " i : " + i);
-                console.log('댓글 번호 : ' + comIdx[i] + " i : " + i);
-                console.log('댓글 좋아요 개수 : ' + comLike[i] + " i : " + i);
-                comment = "<div class='__user-info'> " +
-                    "<a class='profile'> <div class='profile-pic'> " +
-                    "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
-                    "style='background: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;) center center no-repeat transparent;'>" +
-                    "</div> " +
-                    "<h4 class='name username'>" +
-                    "<span class='txt'>" + comNick[i] + "</span>" +
-                    "</h4> " +
-                    "<div class='__post-meta'> " +
-                    "<span class='__like comLike" + comIdx[i] + "' onclick='comHeart(" + comIdx[i] + "," + comLike[i] + "," + isCommLike[i] + "," + revComIdx[i] + "," + comPrIdx[i] + ")'>"
-                    + comLike[i] + "</span> " +
-                    "</div></a></div> " +
-                    "<div class='__content'><p class='content'>" + comContent[i] + "</p>" +
-                    "</div><div class='__post-meta'> " +
-                    "<span class='__date' style='font-size: 13px;flex-direction: row-reverse;'>" + comRegDate[i] + "</span> " +
-                    "<a class='__more' onclick='reportComment(" + comIdx[i] + "," + isComm[i] + "," + revComIdx[i] + ")'>MORE</a></div>" +
-                    "<hr class='hairline'>";
-            }
+            let comment = "<div id='comDetail" + comIdx[i] + "'><div class='__user-info'> " +
+                "<a class='profile'> <div class='profile-pic'> " +
+                "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
+                "style='background: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;) center center no-repeat transparent;'>" +
+                "</div> " +
+                "<h4 class='name username'>" +
+                "<span class='txt'>" + comNick[i] + "</span>" +
+                "</h4> " +
+                "<div class='__post-meta'> " +
+                "</div></a></div> " +
+                "<div class='__content'><p class='content'>" + comContent[i] + "</p>" +
+                "</div><div class='__post-meta'> " +
+                "<span class='__date' style='font-size: 13px;flex-direction: row-reverse;'>" + comRegDate[i] + "</span> " +
+                "<a class='__more' onclick='reportComment(" + comIdx[i] + "," + isComm[i] + "," + revComIdx[i] + "," + ")'>MORE</a></div>" +
+                "<hr class='hairline'></div>";
+
             // 댓글 신고 및 삭제 모달 창
             let reportCom = "<div><div class='modal " + comIdx[i] + " modal-overlay'> <div class='modal-window'>" +
                 "<div class='close-area close" + comIdx[i] + "' onclick='closeCom(" + comIdx[i] + ")'>X</div> <div class='content'> <div class='drawer-box'> " +
@@ -245,99 +241,26 @@ function showComment(review) {
 
 }
 
-// 댓글 좋아요 여부 판단
-function comHeart(comIdx, comLike, isCommLike, revComIdx, comPrIdx) {
-    if (isCommLike) {
-        comHearting(comIdx, comLike, false, revComIdx, comPrIdx);       // 좋아요 취소
-    } else {
-        comHearting(comIdx, comLike, true, revComIdx, comPrIdx);
-    }
-}
 
-// 댓글 좋아요 기능
-function comHearting(comIdx, comLike, check, revIdx, prIdx) {
-    if (check) {
-        console.log('댓글 좋아요 증가 ❤️' + comLike);
-        let param = {"comIdx": comIdx, 'comLike': comLike, 'prIdx': prIdx, "revIdx": revIdx};
-        $.ajax({
-            type: 'POST',
-            data: JSON.stringify(param),
-            url: "/timeline/new/comment/heart",
-            contentType: "application/json",
-            success: function (data) {
-                console.log("디비 거친 후 좋아요 수 : " +data);
-                let liked = "<span class='__like __on comLike" + comIdx + "'" +
-                    "onclick='comHeart(" + comIdx + "," + comLike + "," + true + "," + revIdx + "," + prIdx + ")'>"
-                    + (data) + "</span>"
-                $('.comLike' + comIdx).replaceWith(liked);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("ERROR : " + textStatus + " : " + errorThrown);
-            }
-        });
-    } else {
-        // 좋아요 취소
-        console.log('댓글 좋아요 감소💙' + comLike);
-        let del = {"comIdx": comIdx, 'comLike': comLike, 'prIdx': prIdx, "revIdx": revIdx};
+// 댓글 등록
+function newCom(revIdx, prIdx) {
+    let newPost = $('.newContent' + revIdx).val();
+    let param = {"revIdx": revIdx, 'comContent': newPost, "prIdx": prIdx, "comLike": 0}
         $.ajax({
                 type: 'POST',
-                data: JSON.stringify(del),
-                url: "/timeline/del/comment/heart",
+                data: JSON.stringify(param),
+                url: "/timeline/new/comment",
                 contentType: "application/json",
+                async: false,
                 success: function (data) {
-                    console.log("디비 거친 후 좋아요 수 : " +data);
-                    let unliked = "<span class='__like comLike" + comIdx + "'" +
-                        "onclick='comHeart(" + comIdx + "," + comLike + "," + false + "," + revIdx + "," + prIdx + ")'>"
-                        + (data) + "</span>"
-                    $('.comLike' + comIdx).replaceWith(unliked);
+                    console.log(data)
+                    list(data)
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("ERROR : " + textStatus + " : " + errorThrown);
                 }
             }
         )
-
-    }
-}
-
-// 댓글 등록
-function newCom(revIdx, prIdx) {
-    let newPost = $('.newContent' + revIdx).val();
-    let param = {"revIdx": revIdx, 'comContent': newPost, "prIdx": prIdx, "comLike": 0}
-    $.ajax({
-            type: 'POST',
-            data: JSON.stringify(param),
-            url: "/timeline/new/comment",
-            contentType: "application/json",
-            success: function (data) {
-                console.log(data);
-                alert('댓글 등록 성공!');
-                // let com = list(data);
-                // console.log(com);
-                // let newCom = "<div class='__user-info'> " +
-                //     "<a class='profile'> <div class='profile-pic'> " +
-                //     "<img src='https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png' class='img'" +
-                //     "style='background: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;) center center no-repeat transparent;'>" +
-                //     " </div> " +
-                //     "<h4 class='name username'>" +
-                //     "<span class='txt'>" + com.comNick + "</span>" +
-                //     "</h4> " +
-                //     "<div class='__post-meta'> " +
-                //     "<span class='__like comLike'>" + com.comLike + "</span> " +
-                //     "</div> </a> </div> " +
-                //     "<div class='__content'><p class='content'>" + com.comContent + "</p></div><div class='__post-meta'> " +
-                //     "<span class='__date date' style='font-size: 13px;flex-direction: row-reverse;'>" + com.regDate + "</span> " +
-                //     "<a class='__more del'>MORE</a></div>" +
-                //     "<hr class='hairline'>";
-                // $('.comDiv' + id).append(newCom);
-                $('.comDiv' + id).load(location.href + '.comDiv' + id);
-
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert("ERROR : " + textStatus + " : " + errorThrown);
-            }
-        }
-    )
 
 }
 

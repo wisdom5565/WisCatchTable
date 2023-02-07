@@ -1,13 +1,15 @@
 package com.catchmind.catchtable.controller;
 
 
-import com.catchmind.catchtable.domain.*;
+import com.catchmind.catchtable.domain.Ask;
+import com.catchmind.catchtable.domain.Comment;
+import com.catchmind.catchtable.domain.Improvement;
+import com.catchmind.catchtable.domain.Review;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.AskRequest;
 import com.catchmind.catchtable.dto.network.request.DeclareCommentRequest;
 import com.catchmind.catchtable.dto.network.request.DeclareReviewRequest;
 import com.catchmind.catchtable.dto.network.request.ImprovementRequest;
-import com.catchmind.catchtable.dto.network.response.ReviewResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.*;
 import com.catchmind.catchtable.service.NoticeService;
@@ -15,7 +17,6 @@ import com.catchmind.catchtable.service.PaginationService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;

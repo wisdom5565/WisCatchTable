@@ -126,7 +126,7 @@
     <header id="header">
         ㅎㄷㅎㄷ
     </header>
-<!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
+    <!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
     <div class="wrapper" id="wrapperDiv">
         <div class="wrapper">
             <main id="main">
@@ -225,37 +225,9 @@
                                                         <div class="container gutter-sm">
                                                             <div class="__comment-list __comment-detail-list">
                                                                 <div>
-                                                                    <article
-                                                                            th:class="'__comment-item comDiv'+${review.revIdx}"
-                                                                            style="padding: 16px 20px 0px;">
-                                                                        <!--                                                                        <div class="__user-info">-->
-                                                                        <!--                                                                            <a class="profile">-->
-                                                                        <!--                                                                                <div class="profile-pic ">-->
-                                                                        <!--                                                                                    <img-->
-                                                                        <!--                                                                                            src="https://catchtable.co.kr/web-static/static_webapp_v2/img/noimg/profile_default_v2.png"-->
-                                                                        <!--                                                                                            alt="" class="img"-->
-                                                                        <!--                                                                                            style="background: url(&quot;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&quot;) center center no-repeat transparent;">-->
-                                                                        <!--                                                                                </div>-->
-                                                                        <!--                                                                                <h4 class="name username">-->
-                                                                        <!--                                                                                    <span th:class="'txt nick'+${review.revIdx}">예율</span>-->
-                                                                        <!--                                                                                </h4>-->
-                                                                        <!--                                                                                <div class="__post-meta">-->
-                                                                        <!--                                                                                    <span th:class="'__like comLike'+${review.revIdx}">-->
+                                                                    <article th:class="'__comment-item comDiv'+${review.revIdx}"
+                                                                             style="padding: 16px 20px 0px;">
 
-                                                                        <!--                                                                                    </span>-->
-                                                                        <!--                                                                                </div>-->
-                                                                        <!--                                                                            </a>-->
-                                                                        <!--                                                                        </div>-->
-                                                                        <!--                                                                        <div class="__content"><p-->
-                                                                        <!--                                                                                th:class="'content'+${review.revIdx}">예약-->
-                                                                        <!--                                                                            어떻게 성공 하셨나요 ,,,-->
-                                                                        <!--                                                                            ㅠㅠ </p></div>-->
-                                                                        <!--                                                                        <div class="__post-meta">-->
-                                                                        <!--                                                                                <span th:class="'__date date'+${review.revIdx}"-->
-                                                                        <!--                                                                                      style="font-size: 13px;flex-direction: row-reverse;">2022년 09월 09일</span>-->
-                                                                        <!--                                                                            <a th:class="'__more del'+${review.revIdx}">MORE</a>-->
-                                                                        <!--                                                                        </div>-->
-                                                                        <!--                                                                        <hr class="hairline">-->
                                                                     </article>
                                                                 </div>
                                                             </div>
