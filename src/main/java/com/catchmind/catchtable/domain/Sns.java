@@ -18,5 +18,13 @@ public class Sns {
 
     protected Sns() {}
 
+    public Sns(Profile profile, String snsAddr, String snsType) {
+        this.profile = profile;
+        this.snsAddr = snsAddr;
+        this.snsType = snsType;
+    }
+    public static Sns of(Profile profile, String snsAddr, String snsType) {
+        return new Sns(profile, snsAddr, snsType);
+    }
 
 }

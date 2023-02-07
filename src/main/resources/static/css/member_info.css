@@ -363,13 +363,13 @@ input[type=checkbox], input[type=radio] {
     padding: 0;
 }
 
-.css-1pes2r6 {
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    clip: rect(0px, 0px, 0px, 0px);
-}
+/*.css-1pes2r6 {*/
+/*    overflow: hidden;*/
+/*    position: absolute;*/
+/*    width: 1px;*/
+/*    height: 1px;*/
+/*    clip: rect(0px, 0px, 0px, 0px);*/
+/*}*/
 
 .css-14wodj6 > label > span {
     font-size: 14px;

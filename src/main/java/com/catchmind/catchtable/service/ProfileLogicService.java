@@ -6,10 +6,13 @@ import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.dto.BistroSaveDto;
 import com.catchmind.catchtable.dto.MyCollectionDto;
 import com.catchmind.catchtable.dto.ProfileDto;
+import com.catchmind.catchtable.dto.SnsDto;
 import com.catchmind.catchtable.dto.network.request.MyCollectionRequest;
+import com.catchmind.catchtable.dto.network.request.SnsRequest;
 import com.catchmind.catchtable.repository.BistroSaveRepository;
 import com.catchmind.catchtable.repository.MyCollectionRepository;
 import com.catchmind.catchtable.repository.ProfileRepository;
+import com.catchmind.catchtable.repository.SnsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ProfileLogicService {
+    private final SnsRepository snsRepository;
     private final ProfileRepository profileRepository;
     private final BistroSaveRepository bistroSaveRepository;
     private final MyCollectionRepository myCollectionRepository;
@@ -143,5 +147,12 @@ public class ProfileLogicService {
     public Optional<Profile> checkNick(String prNick) {
         Optional<Profile> profile = profileRepository.findByPrNick(prNick);
         return profile;
+    }
+    //sns추가
+    public String saveSNS(SnsRequest snsRequest, Long prIdx, String arr1, String arr2){
+        SnsDto newSns = snsRequest.of(prIdx,arr1,arr2).toDto();
+        System.out.println("🐒💙💙💙   " + newSns.toEntity());
+        snsRepository.save(newSns.toEntity());
+        return null;
     }
 }

@@ -1,10 +1,9 @@
 package com.catchmind.catchtable.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @ToString
 @Entity

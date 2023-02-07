@@ -2,9 +2,7 @@ package com.catchmind.catchtable.domain;
 
 import com.catchmind.catchtable.domain.type.MemberRole;
 import com.catchmind.catchtable.dto.network.request.ProfileRequest;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;

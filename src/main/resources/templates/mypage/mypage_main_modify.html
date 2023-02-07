@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www,ultraq.net.na/thymeleaf/layout"
+      layout:decorate="~{layouts/default}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>즐거운 미식 생활의 시작, 캐치테이블</title>
     <div th:replace="fragment/link :: link"/>
+    <link rel="stylesheet" href="/css/regist_hp.css">
     <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/member_info.css">
     <link rel="stylesheet" href="/css/collection_detail.css">
+    <script src="/js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 <div id="root">
@@ -30,7 +34,7 @@
                 </div>
             </div>
             <div class="css-ya8of1 e1w140tr0">
-                <form method="post" action="/mypage/modify">
+                <form method="post" role="form" id="frm" onsubmit="return modOk()" th:action="@{/mypage/modify}">
                     <div class="css-1pjgd36 e744wfw6">
                         <div class="css-1y8737n e744wfw5"><label
                                 class="css-1obgjqh e744wfw4" for="prNick">닉네임</label></div>
@@ -48,7 +52,7 @@
                             </div>
                         </div>
                         <div class="css-1w0ksfz e744wfw2">
-                            <button class="css-ufulao e4nu7ef3" type="button"><span
+                            <button onclick="double_check()" class="css-ufulao e4nu7ef3" type="button"><span
                                     class="css-ymwvow e4nu7ef1">중복 확인</span></button>
                         </div>
                     </div>
@@ -73,8 +77,8 @@
                         <div class="css-82a6rk e744wfw3">
                             <div class="css-1waqr6j e1uzxhvi6">
                                 <div class="css-176lya2 e1uzxhvi3"><input data-testid="input-box"
-                                                                          id="prUserpwfirm"
-                                                                          name="prUserpwfirm"
+                                                                          id="passwordConfirm"
+                                                                          name="passwordConfirm"
                                                                           placeholder="새 비밀번호를 다시 입력해 주세요"
                                                                           type="password" autocomplete="off"
                                                                           class="css-1bkd15f e1uzxhvi2" value=""></div>
@@ -110,39 +114,44 @@
                         </div>
                         <div class="css-1w0ksfz e744wfw2"></div>
                     </div>
+
+                    <!--                성별시작-->
                     <div class="css-1pjgd36 e744wfw6">
-                        <div class="css-1y8737n e744wfw5"><label class="css-1obgjqh e744wfw4">성별</label></div>
-                        <div class="css-82a6rk e744wfw3">
-                            <div class="css-14wodj6 e1ql5c2c0"><label class="css-z9g6s0 et8nqc33"
-                                                                      for="gender-man"><input data-testid="radio-MALE"
-                                                                                              id="gender-man"
-                                                                                              name="prGender"
-                                                                                              type="radio"
-                                                                                              class="css-1pes2r6 et8nqc32"
-                                                                                              value="남자"><span
-                                    class="css-198i9ca e2sqze61">
-                                    <div class="css-1dahn5m e2sqze60"></div>
-                                </span><span aria-labelledby="gender-man"
-                                             class="css-mgd87h et8nqc31">남자</span></label><label
-                                    class="css-z9g6s0 et8nqc33"
-                                    for="gender-woman"><input data-testid="radio-FEMALE" id="gender-woman"
-                                                              name="prGender"
-                                                              type="radio" class="css-1pes2r6 et8nqc32" value="여자"><span
-                                    class="css-198i9ca e2sqze61">
-                                    <div class="css-1dahn5m e2sqze60"></div>
-                                </span><span aria-labelledby="gender-woman"
-                                             class="css-mgd87h et8nqc31">여자</span></label><label
-                                    class="css-z9g6s0 et8nqc33"
-                                    for="gender-none"><input data-testid="radio-NONE" id="gender-none" name="gender"
-                                                             type="radio" class="css-1pes2r6 et8nqc32" value="선택안함"
-                                                             checked=""><span
-                                    class="css-5xw1m2 e2sqze61">
-                                    <div class="css-1vic0rk e2sqze60"></div>
-                                </span><span aria-labelledby="gender-none"
-                                             class="css-mgd87h et8nqc31">선택안함</span></label></div>
+                        <div class="css-1y8737n e744wfw5"><label class="css-1obgjqh e744wfw4">성별</label>
                         </div>
-                        <div class="css-1w0ksfz e744wfw2"></div>
+                        <div class="css-82a6rk e744wfw3">
+                            <div class="css-14wodj6 e1ql5c2c0">
+                                <label class="css-z9g6s0 et8nqc33" for="gender-man">
+                                    <input data-testid="radio-MALE" id="gender-man" name="prGender" type="radio"
+                                           class="css-1pes2r6 et8nqc32" value="남자">
+                                    <!--                                    <span class="css-198i9ca e2sqze61">-->
+                                    <!--                                    <div class="css-1dahn5m e2sqze60"></div>-->
+                                    <!--                                </span>-->
+                                    <span aria-labelledby="gender-man" class="css-mgd87h et8nqc31">남자</span>
+                                </label>
+
+                                <label class="css-z9g6s0 et8nqc33" for="gender-woman">
+                                    <input data-testid="radio-FEMALE" id="gender-woman" name="prGender" type="radio"
+                                           class="css-1pes2r6 et8nqc32" value="여자">
+                                    <!--                                    <span class="css-198i9ca e2sqze61"><div class="css-1dahn5m e2sqze60"></div></span>-->
+                                    <span aria-labelledby="gender-woman" class="css-mgd87h et8nqc31">여자</span>
+                                </label>
+
+                                <label class="css-z9g6s0 et8nqc33" for="gender-none">
+                                    <input data-testid="radio-NONE" id="gender-none" name="prGender" type="radio"
+                                           class="css-1pes2r6 et8nqc32" value="선택안함" checked>
+                                    <!--                                    <span class="css-5xw1m2 e2sqze61"><div class="css-1vic0rk e2sqze60"></div></span>-->
+                                    <span aria-labelledby="gender-none" class="css-mgd87h et8nqc31">선택안함</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <!--                        <div class="css-1w0ksfz e744wfw2"></div>-->
                     </div>
+                    <!--                    성별끝-->
+
+
                     <div class="css-1pjgd36 e744wfw6">
                         <div class="css-1y8737n e744wfw5"><label
                                 class="css-1obgjqh e744wfw4">생년월일</label></div>
@@ -215,5 +224,7 @@
     <div th:replace="fragment/footer :: footer"/>
 </div>
 <script src="/js/leave.js"></script>
+<script src="/js/check.js"></script>
+<script src="/js/mypageMod.js"></script>
 </body>
 </html>

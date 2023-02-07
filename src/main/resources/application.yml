@@ -17,8 +17,8 @@ spring:
       max-request-size: 100MB
       location: D:/test/
   main:
-      allow-bean-definition-overriding: true
+    allow-bean-definition-overriding: true
 server:
-  port: 9090
+  port: 8888
 
 

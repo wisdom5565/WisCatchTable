@@ -1,11 +1,12 @@
 package com.catchmind.catchtable.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity

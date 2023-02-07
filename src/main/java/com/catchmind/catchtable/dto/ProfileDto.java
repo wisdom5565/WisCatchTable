@@ -1,7 +1,7 @@
 package com.catchmind.catchtable.dto;
 
-import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.domain.type.MemberRole;
+import com.catchmind.catchtable.domain.Profile;
 
 public record ProfileDto(
         Long prIdx,
