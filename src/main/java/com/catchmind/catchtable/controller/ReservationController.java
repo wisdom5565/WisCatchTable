@@ -39,6 +39,33 @@ public class ReservationController {
         return "reservation/reservation";
     }
 
+    @GetMapping("/update/{resaBisName}/{resIdx}")
+    public String resUpdate(@PathVariable String resaBisName, @PathVariable Long resIdx,Model model){
+        model.addAttribute("resaBisName",resaBisName);
+        model.addAttribute("resIdx",resIdx);
+        return "reservation/reservation_update";
+    }
+
+    @PostMapping("/update/planned/{resIdx}")
+    @ResponseBody
+    public String resUpdatePlanned(@RequestBody ReserveRequest request,@PathVariable Long resIdx){
+        reserveLogicService.updateReserve(request,resIdx);
+        return "/mydining/planned";
+    }
+
+    @GetMapping("/blockCheck")
+    @ResponseBody
+    public boolean blockCheck(@AuthenticationPrincipal CatchPrincipal catchPrincipal){
+        Long prIdx = catchPrincipal.prIdx();
+        ProfileDto loginUser = reserveLogicService.getUser(prIdx);
+        System.out.println(loginUser.prBlock());
+        if(!loginUser.prBlock()){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
     @PostMapping(path="{resaBisName}")
     @ResponseBody
     public List<ShopResTableDto> resMain(@RequestBody ReserveRequest request) {
@@ -60,7 +87,6 @@ public class ReservationController {
         System.out.println(bistroDetailDto);
         return "reservation/payment";
     }
-
 
     @PostMapping("/pay")
     public @ResponseBody ReadyResponse payReady(@RequestBody PaymentRequest request, Model model){
@@ -101,7 +127,7 @@ public class ReservationController {
         //	orderNo, payMathod, 주문명.
         // - 카카오 페이로 넘겨받은 결재정보값을 저장.
 
-        return "redirect:/";
+        return "redirect:/mydining/planned";
     }
 
     // 결제 취소시 실행 url

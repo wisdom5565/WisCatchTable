@@ -1,7 +1,6 @@
 package com.catchmind.catchtable.dto;
 
 import com.catchmind.catchtable.domain.CommentHeart;
-import com.catchmind.catchtable.domain.Profile;
 
 public record CommentHeartDto(
         Long heIdx,

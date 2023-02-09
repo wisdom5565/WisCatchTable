@@ -5,7 +5,6 @@ import com.catchmind.catchtable.domain.TalkAdmin;
 import com.catchmind.catchtable.domain.type.ReservationType;
 import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.ReserveDto;
-
 import com.catchmind.catchtable.dto.network.request.ReviewRequest;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.ReserveRepository;
@@ -87,7 +86,7 @@ public class MydiningController {
         }
         System.out.println("⭕" + file);
         System.out.println("🎁" + files);
-        return "redirect:/mydining/done";
+        return "redirect:/mypage/review";
     }
 
     @PostMapping("/reserve/plannedDetail/{resIdx}")

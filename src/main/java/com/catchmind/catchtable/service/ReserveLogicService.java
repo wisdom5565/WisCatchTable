@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.service;
 
 
+import com.catchmind.catchtable.domain.Reserve;
 import com.catchmind.catchtable.domain.ShopResTable;
 import com.catchmind.catchtable.dto.BistroDetailDto;
 import com.catchmind.catchtable.dto.ProfileDto;
@@ -185,5 +186,14 @@ public class ReserveLogicService {
 
     public BistroDetailDto getInfo(String resaBisName) {
         return bistroDetailRepository.findByResAdmin_ResaBisName(resaBisName).map(BistroDetailDto::from).orElseThrow();
+    }
+
+    public Reserve updateReserve(ReserveRequest request, Long resIdx) {
+        Reserve reserve = reserveRepository.findById(resIdx).orElse(null);
+        reserve.setResMonth(request.resMonth());
+        reserve.setResDay(request.resDay());
+        reserve.setResTime(request.resTime());
+        reserve.setResPerson(Long.valueOf(request.resPerson()));
+        return reserveRepository.save(reserve);
     }
 }

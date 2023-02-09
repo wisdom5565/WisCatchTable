@@ -1,10 +1,12 @@
 package com.catchmind.catchtable.controller;
 
 import com.catchmind.catchtable.domain.Profile;
+import com.catchmind.catchtable.dto.PendingDto;
 import com.catchmind.catchtable.dto.network.request.ProfileRequest;
 import com.catchmind.catchtable.dto.network.request.SnsRequest;
 import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
+import com.catchmind.catchtable.service.PendingService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import com.catchmind.catchtable.service.TimeLineService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class PageController {
     private final PasswordEncoder passwordEncoder;
     private final ProfileLogicService profileLogicService;
     private final TimeLineService timeLineService;
+    private final PendingService pendingService;
 
     // 마이페이지 헤더
     public TimeLineResponse header(Long prIdx) {
@@ -44,26 +48,30 @@ public class PageController {
         model.addAttribute("prIdx",prIdx);
         return new ModelAndView("/newSNS");
     }
-
+    // sns 추가
     @PostMapping("/newSNS")
-    public String saveSNS(@AuthenticationPrincipal CatchPrincipal catchPrincipal, SnsRequest request){
+    public String saveSNS(@AuthenticationPrincipal CatchPrincipal catchPrincipal,
+                          SnsRequest request,
+                          HttpServletResponse response
+    ){
         Long prIdx = catchPrincipal.prIdx();
         String arr1[];
         String arr2[];
         arr1 = request.snsAddr().split(",");
         arr2 = request.snsType().split(",");
-//        for(int i=0; i<arr1.length;i++) {
-//            System.out.println(arr1[i]);
-//            System.out.println(arr2[i]);
-//        }
+
+
         for(int i=0; i<arr1.length;i++) {
+
             if(arr1[i]!=null && arr1[i]!="") {
-                profileLogicService.saveSNS(request,prIdx, arr1[i], arr2[i]);
+
+                profileLogicService.saveSNS(request, prIdx, arr1[i], arr2[i]);
+
             }
         }
+
         return "redirect:/mypage";
     }
-
     @GetMapping("/login")
     public ModelAndView login() {
         return new ModelAndView("/login");
@@ -100,10 +108,18 @@ public class PageController {
         }
     }
 
-
-    @GetMapping("/pending")
+    // 입점문의 페이지
+    @GetMapping("pending")
     public ModelAndView inquiry (){
         return new ModelAndView("/inquiry");
+    }
+
+    // 입점문의 등록
+    @PostMapping("/pending")
+    public String inquiry (PendingDto pendingDto){
+        System.out.println(pendingDto);
+        pendingService.createResAdmin(pendingDto);
+        return "redirect:/";
     }
 
 

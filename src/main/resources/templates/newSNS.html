@@ -20,15 +20,9 @@
 
     <!-- header 끝 -->
     <!--    <form id="join-form" role="form"> &lt;!&ndash;method="post" onsubmit="return sendit()"> th:action="@{/join}"&ndash;&gt;-->
-    <div class="wrapper">
-        <header id="header" class="opaque">
-            <div class="container">
-                <div class="header-left">
-                    <button class="btn-back" onclick="window.history.back()">이전</button>
-                    <h1 class="page-title">SNS</h1></div>
-            </div>
-        </header>
-        <main id="main">
+    <div class="wrapper" style="max-width: 600px;">
+
+        <main id="main" style="margin-top: 144px;">
             <form id="join-form" role="form" method="post" th:action="@{/newSNS}">
                 <input type="hidden" id="prIdx" th:value="${prIdx}">
                 <div class="my-account">

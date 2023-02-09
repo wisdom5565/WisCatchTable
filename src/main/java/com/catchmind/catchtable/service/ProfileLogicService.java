@@ -33,74 +33,96 @@ public class ProfileLogicService {
     private final ProfileRepository profileRepository;
     private final BistroSaveRepository bistroSaveRepository;
     private final MyCollectionRepository myCollectionRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final ReviewRepository reviewRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
-    private final PasswordEncoder passwordEncoder =  new BCryptPasswordEncoder();
 
-
-    public boolean login(String prHp, String prUserpw){
-        ProfileDto profileDto =  profileRepository.findByPrHp(prHp).map(ProfileDto::from).orElseThrow();
-        boolean isTrue = passwordEncoder.matches(prUserpw,profileDto.prUserpw());
+    public boolean login(String prHp, String prUserpw) {
+        ProfileDto profileDto = profileRepository.findByPrHp(prHp).map(ProfileDto::from).orElseThrow();
+        boolean isTrue = passwordEncoder.matches(prUserpw, profileDto.prUserpw());
         System.out.println(isTrue);
         return isTrue;
     }
-    public ProfileDto getProfileElements(Long prIdx){
+
+    public ProfileDto getProfileElements(Long prIdx) {
         return profileRepository.findById(prIdx)
                 .map(ProfileDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("유저가 없는데여 - prIdx :" + prIdx));
     }
 
-    public List<BistroSaveDto> getList(Long prIdx){
+    public List<BistroSaveDto> getList(Long prIdx) {
         return bistroSaveRepository.findAllByProfile_PrIdx(prIdx).stream().map(BistroSaveDto::from).collect(Collectors.toList());
     }
-    public List<BistroSaveDto> getSaveList(Long colIdx){
+
+    public List<BistroSaveDto> getSaveList(Long colIdx) {
         return bistroSaveRepository.findAllByColIdx(colIdx).stream().map(BistroSaveDto::from).collect(Collectors.toList());
     }
+
     public Profile saveMember(Profile profile) {
         System.out.println(profile);
         return profileRepository.save(profile);
     }
+
     public void updateProfile(Long prIdx, ProfileDto profileDto) {
         try {
             System.out.println(profileDto);
             Optional<Profile> profile = profileRepository.findById(prIdx);
             profile.ifPresent(
                     member -> {
-                        if(profileDto.prUserpw() != null) {member.setPrUserpw(passwordEncoder.encode(profileDto.prUserpw()));}
-                        if(profileDto.prHp() != null) {member.setPrHp(profileDto.prHp());}
-                        if(profileDto.prGender() != null) {member.setPrGender(profileDto.prGender());}
-                        if(profileDto.prIntro() != null) {member.setPrIntro(profileDto.prIntro());}
-                        if(profileDto.prNick() != null) {member.setPrNick(profileDto.prNick());}
-                        if(profileDto.prRegion() != null) {member.setPrRegion(profileDto.prRegion());}
-                        if(profileDto.prName() != null) {member.setPrName(profileDto.prName());}
+                        if (profileDto.prUserpw() != null && profileDto.prUserpw() != "") {
+                            member.setPrUserpw(passwordEncoder.encode(profileDto.prUserpw()));
+                        }
+                        if (profileDto.prHp() != null) {
+                            member.setPrHp(profileDto.prHp());
+                        }
+                        if (profileDto.prGender() != null) {
+                            member.setPrGender(profileDto.prGender());
+                        }
+                        if (profileDto.prIntro() != null) {
+                            member.setPrIntro(profileDto.prIntro());
+                        }
+                        if (profileDto.prNick() != null) {
+                            member.setPrNick(profileDto.prNick());
+                        }
+                        if (profileDto.prRegion() != null) {
+                            member.setPrRegion(profileDto.prRegion());
+                        }
+                        if (profileDto.prName() != null) {
+                            member.setPrName(profileDto.prName());
+                        }
                     }
             );
         } catch (EntityNotFoundException e) {
             log.warn("업데이트 실패..!!!, 공지사항을 찾을 수 없음  - exNoticeDTO {} ", profileDto);
         }
     }
+
     //    회원탈퇴
-    public void delete(Long prIdx){
+    public void delete(Long prIdx) {
         profileRepository.deleteById(prIdx);
     }
+
     //    컬렉션 삭제
-    public void delMyCollection(Long colIdx){
+    public void delMyCollection(Long colIdx) {
         myCollectionRepository.deleteById(colIdx);
     }
-    public void delRes(Long saveIdx){
+
+    public void delRes(Long saveIdx) {
         bistroSaveRepository.deleteById(saveIdx);
     }
-    public void createCollection(MyCollectionRequest request){
+
+    public void createCollection(MyCollectionRequest request) {
         System.out.println(request);
         System.out.println(request.toDto());
         System.out.println(request.toDto().toEntity());
         myCollectionRepository.save(request.toDto().toEntity());
     }
-    public List<MyCollectionDto> getColList(Long prIdx){
+
+    public List<MyCollectionDto> getColList(Long prIdx) {
         return myCollectionRepository.findAllByProfile_PrIdx(prIdx).stream().map(MyCollectionDto::from).collect(Collectors.toList());
     }
 
-    public MyCollectionDto getMyCollectionElements(Long colIdx){
+    public MyCollectionDto getMyCollectionElements(Long colIdx) {
         return myCollectionRepository.findById(colIdx)
                 .map(MyCollectionDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("유저가 없는데여 - prIdx :" + colIdx));
@@ -112,9 +134,15 @@ public class ProfileLogicService {
             Optional<MyCollection> myCollection = myCollectionRepository.findById(colIdx);
             myCollection.ifPresent(
                     collection -> {
-                        if(myCollectionDto.colTitle() != null) {collection.setColTitle(myCollectionDto.colTitle());}
-                        if(myCollectionDto.colContent() != null) {collection.setColContent(myCollectionDto.colTitle());}
-                        if(myCollectionDto.colLock() != true) {collection.setColLock(false);}
+                        if (myCollectionDto.colTitle() != null) {
+                            collection.setColTitle(myCollectionDto.colTitle());
+                        }
+                        if (myCollectionDto.colContent() != null) {
+                            collection.setColContent(myCollectionDto.colTitle());
+                        }
+                        if (!myCollectionDto.colLock()) {
+                            collection.setColLock(false);
+                        }
                     }
             );
         } catch (EntityNotFoundException e) {
@@ -127,10 +155,11 @@ public class ProfileLogicService {
         myCollection.setBisNames(bisNames);
         return myCollectionRepository.save(myCollection);
     }
+
     @Transactional
-    public void updateBistroSave(Long colIdx,String bisNames) {
+    public void updateBistroSave(Long colIdx, String bisNames) {
         String[] saveIdx = bisNames.split(",");
-        for(String idx : saveIdx) {
+        for (String idx : saveIdx) {
             System.out.println(idx);
             BistroSave bistroSave = bistroSaveRepository.findByResAdmin_ResaBisName(idx);
             System.out.println("🐒" + bistroSave);
@@ -138,7 +167,8 @@ public class ProfileLogicService {
 //            bistroSaveRepository.save(bistroSave);
         }
     }
-    public BistroSave delCollectionSave(Long saveIdx){
+
+    public BistroSave delCollectionSave(Long saveIdx) {
         BistroSave bistroSave = bistroSaveRepository.findById(saveIdx).orElse(null);
         bistroSave.setColIdx(null);
         return bistroSaveRepository.save(bistroSave);
@@ -149,15 +179,15 @@ public class ProfileLogicService {
         Optional<Profile> profile = profileRepository.findByPrNick(prNick);
         return profile;
     }
+
     //sns추가
-    public String saveSNS(SnsRequest snsRequest, Long prIdx, String arr1, String arr2){
-        SnsDto newSns = snsRequest.of(prIdx,arr1,arr2).toDto();
+    public String saveSNS(SnsRequest snsRequest, Long prIdx, String arr1, String arr2) {
+        SnsDto newSns = snsRequest.of(prIdx, arr1, arr2).toDto();
         System.out.println("🐒💙💙💙   " + newSns.toEntity());
         snsRepository.save(newSns.toEntity());
         return null;
     }
 
-    // 내리뷰 조회
     public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {
         List<ReviewResponse> reviewList = new ArrayList<>();
         List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();

@@ -22,7 +22,7 @@
             padding: 5px 20px;
         }
     </style>
-    </head>
+</head>
     <body class="form page-apply">
         <div class="wrap">
             <header>
@@ -76,7 +76,7 @@
                                     아래 내용을 상세하게 적을수록 빠르고 정확한 상담이 가능합니다.</p>
                             </div>
         
-                            <form name="form1" id="form1" method="post" action="/inquiry">
+                            <form name="form1" id="form1" method="post" action="/pending">
                                 <input type="hidden" name="gubun" value="">
                                 <fieldset>
                                     <div class="__fieldset-header">
@@ -86,31 +86,37 @@
                                         <div class="__form-block">
                                             <label for="shop_name" class="__form-label">매장명</label>
                                             <div class="__form-control">
-                                                <input type="text" placeholder="매장명을 입력해주세요." id="shop_name" name="shop_name" value="" class="__form-input">
+                                                <input type="text" placeholder="매장명을 입력해주세요." id="shop_name" name="penBisName" value="" class="__form-input">
                                             </div>
                                         </div>
                                         <div class="__form-block">
                                             <label for="customer_name" class="__form-label">문의자명 </label>
                                             <div class="__form-control">
-                                                <input type="text" placeholder="문의주시는 분의 성함과 직책을 입력해 주세요." id="customer_name" name="customer_name" value="" class="__form-input">
+                                                <input type="text" placeholder="문의주시는 분의 성함과 직책을 입력해 주세요." id="customer_name" name="penName" value="" class="__form-input">
                                             </div>
                                         </div>
                                         <div class="__form-block">
-                                            <label for="customer_phone" class="__form-label">문의자 번호</label>
+                                            <label for="customer_phone" class="__form-label">문의자 전화번호</label>
                                             <div class="__form-control">
-                                                <input type="phone" placeholder="문의자 번호를 입력해주세요." id="customer_phone" name="customer_phone" value="" class="__form-input">
+                                                <input type="phone" placeholder="문의자 전화번호를 입력해주세요." id="customer_phone" name="penHp" value="" class="__form-input">
+                                            </div>
+                                        </div>
+                                        <div class="__form-block">
+                                            <label for="customer_address" class="__form-label">매장 지역</label>
+                                            <div class="__form-control">
+                                                <input type="text" placeholder="매장의 위치를 시/구, 시/군/구 순으로 작성해주세요" id="customer_address" name="penRegion" value="" class="__form-input">
                                             </div>
                                         </div>
                                         <div class="__form-block">
                                             <label for="reservationCntAvg" class="__form-label">월 평균 예약건수</label>
                                             <div class="__form-control">
-                                                <select id="reservationCntAvg" name="reservationCntAvg" class="__form-input">
-                                                    <option value="" disabled="" selected="">월 평균 예약건수를 선택해주세요.</option>
-                                                    <option value="0~50건">0~50건</option>
-                                                    <option value="50~150건">50~150건</option>
-                                                    <option value="150~300건">150~300건</option>
-                                                    <option value="300~450건">300~450건</option>
-                                                    <option value="450건 이상">450건 이상</option>
+                                                <select id="reservationCntAvg" name="penBook" class="__form-input">
+                                                    <option value="" selected="" disabled>월 평균 예약건수를 선택해주세요.</option>
+                                                    <option value="50">0~50건</option>
+                                                    <option value="150">50~150건</option>
+                                                    <option value="300">150~300건</option>
+                                                    <option value="450">300~450건</option>
+                                                    <option value="600">450건 이상</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -122,14 +128,14 @@
                                         <h4>매장 분야* <small></small></h4>
                                     </div>
                                     <div class="__checkbox-group">
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="한식"> <span>한식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="중식"> <span>중식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="일식"> <span>일식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="이탈리안 음식"> <span>이탈리안 음식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="프랑스 음식"> <span>프랑스 음식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="유러피안 음식"> <span>유러피안 음식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="스페인 음식"> <span>스페인 음식</span></label>
-                                        <label class="__label-checkbox"><input type="checkbox" name="InterestField" value="기타 세계 음식"> <span>기타 세계 음식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="한식"> <span>한식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="중식"> <span>중식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="일식"> <span>일식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="이탈리안 음식"> <span>이탈리안 음식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="프랑스 음식"> <span>프랑스 음식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="유러피안 음식"> <span>유러피안 음식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="스페인 음식"> <span>스페인 음식</span></label>
+                                        <label class="__label-checkbox"><input type="radio" name="penFoodtype" value="기타 세계 음식"> <span>기타 세계 음식</span></label>
                                     </div>
                                 </fieldset>
         
@@ -163,7 +169,7 @@
                                     </div>
                                 </fieldset>
         
-                                <button id="inquiryBtn" name="inquiryBtn" class="submit" type="button"><strong>접수하기</strong></button>
+                                <button id="inquiryBtn" name="inquiryBtn" class="submit" type="submit"><strong>접수하기</strong></button>
                             </form>
                         </div>
                     </section>
@@ -360,7 +366,7 @@
                     alert('월 평균 예약건수 선택해 주세요.');
                     form1.reservationCntAvg.focus();
                 }
-                else if($("input:checkbox[name='InterestField']:checked").length == 0){
+                else if($("input:checkbox[name='penFoodtype']:checked").length == 0){
                     alert('관심 분야를 한개이상 선택해 주세요.');
                 }
                 else if(!$("input:checkbox[id='checkAgree']").is(":checked")) {
@@ -385,6 +391,7 @@
         
      
         <iframe id="__6472_ct_widget0_frame" frameborder="0" allowtransparency="true" width="100%" height="100%" src="" style="position: fixed; left: 0; top:0; visibility: hidden; z-index:18000; display:none"></iframe><iframe src="//tpc.googlesyndication.com/sodar/Beq5YUTp.html" width="0" height="0" style="display: none;"></iframe>
+        </div>
     </body>
 
 </html>

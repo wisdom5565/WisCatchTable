@@ -3,32 +3,16 @@ package com.catchmind.catchtable.config;
 import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.ProfileRepository;
-import com.catchmind.catchtable.service.ProfileLogicService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 
 // 스프링 시큐리티 설정 클래스
@@ -46,7 +30,7 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")            // 사용자 정의 로그인 페이지
                 .defaultSuccessUrl("/")            // 로그인 성공 후 이동 페이지
-                .failureUrl("/login")            // 로그인 실패 후 이동 페이지
+                .failureUrl("/login.html?error=true")            // 로그인 실패 후 이동 페이지
                 .usernameParameter("prHp")            // 아이디 파라미터명 설정
                 .passwordParameter("prUserpw")            // 패스워드 파라미터명 설정
                 .loginProcessingUrl("/loginOk")            // 로그인 Form Action Url

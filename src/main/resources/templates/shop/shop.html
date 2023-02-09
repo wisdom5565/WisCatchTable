@@ -56,7 +56,7 @@
                 <section class="section">
                     <div class="container gutter-sm">
                         <div class="restaurant-summary mb-20">
-                            <h2 class="name" th:text="${bisInfo.resAdminDto().resaBisName()}" ></h2>
+                            <h2 id="resa_bis_name" class="name" th:text="${bisInfo.resAdminDto().resaBisName()}" ></h2>
                             <p class="slogan" style="line-height: 1.5;" th:text="${bisInfo.bisDesc()}">고속터미널역에 위치한 무한 리필 스테이크 맛집</p><span
                                 class="tags">스테이크,립 • 반포</span>
                         </div>
@@ -75,7 +75,7 @@
                             <div class="mb-8"><a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown"
                                     style="border: 1px solid #666; border-radius: 6px;"><span><span
                                             class="label calendar">오늘(목) / 2명</span></span></a></div>
-                            <div class="btn-centered"><a th:href="'/reservation/'+${bisInfo.resAdminDto.resaBisName}" class="btn btn-rounded btn-outline-red"><span
+                            <div class="btn-centered"><a th:onclick="checkBlock([[${bisInfo.resAdminDto().resaBisName()}]])" class="btn btn-rounded btn-outline-red"><span
                                         class="label arrow">예약가능 날짜 찾기</span></a></div>
                 </section>
                 <hr class="separator">
@@ -532,4 +532,5 @@
 </body>
 <script type="text/javascript" src="/js/script.js"></script>
 <script type="text/javascript" src="/js/header.js"></script>
+<script src="/js/shopBlock.js"></script>
 </html>

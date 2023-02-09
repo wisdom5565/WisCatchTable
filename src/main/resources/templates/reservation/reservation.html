@@ -58,23 +58,20 @@
             background-color: #ff3d00;
             color: #fff;
         }
-        .display{
-            display: none;
-        }
        
     </style>
 </head>
 <body>
 <div id="root">
 <!--  header 시작-->
-    <header id="header1">
+    <header  id="header1">
         ㅎㄷㅎㄷ
     </header>
 <!--header 끝-->
         <div class="wrapper">
             <main id="main">
                 <section class="section">
-                    <header id="header">
+                    <header th:text="${resaBisName}" id="header">
                         스시도온
                     </header>
                     <!-- 날짜 API -->
@@ -132,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="drawer-box display">
+                    <div class="drawer-box">
                         <hr style="width:720px;" >
                         <div class="drawer-box-header">
                             <h2 class="drawer-box-title">예약금 확인</h2>

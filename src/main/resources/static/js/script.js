@@ -20,13 +20,9 @@ const bmbtn = document.querySelector('.btn-bookmark')
 
 $('.btn-bookmark').on({
     'click': function() {
-         var src = ($(this).attr('src') === '../bookmark_1.svg')
-            ? '../bookmark_2.svg' 
-            : '../bookmark_1.svg';
-         $(this).attr('src', src);
-         var aaa = ($(this).attr('src') === '../bookmark_1.svg')
-            ? toast('   저장한 레스토랑에서 삭제되었습니다       ') 
-            : toast('   레스토랑이 저장되었습니다    편집하기 >');
+        var src = ($(this).attr('src') === '/images/bookmark_1.svg') ? '/images/bookmark_2.svg' : '/images/bookmark_1.svg';
+        $(this).attr('src', src);
+        var aaa = ($(this).attr('src') === '/images/bookmark_1.svg') ? toast(' 저장한 레스토랑에서 삭제되었습니다 ') : toast(' 레스토랑이 저장되었습니다 편집하기 >');
     }
 });
 

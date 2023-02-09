@@ -1,11 +1,15 @@
 package com.catchmind.catchtable.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Follow extends AuditingField{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

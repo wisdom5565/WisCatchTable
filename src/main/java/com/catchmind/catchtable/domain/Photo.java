@@ -23,6 +23,13 @@ public class Photo {
 
 
     protected Photo(){}
+    public Photo(String savedPath) {
+        this.savedPath = savedPath;
+    }
+
+    public static Photo of1(String savedPath) {
+        return new Photo(savedPath);
+    }
 }
 //ph_idx int auto_increment primary key,
 //    org_nm varchar(1000) not null,

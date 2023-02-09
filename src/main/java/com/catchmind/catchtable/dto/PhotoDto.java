@@ -26,4 +26,9 @@ public record PhotoDto(
 
         );
     }
+    public Photo toEntity() {
+        return Photo.of1(
+                savedPath
+        );
+    }
 }

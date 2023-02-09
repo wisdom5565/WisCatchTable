@@ -4,7 +4,6 @@ import com.catchmind.catchtable.domain.Reserve;
 import com.catchmind.catchtable.domain.type.ReservationType;
 import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.ReviewDto;
-
 import com.catchmind.catchtable.dto.ReviewPhotoDto;
 import com.catchmind.catchtable.dto.network.request.ReviewPhotoRequest;
 import com.catchmind.catchtable.dto.network.request.ReviewRequest;
