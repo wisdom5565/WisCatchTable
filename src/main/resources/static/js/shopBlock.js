@@ -1,5 +1,4 @@
-function checkBlock(){
-    let resaBisName = document.getElementById("resa_bis_name").innerText;
+function checkBlock(resaBisName){
 
     $.ajax({
         url:'/reservation/blockCheck'
