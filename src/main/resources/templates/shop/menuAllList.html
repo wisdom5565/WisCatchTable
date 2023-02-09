@@ -6,18 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${resaBisName}"></title>
-<!--    즐거운 미식 생활의 시작, 캐치테이블-->
     <div th:replace="fragment/link :: link"/>
     <link rel="stylesheet" href="/css/st_menu.css">
 </head>
-
+<style>
+    .headerCategory {
+        padding: 17px 0;
+    }
+</style>
 <body>
-<div id="root">
 <!--header-->
     <header id="header">
         ㅎㄷㅎㄷ
     </header>
 <!--/header-->
+<div id="root">
     <div class="wrapper">
         <main id="main">
             <div class="menu-content shadow" >
@@ -71,5 +74,4 @@
 <!--/footer-->
 </div>
 </body>
-<script src="/js/header.js"></script>
 </html>

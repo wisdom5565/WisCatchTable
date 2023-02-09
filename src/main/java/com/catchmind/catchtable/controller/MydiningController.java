@@ -36,6 +36,9 @@ public class MydiningController {
 
     @GetMapping("/planned")
     public String planned(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.PLANNED, prIdx, Sort.by(Sort.Direction.DESC, "updateDate"));
         System.out.println(reserves);
@@ -54,6 +57,9 @@ public class MydiningController {
 
     @GetMapping("/done")
     public String done(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.DONE, prIdx, Sort.by(Sort.Direction.DESC, "updateDate"));
@@ -65,6 +71,9 @@ public class MydiningController {
 
     @GetMapping("/reserve/doneDetail/{resIdx}")
     public String doneDetail(Model model, @PathVariable("resIdx") Long resIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         System.out.println("🍎" + resIdx);
         Long prIdx = catchPrincipal.prIdx();
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
@@ -100,6 +109,9 @@ public class MydiningController {
 
     @GetMapping("/cancel")
     public String cancel(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         List<Reserve> reserves = reserveRepository.findAllByresStatusAndProfile_PrIdx(ReservationType.CANCEL, prIdx, Sort.by(Sort.Direction.DESC, "updateDate"));
         System.out.println(reserves);
@@ -109,6 +121,9 @@ public class MydiningController {
 
     @GetMapping("/emptySlot")
     public String emptySlot(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         List<TalkAdmin> talkAdmins = talkAdminRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "taaIdx"));
         model.addAttribute("list", talkAdmins);

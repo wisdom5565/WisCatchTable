@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -21,6 +21,7 @@
         justify-content: flex-start;
         margin-left: 45px;
     }
+
     .social a {
         display: flex;
         width: 32px;
@@ -31,8 +32,21 @@
         align-items: center;
         justify-content: center;
     }
-    .mypage-profile-meta{
+
+    .mypage-profile-meta {
         display: flex;
+    }
+
+    body {
+        scrollbar-color: white;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        overflow-x: hidden;
+    }
+
+    .header-wrap {
+        top: -6.5px;
+        right: 8px;
     }
 </style>
 <body>
@@ -129,7 +143,7 @@
                                         <th:block th:if="${timeLineIdx != prIdx}">
                                             <div th:class="profile">
                                                 <input type="hidden" class="isfollow" th:value="${isFollow}">
-                                                <input type="hidden" class="login-idx" th:value="${prIdx}">
+                                                    <input type="hidden" class="login-idx" th:value="${prIdx}">
                                                 <input type="hidden" class="timeline-idx" th:value="${timeLineIdx}">
                                             </div>
                                         </th:block>
@@ -179,8 +193,8 @@
 
         </div>
     </div>
+    <div th:replace="fragment/footer :: footer"/>
 </div>
-<div th:replace="fragment/footer :: footer"/>
 </body>
 <script src="/js/profileFollow.js"></script>
 <script type="text/javascript" src="/js/script.js"></script>

@@ -51,6 +51,10 @@ function totalList() {
 
 // 리뷰 좋아요 여부 판단
 function heart(prIdx, revIdx, isLike, heartNum) {
+    if(prIdx == null) {
+        alert('로그인 후 이용해주세요! ');
+        location.href="/login";
+    }
     console.log("전체 하트" + heartNum);
     if (isLike) {
         console.log(isLike)
@@ -243,8 +247,12 @@ function showComment(review) {
 
 // 댓글 등록
 function newCom(revIdx, prIdx) {
-    let newPost = $('.newContent' + revIdx).val();
-    let param = {"revIdx": revIdx, 'comContent': newPost, "prIdx": prIdx, "comLike": 0}
+    if(prIdx == null) {
+        alert('로그인 후 이용해주세요! ');
+        location.href="/login";
+    } else {
+        let newPost = $('.newContent' + revIdx).val();
+        let param = {"revIdx": revIdx, 'comContent': newPost, "prIdx": prIdx, "comLike": 0}
         $.ajax({
                 type: 'POST',
                 data: JSON.stringify(param),
@@ -260,6 +268,8 @@ function newCom(revIdx, prIdx) {
                 }
             }
         )
+    }
+
 
 }
 

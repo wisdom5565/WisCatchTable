@@ -90,6 +90,9 @@ public class NoticeController {
     // 1대1문의 리스트
     @GetMapping("/support/contact")
     public String contact(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="askIdx", direction = Sort.Direction.DESC) Pageable pageable) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
 //        List<AskDto> askDtoList = askRepository.findAllByProfile_PrIdx(prIdx).stream().map(AskDto::from).toList();
 
@@ -106,6 +109,9 @@ public class NoticeController {
     // 1대1문의 작성
     @GetMapping("/support/contact/write")
     public String contactWrite(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         model.addAttribute("prIdx", prIdx);
         return "notice/contact2";
@@ -168,6 +174,9 @@ public class NoticeController {
     // 개선제안 리스트
     @GetMapping("/support/improve")
     public String improve(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal, @PageableDefault(size=10, sort="impIdx", direction = Sort.Direction.DESC) Pageable pageable) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
 //        List<ImprovementDto> improvementDtoList = improvementRepository.findAllByProfile_PrIdx(prIdx).stream().map(ImprovementDto::from).toList();
         Page<Improvement> improvementDtoList = noticeService.listImp(pageable, prIdx);
@@ -180,6 +189,9 @@ public class NoticeController {
     //개선제안 작성
     @GetMapping("/support/improve/write")
     public String improveWrite(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         model.addAttribute("prIdx", prIdx);
         return "notice/improve2";
@@ -194,6 +206,9 @@ public class NoticeController {
     // 리뷰 신고내역
     @GetMapping("/report/review/list")
     public String reportList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         List<DeclareReviewDto> declareReviewDto = noticeService.listDe(prIdx);
         model.addAttribute("notice", declareReviewDto);
@@ -203,6 +218,9 @@ public class NoticeController {
     // 댓글 신고내역
     @GetMapping("/report/comment/list")
     public String reportCommentList(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         List<DeclareCommentDto> declareCommentDto = noticeService.listDec(prIdx);
         model.addAttribute("notice", declareCommentDto);
@@ -213,6 +231,9 @@ public class NoticeController {
     // 리뷰 신고
     @GetMapping("/report/review/{revIdx}")
     public String reportReview(Model model, @PathVariable(name="revIdx")Long revIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         System.out.println("🍋" + prIdx);
         System.out.println("🍌" + revIdx);
@@ -234,6 +255,9 @@ public class NoticeController {
     // 댓글 신고
     @GetMapping("/report/comment/{comIdx}")
     public String reportReply(Model model, @PathVariable(name="comIdx")Long comIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         String prHp = catchPrincipal.prHp();
         System.out.println("🍋" + prIdx);
@@ -249,7 +273,10 @@ public class NoticeController {
 
     // 댓글 신고 작성
     @PostMapping("/report/comment")
-    public String reportReplyWrite(DeclareCommentRequest declareCommentRequest){
+    public String reportReplyWrite(DeclareCommentRequest declareCommentRequest, @AuthenticationPrincipal CatchPrincipal catchPrincipal){
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         noticeService.saveDeclareComment(declareCommentRequest);
         System.out.println("🗡️" + declareCommentRequest);
         return "redirect:/report/comment/list";

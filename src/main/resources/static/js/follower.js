@@ -7,6 +7,7 @@ for (let i = 0; i < size; i++) {
     console.log(listPrIdx[i].value)
     console.log(isFollow[i])
     if (isFollow[i].value == 'true') {
+        i
         console.log("⭕")
         let btn = "<button type='button' onclick ='follow(" + prIdx[i].value + "," + listPrIdx[i].value + ")' class='btn btn-md btn-outline-orange btn-rounded full-width t" + listPrIdx[i].value + "'>" +
             "<span class='label " + listPrIdx[i].value + "'>팔로잉</span>" +
@@ -22,6 +23,10 @@ for (let i = 0; i < size; i++) {
 }
 
 function follow(prIdx, timeLineIdx) {
+    if(prIdx == null || prIdx == '') {
+        alert('로그인 후 이용해주세요!')
+        location.href="/login";
+    }
     const spanText = $('.' + timeLineIdx).text();
     console.log(spanText);
     if (spanText == '팔로우') {

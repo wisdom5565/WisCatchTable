@@ -21,6 +21,10 @@ if(profile.value == 'true') {
 }
 
 function follow(prIdx, timeLineIdx) {
+    if(prIdx == null || prIdx == '') {
+        alert('로그인 후 이용해주세요!')
+        location.href="/login";
+    }
     const spanText = $('.label').text();
     console.log(spanText);
     if (spanText == '팔로우') {

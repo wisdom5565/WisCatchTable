@@ -19,32 +19,39 @@
             text-indent: -999em;
             overflow: hidden;
         }
+
         a {
             color: #000;
         }
+
         a {
             color: #000;
             text-decoration: none;
         }
+
         .my-dining-item .info .date {
             color: #ff3d00;
         }
+
         .my-dining-item .info .meta {
             font-size: 12px;
             color: #666;
             margin-bottom: 6px;
         }
+
         .meta {
             display: flex;
             align-items: baseline;
             line-height: 14px;
         }
+
         .my-dining-item .info {
             font-weight: 500;
             min-width: 0;
             flex: 1;
             padding-right: 15px;
         }
+
         .my-dining-item .tb img {
             object-fit: cover;
             width: 48px;
@@ -52,33 +59,39 @@
             display: block;
             border-radius: 4px;
         }
+
         .my-dining-item .tb {
             margin-right: 14px;
             min-width: 0;
             width: 48px;
             align-self: flex-start;
         }
+
         .my-dining-item .restaurant-info {
             display: flex;
             align-items: center;
             padding: 16px;
             position: relative;
         }
+
         .my-dining-item .my-dining-status .desc {
             font-size: 12px;
             color: #666;
             padding: 0 2px;
             margin-right: -20px;
         }
-        .my-dining-item .my-dining-status>* {
+
+        .my-dining-item .my-dining-status > * {
             margin-right: 5px;
             display: block;
         }
+
         .my-dining-item .my-dining-status .badge.danger {
             background: #ffebe5;
             border-color: #ffebe5;
             color: #ff3d00;
         }
+
         .my-dining-item .my-dining-status .badge {
             border: 1px solid #d5d5d5;
             box-sizing: border-box;
@@ -91,24 +104,29 @@
             justify-content: center;
             align-items: center;
         }
+
         .my-dining-item .my-dining-status {
             padding: 24px 16px 0;
             margin-bottom: -5px;
             display: flex;
             align-items: center;
         }
+
         .my-dining-item.completed .my-dining-item-header, .my-dining-item.with-x .my-dining-item-header {
             padding-right: 30px;
         }
+
         .my-dining-item .my-dining-item-header {
             position: relative;
         }
+
         .my-dining-item {
             background: #fff;
             border-radius: 10px;
             filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, .15));
             backdrop-filter: blur(6px);
         }
+
         .label1 {
             /*border-color: #000;*/
             color: #000;
@@ -133,6 +151,10 @@
             border: 1px solid transparent;
             color: #666;
         }
+
+        .headerCategory {
+            padding: 6px 0;
+        }
     </style>
 
 <body class="disable-user-select">
@@ -156,7 +178,7 @@
                 <div class="container gutter-sm">
                     <div class="tag-radio-group mt--10">
                         <a th:href="@{/mydining/planned}" class="check"><span class="label2">방문예정</span></a>
-                        <a th:href="@{/mydining/done}"><span class="label2" >방문완료</span></a>
+                        <a th:href="@{/mydining/done}"><span class="label2">방문완료</span></a>
                         <!-- <label style="position: relative;"><input type="radio" name="type" value="done"><span class="label">방문완료</span></label> -->
                         <a th:href="@{/mydining/cancel}"><span class="label1">취소/노쇼</span></a>
                         <a th:href="@{/mydining/emptySlot}"><span class="label2">나의 알림</span></a>
@@ -169,9 +191,12 @@
                                 <br>캐치테이블을 통해 편리하게 예약해 보세요!</p>
                             <div class="centered-btn">
                                 <a href="#" class="btn-blue">
-                                            <span class="label"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                            <span class="label"><svg width="18" height="18" viewBox="0 0 18 18"
+                                                                     fill="none"
                                                                      xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.56604 2.0625C5.28489 2.0625 2.625 4.72239 2.625 8.00354C2.625 11.2847 5.28489 13.9446 8.56604 13.9446C10.0188 13.9446 11.3498 13.4231 12.382 12.5572L14.4359 14.4396C14.7413 14.7195 15.2157 14.6988 15.4956 14.3935C15.7755 14.0881 15.7548 13.6137 15.4494 13.3338L13.4012 11.4565C14.0974 10.4834 14.5071 9.29132 14.5071 8.00354C14.5071 4.72239 11.8472 2.0625 8.56604 2.0625ZM4.125 8.00354C4.125 5.55082 6.11332 3.5625 8.56604 3.5625C11.0188 3.5625 13.0071 5.55082 13.0071 8.00354C13.0071 10.4563 11.0188 12.4446 8.56604 12.4446C6.11332 12.4446 4.125 10.4563 4.125 8.00354Z" fill="#0091FF">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                      d="M8.56604 2.0625C5.28489 2.0625 2.625 4.72239 2.625 8.00354C2.625 11.2847 5.28489 13.9446 8.56604 13.9446C10.0188 13.9446 11.3498 13.4231 12.382 12.5572L14.4359 14.4396C14.7413 14.7195 15.2157 14.6988 15.4956 14.3935C15.7755 14.0881 15.7548 13.6137 15.4494 13.3338L13.4012 11.4565C14.0974 10.4834 14.5071 9.29132 14.5071 8.00354C14.5071 4.72239 11.8472 2.0625 8.56604 2.0625ZM4.125 8.00354C4.125 5.55082 6.11332 3.5625 8.56604 3.5625C11.0188 3.5625 13.0071 5.55082 13.0071 8.00354C13.0071 10.4563 11.0188 12.4446 8.56604 12.4446C6.11332 12.4446 4.125 10.4563 4.125 8.00354Z"
+                                                      fill="#0091FF">
                                             </path>
                                         </svg> 레스토랑 둘러보기</span>
                                 </a>
@@ -193,13 +218,14 @@
                                             <!--                                                재사용가능한 컨텐츠-->
                                             <div id="myReservationDoneListScroll_0" data-dummy="139">
                                                 <div class="my-dining-item completed" style="margin: 24px 5px">
-                                                    <div class="my-dining-item-header" >
+                                                    <div class="my-dining-item-header">
                                                         <div class="my-dining-status">
-                                                            <div class="badge danger" th:text="${list.resStatus.description}"></div>
+                                                            <div class="badge danger"
+                                                                 th:text="${list.resStatus.description}"></div>
                                                             <div class="desc">
                                                                 <div class="cancel">
                                                                     <span class="label">예약취소</span>
-                                                                    <span class="date" >[[${#temporals.month(list.updateDate)}]].[[${#temporals.day(list.updateDate)}]]([[${#temporals.dayOfWeekNameShort(list.updateDate)}]])  [[${#temporals.format(list.updateDate, 'HH:mm')}]]</span>
+                                                                    <span class="date">[[${#temporals.month(list.updateDate)}]].[[${#temporals.day(list.updateDate)}]]([[${#temporals.dayOfWeekNameShort(list.updateDate)}]])  [[${#temporals.format(list.updateDate, 'HH:mm')}]]</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -210,9 +236,15 @@
                                                                 />
                                                             </div>
                                                             <div class="info">
-                                                                <h3 th:text="${list.resAdmin.resaBisName}">리마스터 인 피아 라운지</h3>
-                                                                <div class="meta"><span>[[${list.bistroInfo.bisCategory}]] · [[${list.bistroInfo.bisRegion}]]</span></div>
-                                                                <div class="date"><del>[[${list.resMonth}]]월[[${list.resDay}]]일 [[${list.resTime}]]시 [[${list.resPerson}]]명</del></div>
+                                                                <h3 th:text="${list.resAdmin.resaBisName}">리마스터 인 피아
+                                                                    라운지</h3>
+                                                                <div class="meta"><span>[[${list.bistroInfo.bisCategory}]] · [[${list.bistroInfo.bisRegion}]]</span>
+                                                                </div>
+                                                                <div class="date">
+                                                                    <del>[[${list.resMonth}]]월[[${list.resDay}]]일
+                                                                        [[${list.resTime}]]시 [[${list.resPerson}]]명
+                                                                    </del>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <!--                                                        <a class="btn-delete">삭제</a>-->

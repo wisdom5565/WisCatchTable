@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <thlogic>
-    <attr sel="#header1" th:replace="header :: html"/>
+    <attr sel="#header1" th:replace="header :: header"/>
 
 <!--    <attr sel="main" th:object="${reviews}">-->
 <!--        <attr sel="#search-form" th:action="@{/review}" th:method="get"/>-->

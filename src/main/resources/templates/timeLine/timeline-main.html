@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>즐거운 미식 생활의 시작, 캐치테이블</title>
     <div th:replace="fragment/link :: link"/>
-    <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/collection_detail.css">
+    <link rel="stylesheet" href="/css/mypage.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -119,13 +119,23 @@
         color: black;
     }
 
+    body {
+        scrollbar-color: white;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        overflow-x: hidden;
+    }
+    .header-wrap {
+        top: -6.5px;
+        right: 8px;
+    }
 
 </style>
 <body>
+<header id="header">
+    ㅎㄷㅎㄷ
+</header>
 <div id="root">
-    <header id="header">
-        ㅎㄷㅎㄷ
-    </header>
     <!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
     <div class="wrapper" id="wrapperDiv">
         <div class="wrapper">
@@ -136,7 +146,8 @@
                             <div class="__my-review-list ml--20 mr--20">
                                 <div id="shopReviewListScroll">
                                     <div id="shopReviewListScroll_0" data-dummy="495.6363830566406">
-                                        <article class="__my-review-post" style="overflow-x: hidden;"
+                                        <article class="__my-review-post"
+                                                 style="overflow-x: hidden; margin-left: -15px;"
                                                  th:each="review : ${reviews}">
                                             <div class="__header">
                                                 <div class="__user-info"
@@ -166,10 +177,12 @@
                                                             <div th:each="photo : ${review.photo}">
                                                                 <div class="swiper-slide"
                                                                      style="margin-right: 8px;">
-                                                                    <th:block th:if="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                    <th:block
+                                                                            th:if="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
                                                                         <img th:src="${photo.savedPath}" alt="">
                                                                     </th:block>
-                                                                    <th:block th:unless="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                    <th:block
+                                                                            th:unless="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
                                                                         <img th:src="'/photo/'+${photo.savedNm}" alt="">
                                                                     </th:block>
                                                                 </div>
@@ -197,7 +210,8 @@
                                                             분위기도 좋고 친절 하고 .. 심지어 집근처... 자주 갈듯요!!
                                                         </div>
                                                     </div>
-                                                    <div class="restaurant-info" style="padding:8px;">
+                                                    <div class="restaurant-info"
+                                                         style="padding: 15px;margin-left: -15px;">
                                                         <div class="__info" style="font-size: 1em;">
                                                             <h4 class="__name">
                                                                 <span th:text="${review.resAdminDto.resaBisName}">미래회관 한남</span>
@@ -211,7 +225,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="timeline-post-footer">
-                                                    <div class="__post-meta">
+                                                    <div class="__post-meta" style="margin-left: -15px;">
                                                         <div th:class="'heart'+${review.revIdx}">
                                                         </div>
                                                         <div th:class="'comment'+${review.revIdx}">

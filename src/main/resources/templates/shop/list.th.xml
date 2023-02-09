@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <thlogic>
-    <attr sel="#header" th:replace="header :: html"/>
+    <attr sel="#header" th:replace="header :: header"/>
 
 <!--    <attr sel="#pagination">-->
 <!--        <attr sel="li[0]/a" th:text="'previous'"-->

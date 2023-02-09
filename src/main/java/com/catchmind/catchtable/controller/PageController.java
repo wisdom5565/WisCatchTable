@@ -41,37 +41,6 @@ public class PageController {
         return new ModelAndView("/index");
     }
 
-    @GetMapping("/newSNS")
-    public ModelAndView SNS(@AuthenticationPrincipal CatchPrincipal catchPrincipal,
-                            Model model){
-        Long prIdx = catchPrincipal.prIdx();
-        model.addAttribute("prIdx",prIdx);
-        return new ModelAndView("/newSNS");
-    }
-    // sns 추가
-    @PostMapping("/newSNS")
-    public String saveSNS(@AuthenticationPrincipal CatchPrincipal catchPrincipal,
-                          SnsRequest request,
-                          HttpServletResponse response
-    ){
-        Long prIdx = catchPrincipal.prIdx();
-        String arr1[];
-        String arr2[];
-        arr1 = request.snsAddr().split(",");
-        arr2 = request.snsType().split(",");
-
-
-        for(int i=0; i<arr1.length;i++) {
-
-            if(arr1[i]!=null && arr1[i]!="") {
-
-                profileLogicService.saveSNS(request, prIdx, arr1[i], arr2[i]);
-
-            }
-        }
-
-        return "redirect:/mypage";
-    }
     @GetMapping("/login")
     public ModelAndView login() {
         return new ModelAndView("/login");

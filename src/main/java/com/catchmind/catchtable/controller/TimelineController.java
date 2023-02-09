@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.controller;
 
 import com.catchmind.catchtable.domain.Follow;
+import com.catchmind.catchtable.domain.Review;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.CommentHeartRequest;
 import com.catchmind.catchtable.dto.network.request.FollowRequest;
@@ -12,6 +13,7 @@ import com.catchmind.catchtable.service.TimeLineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -32,24 +34,23 @@ public class TimelineController {
     private final TimeLineService timeLineService;
     private final PaginationService paginationService;
 
-//    // 타임라인 헤더
-//    public TimeLineResponse header(Long prIdx) {
-//        TimeLineResponse response = timeLineService.getHeader(prIdx);
-//        return response;
-//    }
-
     // 전체 리뷰 페이지
     @GetMapping("")
     public String timeline(ModelMap map, @AuthenticationPrincipal CatchPrincipal catchPrincipal,
                            @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
-        Long prIdx = catchPrincipal.prIdx();
-        Page<ReviewResponse> reviews = timeLineService.getReviews(pageable, prIdx);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
-
-//        map.addAttribute("header", header);
-        map.addAttribute("reviews", reviews);
-        map.addAttribute("prIdx", prIdx);
-        map.addAttribute("paginationBarNumbers", barNumbers);
+        if (catchPrincipal == null) {
+            Page<ReviewResponse> reviews = timeLineService.getReviews(pageable);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
+            map.addAttribute("reviews", reviews);
+            map.addAttribute("paginationBarNumbers", barNumbers);
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            Page<ReviewResponse> reviews = timeLineService.getReviews(pageable, prIdx);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
+            map.addAttribute("reviews", reviews);
+            map.addAttribute("prIdx", prIdx);
+            map.addAttribute("paginationBarNumbers", barNumbers);
+        }
         return "timeline/timeline-main";
     }
 
@@ -57,25 +58,34 @@ public class TimelineController {
     @GetMapping("/profile/{timeLineIdx}")
     public String profile(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
                           @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
-        Long prIdx = catchPrincipal.prIdx();
-        Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
-        boolean isFollow = false;
-        List<FollowDto> loginFollowing = timeLineService.getFollowerList(prIdx);
-        TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
-        for (FollowDto follow : loginFollowing) {
-            System.out.println("following" + follow.following());
-            System.out.println("follower" + follow.follower());
-            if (timeLineIdx == follow.following().prIdx()) {
-                isFollow = true;
+        if (catchPrincipal == null) {
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            boolean isFollow = false;
+            map.addAttribute("isFollow", isFollow);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+            map.addAttribute("profile", profile);
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
+            boolean isFollow = false;
+            List<FollowDto> loginFollowing = timeLineService.getFollowerList(prIdx);
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            for (FollowDto follow : loginFollowing) {
+                System.out.println("following" + follow.following());
+                System.out.println("follower" + follow.follower());
+                if (timeLineIdx == follow.following().prIdx()) {
+                    isFollow = true;
+                }
             }
-        }
-        System.out.println(isFollow);
+            System.out.println(isFollow);
 
-        map.addAttribute("profile", profile);
-        map.addAttribute("reviews", response);
-        map.addAttribute("timeLineIdx", timeLineIdx);
-        map.addAttribute("prIdx", prIdx);
-        map.addAttribute("isFollow", isFollow);
+            map.addAttribute("profile", profile);
+            map.addAttribute("reviews", response);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+            map.addAttribute("prIdx", prIdx);
+            map.addAttribute("isFollow", isFollow);
+        }
+
         return "timeline/profile";
     }
 
@@ -92,7 +102,7 @@ public class TimelineController {
 
     //  공개된 컬렉션 상세 페이지
     @GetMapping("/collection/{timeLineIdx}/detail/{colIdx}")
-    public String collection(@PathVariable Long timeLineIdx, @PathVariable Long colIdx,
+    public String collection(@PathVariable Long timeLineIdx, @PathVariable Long colIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal,
                              @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map) {
         List<BistroSaveDto> responses = timeLineService.getCollectionDetail(colIdx);
         System.out.println(responses);
@@ -128,63 +138,92 @@ public class TimelineController {
     // 팔로잉 리스트
     @GetMapping("/following/{timeLineIdx}")
     public String following(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
-        Long prIdx = catchPrincipal.prIdx();
-        TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
-
-        List<FollowDto> followingDtos = timeLineService.getFollowerList(timeLineIdx);
-        List<FollowDto> loginDtos = timeLineService.getFollowerList(prIdx);
-        List<FollowResponse> followingList = new ArrayList<>();
-        boolean isFollow = false;
-        for (FollowDto follow : followingDtos) {
-            for (FollowDto login : loginDtos) {
-                if (follow.following().prIdx() == login.following().prIdx()) {
-                    isFollow = true;
-                    break;
-                }
+        // 로그인 안한 회원
+        if (catchPrincipal == null) {
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            List<FollowDto> followingDtos = timeLineService.getFollowerList(timeLineIdx);
+            boolean isFollow = false;
+            List<FollowResponse> followingList = new ArrayList<>();
+            for (FollowDto follow : followingDtos) {
+                FollowResponse response = new FollowResponse(follow.following().prIdx(), follow.following().prNick(), follow.following().prIntro(), isFollow);
+                followingList.add(response);
             }
-            FollowResponse response = new FollowResponse(follow.following().prIdx(), follow.following().prNick(), follow.following().prIntro(), isFollow);
-            followingList.add(response);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+            map.addAttribute("profile", profile);
+            map.addAttribute("followings", followingList);
+            // 로그인한 유저
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            List<FollowDto> followingDtos = timeLineService.getFollowerList(timeLineIdx);
+            List<FollowDto> loginDtos = timeLineService.getFollowerList(prIdx);
+            List<FollowResponse> followingList = new ArrayList<>();
+            boolean isFollow = false;
+            for (FollowDto follow : followingDtos) {
+                for (FollowDto login : loginDtos) {
+                    if (follow.following().prIdx() == login.following().prIdx()) {
+                        isFollow = true;
+                        break;
+                    }
+                }
+                FollowResponse response = new FollowResponse(follow.following().prIdx(), follow.following().prNick(), follow.following().prIntro(), isFollow);
+                followingList.add(response);
+            }
+
+            System.out.println("비교 후 리스트 : " + followingList);
+
+            map.addAttribute("prIdx", prIdx);
+            map.addAttribute("profile", profile);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+            map.addAttribute("followings", followingList);
         }
 
-        System.out.println("비교 후 리스트 : " + followingList);
-
-//        map.addAttribute("header", header);
-        map.addAttribute("prIdx", prIdx);
-        map.addAttribute("profile", profile);
-        map.addAttribute("timeLineIdx", timeLineIdx);
-        map.addAttribute("followings", followingList);
         return "timeline/followingList";
     }
 
     // 팔로워 리스트
     @GetMapping("/follower/{timeLineIdx}")
     public String follower(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
-        Long prIdx = catchPrincipal.prIdx();
-//        TimeLineResponse header = header(prIdx);
-        TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
-
-        List<FollowDto> followerDtos = timeLineService.getFollowingList(timeLineIdx);
-        List<FollowDto> loginDtos = timeLineService.getFollowerList(prIdx);
-        List<FollowResponse> followerList = new ArrayList<>();
-        boolean isFollow = false;
-        for (FollowDto follow : followerDtos) {
-            for (FollowDto login : loginDtos) {
-                if (follow.follower().prIdx() == login.following().prIdx()) {
-                    isFollow = true;
-                    break;
-                }
+        if (catchPrincipal == null) {
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            List<FollowDto> followerDtos = timeLineService.getFollowingList(timeLineIdx);
+            boolean isFollow = false;
+            List<FollowResponse> followerList = new ArrayList<>();
+            for (FollowDto follow : followerDtos) {
+                FollowResponse response = new FollowResponse(follow.follower().prIdx(), follow.follower().prNick(), follow.follower().prIntro(), isFollow);
+                followerList.add(response);
             }
-            FollowResponse response = new FollowResponse(follow.follower().prIdx(), follow.follower().prNick(), follow.follower().prIntro(), isFollow);
-            followerList.add(response);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+            map.addAttribute("profile", profile);
+            map.addAttribute("followers", followerList);
+
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+
+            List<FollowDto> followerDtos = timeLineService.getFollowingList(timeLineIdx);
+            List<FollowDto> loginDtos = timeLineService.getFollowerList(prIdx);
+            List<FollowResponse> followerList = new ArrayList<>();
+            boolean isFollow = false;
+            for (FollowDto follow : followerDtos) {
+                for (FollowDto login : loginDtos) {
+                    if (follow.follower().prIdx() == login.following().prIdx()) {
+                        isFollow = true;
+                        break;
+                    }
+                }
+                FollowResponse response = new FollowResponse(follow.follower().prIdx(), follow.follower().prNick(), follow.follower().prIntro(), isFollow);
+                followerList.add(response);
+            }
+            System.out.println("검사후 팔로워 리스트 : " + followerList);
+
+
+            map.addAttribute("prIdx", prIdx);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+            map.addAttribute("followers", followerList);
+            map.addAttribute("profile", profile);
         }
-        System.out.println("검사후 팔로워 리스트 : " + followerList);
 
-
-//        map.addAttribute("header", header);
-        map.addAttribute("prIdx", prIdx);
-        map.addAttribute("timeLineIdx", timeLineIdx);
-        map.addAttribute("followers", followerList);
-        map.addAttribute("profile", profile);
         return "timeline/followerList";
     }
 
@@ -215,24 +254,35 @@ public class TimelineController {
     // 좋아요 및 댓글 갯수 리스트
     @GetMapping("/review/total")
     @ResponseBody
-    public List<ReviewHeartWithCommResponse> heartWithComm(@AuthenticationPrincipal CatchPrincipal principal) {
-        Long prIdx = principal.prIdx();
-        List<ReviewDto> reviews = timeLineService.reviews();
-        List<ReviewHeartDto> hearts = timeLineService.getReviewHeart(prIdx);        // 좋아요 여부 판단을 위한 코드
+    public List<ReviewHeartWithCommResponse> heartWithComm(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         List<ReviewHeartWithCommResponse> totalList = new ArrayList<>();
+        if (catchPrincipal == null) {
+            List<ReviewDto> reviews = timeLineService.reviews();
 
-        for (ReviewDto review : reviews) {
-            boolean isLike = false;
-            for (ReviewHeartDto heart : hearts) {
-                if (review.revIdx().equals(heart.reviewDto().revIdx())) {
-                    isLike = true;
-                    break;
-                }
+            for (ReviewDto review : reviews) {
+                boolean isLike = false;
+                ReviewHeartWithCommResponse response = new ReviewHeartWithCommResponse(null, review.revIdx(), isLike, review.revLike(), review.revComm());
+                totalList.add(response);
             }
-            ReviewHeartWithCommResponse response = new ReviewHeartWithCommResponse(prIdx, review.revIdx(), isLike, review.revLike(), review.revComm());
-            totalList.add(response);
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            List<ReviewDto> reviews = timeLineService.reviews();
+            List<ReviewHeartDto> hearts = timeLineService.getReviewHeart(prIdx);        // 좋아요 여부 판단을 위한 코드
+
+            for (ReviewDto review : reviews) {
+                boolean isLike = false;
+                for (ReviewHeartDto heart : hearts) {
+                    if (review.revIdx().equals(heart.reviewDto().revIdx())) {
+                        isLike = true;
+                        break;
+                    }
+                }
+                ReviewHeartWithCommResponse response = new ReviewHeartWithCommResponse(prIdx, review.revIdx(), isLike, review.revLike(), review.revComm());
+                totalList.add(response);
+            }
+            log.info("좋아요 여부 검사 후 전체 리뷰 리스트 : " + totalList);
+
         }
-        log.info("좋아요 여부 검사 후 전체 리뷰 리스트 : " + totalList);
         return totalList;
     }
 
@@ -241,17 +291,28 @@ public class TimelineController {
     @GetMapping("/review/comment")
     @ResponseBody
     public List<CommentResponse> commentList(@AuthenticationPrincipal CatchPrincipal catchPrincipal) {
-        Long prIdx = catchPrincipal.prIdx();
-        List<CommentDto> comments = timeLineService.getComments();
         List<CommentResponse> comList = new ArrayList<>();
+        if (catchPrincipal == null) {
+            List<CommentDto> comments = timeLineService.getComments();
+            for (CommentDto com : comments) {
+                CommentResponse response = new CommentResponse(com.comIdx(),
+                        com.profileDto().prNick(), com.profileDto().prIdx(), com.comContent(), com.reviewDto().revIdx(), com.regDate(), false);
+                comList.add(response);
+            }
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            List<CommentDto> comments = timeLineService.getComments();
 
-        for (CommentDto com : comments) {
-            boolean isComm = com.profileDto().prIdx().equals(prIdx);
-            CommentResponse response = new CommentResponse(com.comIdx(),
-                    com.profileDto().prNick(), com.profileDto().prIdx(), com.comContent(), com.reviewDto().revIdx(), com.regDate(), isComm);
-            comList.add(response);
+            for (CommentDto com : comments) {
+                boolean isComm = com.profileDto().prIdx().equals(prIdx);
+                CommentResponse response = new CommentResponse(com.comIdx(),
+                        com.profileDto().prNick(), com.profileDto().prIdx(), com.comContent(), com.reviewDto().revIdx(), com.regDate(), isComm);
+                comList.add(response);
+            }
+            log.info("댓글 작성 유무 및 좋아요 판별 댓글 리스트 " + comList);
+
         }
-        log.info("댓글 작성 유무 및 좋아요 판별 댓글 리스트 " + comList);
+
         return comList;
     }
 

@@ -28,7 +28,7 @@
 }
 .logo>a>span{
   color: #b3b3b3;
-  font-size: 0.9em;
+  font-size: 16px;
   position: absolute;
   top: 60px;
 }
@@ -37,6 +37,7 @@
   display: flex;
   list-style: none;
   padding-left: 0;
+  font-size: 16px;
 }
 .loginMenu a{
   padding: 8px 10px;
@@ -55,7 +56,7 @@
   max-width: 1100px;
   margin: 0 auto;
   align-items: center;
-  padding: 8px;
+  padding: 8px 0;
 }
 /* 카테고리 관련 디자인 */
 .categoryList{
@@ -64,6 +65,7 @@
   list-style: none;
   padding-left: 0;
   line-height: 10px;
+  font-size: 16px;
 }
 .categoryList a{
   padding: 8px 30px;
@@ -113,20 +115,21 @@
   line-height: 42px;
   align-items: flex-start;
   top: 175px;
-  padding-left: 25px;
-  padding-right: 25px;
+  /*padding-left: 25px;*/
+  /*padding-right: 25px;*/
   z-index: 1;
   left: 50%;
   transform: translate(-50%,0);
+  font-size: 16px;
 }
 
 .dropdown a {
-  padding: 8px 30px;
+  /*padding: 8px 30px;*/
   text-decoration: none;
   color: black;
 }
 .dropdown div{
-  padding-right: 100px;
+  /*padding-right: 100px;*/
 }
 .dropdown  ul{
   list-style:none;
@@ -240,7 +243,7 @@
   display: flex;
   list-style: none;
   padding-left: 0;
-  font-size: 1em;
+  font-size: 16px;
   padding-bottom: 18px;
 }
 .small_categoryList a{
@@ -312,7 +315,7 @@
   z-index: 0;
   left: 50%;
   transform: translate(-50%,0);
-  
+  font-size: 16px;
 }
 .small_dropdown div{
   padding-right: 100px;

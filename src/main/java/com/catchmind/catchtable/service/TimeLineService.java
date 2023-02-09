@@ -69,7 +69,7 @@ public class TimeLineService {
     }
 
 
-    // 전체 리뷰 페이지
+    // 전체 리뷰 페이지 (로그인 O)
     public Page<ReviewResponse> getReviews(Pageable pageable, Long prIdx) {
         List<ReviewDto> reviewDtos = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "revIdx"))
                 .stream().map(ReviewDto::from).toList();
@@ -104,6 +104,45 @@ public class TimeLineService {
                         reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
                         reviewDtos.get(i).regDate()
                         , reviewDtos.get(i).updateDate(), isReview);
+                reviewList.add(response);
+            }
+        }
+        System.out.println("검증 후 리뷰 리스트 : " + reviewList);
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), reviewList.size());
+        PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end), pageable, reviewList.size());
+        return reviewResponsePage;
+    }
+    // 전체 리뷰 페이지 로그인(X)
+    public Page<ReviewResponse> getReviews(Pageable pageable) {
+        List<ReviewDto> reviewDtos = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "revIdx"))
+                .stream().map(ReviewDto::from).toList();
+        List<ReviewResponse> reviewList = new ArrayList<>();
+        List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
+
+        // 리뷰 별 사진 리스트
+        for (int i = 0; i < reviewDtos.size(); i++) {
+            List<ReviewPhotoDto> photoList = new ArrayList<>();
+            for (int j = 0; j < photoDtos.size(); j++) {
+                if (reviewDtos.get(i).revIdx() == photoDtos.get(j).reviewDto().revIdx()) {
+                    String orgNm = photoDtos.get(j).orgNm();
+                    String savedNm = photoDtos.get(j).savedNm();
+                    String savedPath = photoDtos.get(j).savedPath();
+                    ReviewDto reviewDto = photoDtos.get(j).reviewDto();
+                    ReviewPhotoDto real = ReviewPhotoDto.of(orgNm, savedNm, savedPath, reviewDto);
+                    photoList.add(real);
+                }
+            }
+            if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
+                ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
+                        reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate(), null, false);
+                reviewList.add(response);
+            } else {
+                ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
+                        reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate()
+                        , reviewDtos.get(i).updateDate(), false);
                 reviewList.add(response);
             }
         }
