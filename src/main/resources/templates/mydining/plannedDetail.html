@@ -8,11 +8,11 @@
   <div th:replace="fragment/link :: link"/>
   <link rel="stylesheet" href="/css/detail.css">
   <link rel="stylesheet" href="/css/collection_detail.css">
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b5d757c54c1d945c4c71d8f3f60e1a69&amp;autoload=false&amp;libraries=services,clusterer" async=""></script>
+<!--  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b5d757c54c1d945c4c71d8f3f60e1a69&amp;autoload=false&amp;libraries=services,clusterer" async=""></script>-->
 
   <style data-styled="active" data-styled-version="5.1.1"></style>
 
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b5d757c54c1d945c4c71d8f3f60e1a69&amp;autoload=false&amp;libraries=services,clusterer" async=""></script>
+<!--  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b5d757c54c1d945c4c71d8f3f60e1a69&amp;autoload=false&amp;libraries=services,clusterer" async=""></script>-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -110,7 +110,8 @@
                 <hr class="hairline" />
                 <div>
                   <div style="text-align: right;">
-                    <button><a th:href="@{'/reservation/update/'+${detail.resAdminDto().resaBisName()}+'/'+${detail.resIdx}}">예약변경</a></button>
+                    <button><a
+                            th:href="@{'/reservation/' + ${detail.resAdminDto().resaBisName()}}">예약변경</a></button>
                     <span style="border-right: 1px solid #ded7d7;height: 12px;
     margin: 0 10px;
     display: inline-block;">
@@ -198,326 +199,23 @@
             <div class="sc-gsnTZi hLhZKP">
               <div
                       class="map"
-                      id="mapContainer"
+                      id="map"
                       style="
                   height: 240px;
                   overflow: hidden;
                   background: url('https://t1.daumcdn.net/mapjsapi/images/2x/bg_tile.png');
                 "
               >
-                <img
-                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/location-red.svg"
-                        class="icon"
-                />
-                <div
-                        style="
-                    position: absolute;
-                    left: 0px;
-                    top: 0px;
-                    width: 100%;
-                    height: 100%;
-                    touch-action: none;
-                  "
-                >
-                  <div style="position: absolute">
-                    <div style="position: absolute; z-index: 0"></div>
-                    <div
-                            style="
-                        position: absolute;
-                        z-index: 1;
-                        left: 0px;
-                        top: 0px;
-                      "
-                    >
-                      <img
-                              src="https://map1.daumcdn.net/map_2d_hd/2212ejo/L3/1999/889.png"
-                              alt=""
-                              role="presentation"
-                              draggable="false"
-                              style="
-                          position: absolute;
-                          user-select: none;
-                          -webkit-user-drag: none;
-                          min-width: 0px;
-                          min-height: 0px;
-                          max-width: none;
-                          max-height: none;
-                          left: -79px;
-                          top: 151px;
-                          opacity: 1;
-                          transition-property: opacity;
-                          transition-duration: 0.2s;
-                          transition-timing-function: ease;
-                          width: 256px;
-                          height: 256px;
-                        "
-                      /><img
-                            src="https://map2.daumcdn.net/map_2d_hd/2212ejo/L3/1999/890.png"
-                            alt=""
-                            role="presentation"
-                            draggable="false"
-                            style="
-                          position: absolute;
-                          user-select: none;
-                          -webkit-user-drag: none;
-                          min-width: 0px;
-                          min-height: 0px;
-                          max-width: none;
-                          max-height: none;
-                          left: 177px;
-                          top: 151px;
-                          opacity: 1;
-                          transition-property: opacity;
-                          transition-duration: 0.2s;
-                          transition-timing-function: ease;
-                          width: 256px;
-                          height: 256px;
-                        "
-                    /><img
-                            src="https://map3.daumcdn.net/map_2d_hd/2212ejo/L3/1999/891.png"
-                            alt=""
-                            role="presentation"
-                            draggable="false"
-                            style="
-                          position: absolute;
-                          user-select: none;
-                          -webkit-user-drag: none;
-                          min-width: 0px;
-                          min-height: 0px;
-                          max-width: none;
-                          max-height: none;
-                          left: 433px;
-                          top: 151px;
-                          opacity: 1;
-                          transition-property: opacity;
-                          transition-duration: 0.2s;
-                          transition-timing-function: ease;
-                          width: 256px;
-                          height: 256px;
-                        "
-                    /><img
-                            src="https://map1.daumcdn.net/map_2d_hd/2212ejo/L3/2000/889.png"
-                            alt=""
-                            role="presentation"
-                            draggable="false"
-                            style="
-                          position: absolute;
-                          user-select: none;
-                          -webkit-user-drag: none;
-                          min-width: 0px;
-                          min-height: 0px;
-                          max-width: none;
-                          max-height: none;
-                          left: -79px;
-                          top: -105px;
-                          opacity: 1;
-                          transition-property: opacity;
-                          transition-duration: 0.2s;
-                          transition-timing-function: ease;
-                          width: 256px;
-                          height: 256px;
-                        "
-                    /><img
-                            src="https://map2.daumcdn.net/map_2d_hd/2212ejo/L3/2000/890.png"
-                            alt=""
-                            role="presentation"
-                            draggable="false"
-                            style="
-                          position: absolute;
-                          user-select: none;
-                          -webkit-user-drag: none;
-                          min-width: 0px;
-                          min-height: 0px;
-                          max-width: none;
-                          max-height: none;
-                          left: 177px;
-                          top: -105px;
-                          opacity: 1;
-                          transition-property: opacity;
-                          transition-duration: 0.2s;
-                          transition-timing-function: ease;
-                          width: 256px;
-                          height: 256px;
-                        "
-                    /><img
-                            src="https://map3.daumcdn.net/map_2d_hd/2212ejo/L3/2000/891.png"
-                            alt=""
-                            role="presentation"
-                            draggable="false"
-                            style="
-                          position: absolute;
-                          user-select: none;
-                          -webkit-user-drag: none;
-                          min-width: 0px;
-                          min-height: 0px;
-                          max-width: none;
-                          max-height: none;
-                          left: 433px;
-                          top: -105px;
-                          opacity: 1;
-                          transition-property: opacity;
-                          transition-duration: 0.2s;
-                          transition-timing-function: ease;
-                          width: 256px;
-                          height: 256px;
-                        "
-                    />
-                    </div>
-                    <div style="position: absolute; z-index: 1"></div>
-                    <div
-                            style="
-                        width: 480px;
-                        height: 240px;
-                        position: absolute;
-                        z-index: 1;
-                      "
-                    ></div>
-                    <div style="position: absolute; z-index: 1">
-                      <svg
-                              version="1.1"
-                              style="
-                          stroke: none;
-                          stroke-dashoffset: 0.5;
-                          stroke-linejoin: round;
-                          fill: none;
-                          transform: translateZ(0px);
-                          position: absolute;
-                          width: 2400px;
-                          height: 1200px;
-                          left: -960px;
-                          top: -480px;
-                        "
-                              viewBox="0 0 2400 1200"
-                      >
-                        <defs></defs>
-                      </svg>
-                    </div>
-                    <div
-                            style="
-                        position: absolute;
-                        z-index: 1;
-                        width: 100%;
-                        height: 0px;
-                        transform: translateZ(0px);
-                      "
-                    >
-                      <div
-                              style="
-                          position: absolute;
-                          margin: -35px 0px 0px -12px;
-                          z-index: 0;
-                          left: 240px;
-                          top: 120px;
-                        "
-                      >
-                        <img
-                                draggable="false"
-                                src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/location-red.svg"
-                                alt=""
-                                role="presentation"
-                                title=""
-                                style="
-                            min-width: 0px;
-                            min-height: 0px;
-                            max-width: 99999px;
-                            max-height: none;
-                            border: 0px;
-                            display: block;
-                            position: absolute;
-                            user-select: none;
-                            -webkit-user-drag: none;
-                            clip: rect(0px, 26px, 36px, 0px);
-                            top: 0px;
-                            left: 0px;
-                            width: 26px;
-                            height: 36px;
-                          "
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                        style="
-                    position: absolute;
-                    cursor: default;
-                    z-index: 1;
-                    margin: 0px 6px;
-                    height: 19px;
-                    line-height: 14px;
-                    left: 0px;
-                    bottom: 0px;
-                    color: rgb(0, 0, 0);
-                  "
-                >
-                  <div
-                          style="
-                      color: rgb(0, 0, 0);
-                      text-align: center;
-                      font-size: 10px;
-                      float: left;
-                    "
-                  >
-                    <div
-                            style="
-                        float: left;
-                        margin: 2px 3px 0px 4px;
-                        height: 6px;
-                        transition: width 0.1s ease 0s;
-                        border-top: none rgb(0, 0, 0);
-                        border-right: 2px solid rgb(0, 0, 0);
-                        border-bottom: 2px solid rgb(0, 0, 0);
-                        border-left: 2px solid rgb(0, 0, 0);
-                        border-image: initial;
-                        width: 46px;
-                      "
-                    ></div>
-                    <div
-                            style="
-                        float: left;
-                        margin: 0px 4px 0px 0px;
-                        font-family: AppleSDGothicNeo-Regular, 돋움, dotum,
-                          sans-serif;
-                        font-weight: bold;
-                        color: rgb(0, 0, 0);
-                      "
-                    >
-                      50m
-                    </div>
-                  </div>
-                  <div style="margin: 0px 4px; float: left">
-                    <a
-                            target="_blank"
-                            href="http://map.kakao.com/"
-                            title="Kakao 지도로 보시려면 클릭하세요."
-                            style="float: left; width: 32px; height: 10px"
-                    ><img
-                            src="https://t1.daumcdn.net/mapjsapi/images/2x/m_bi_b.png"
-                            alt="Kakao 지도로 이동"
-                            style="
-                          float: left;
-                          width: 32px;
-                          height: 10px;
-                          border: none;
-                        "
-                    /></a>
-                    <div
-                            style="
-                        font: 11px / 11px Arial, Tahoma, Dotum, sans-serif;
-                        float: left;
-                      "
-                    ></div>
-                  </div>
-                </div>
-                <div
-                        style="
-                    cursor: auto;
-                    position: absolute;
-                    z-index: 2;
-                    left: 0px;
-                    top: 0px;
-                  "
-                ></div>
+
+<!--                <div-->
+<!--                        style="-->
+<!--                    cursor: auto;-->
+<!--                    position: absolute;-->
+<!--                    z-index: 2;-->
+<!--                    left: 0px;-->
+<!--                    top: 0px;-->
+<!--                  "-->
+<!--                ></div>-->
               </div>
               <div class="addr">
                 <!--                <a class="btn-copy">매장주소 복사하기</a>-->
@@ -686,12 +384,14 @@
   // 마커가 지도 위에 표시되도록 설정합니다
   marker.setMap(map);
 </script>
-//중심주소를 변경
 <script th:inline="javascript">
   /*<![CDATA[*/
+  const address = [[${detail.bistroDetailDto().bdAddr()}]]
+  const addressName = [[${detail.resAdminDto().resaBisName()}]]
+  console.log(address);
   // 주소로 좌표를 검색합니다
   geocoder.addressSearch(
-          "[[${detail.bistroDetailDto().bdAddr()}]]",
+          address,
           // 받아온 식당주소 입력
           function (result, status) {
             // 정상적으로 검색이 완료됐으면
@@ -708,12 +408,14 @@
               // 인포윈도우로 장소에 대한 설명을 표시합니다
               var infowindow = new kakao.maps.InfoWindow({
                 content:
-                        '<div style="width:150px;text-align:center;padding:6px 0;">식당이름</div>',
+                        '<div id="addressName" style="width:150px;text-align:center;padding:6px 0;"></div>',
               });
               infowindow.open(map, marker);
 
               // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
               map.setCenter(coords);
+
+              document.querySelector("#addressName").innerHTML = addressName
             }
           }
   );

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/collection_detail.css">
     <link rel="stylesheet" href="/images/kakao_button.svg">
     <link rel="stylesheet" href="/images/kakao_button_gainsboro.svg">
+    <script src="/js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 <div id="root">
@@ -20,35 +21,35 @@
     <!--header 끝-->
     <div class="wrapper">
         <main id="main">
-            <form method="post" id="frm" action="/loginOk" class="container">
+            <form class="container">
                 <section class="signin-wrapper" style="height: auto;">
                     <div class="__inner">
                         <div class="css-o5dw7d">
-                            로그인
+                            비밀번호 찾기
                         </div>
                         <div class="input-control mb-30">
                             <input type="text" class="form-input form-input-underline" id="prHp" name="prHp"
-                                   placeholder="휴대폰 번호 or 닉네임" autocomplete="off" value="">
+                                   placeholder="휴대폰 번호" autocomplete="off" value="">
                         </div>
                         <div class="input-control mb-30">
-                            <input type="password" id="prUserpw" name="prUserpw" class="form-input form-input-underline"
-                                   placeholder="비밀번호" autocomplete="off" value="">
-                            <button type="button" class="hide-password ">패스워드보이기</button>
+                            <input type="text" id="prName" name="prName" class="form-input form-input-underline"
+                                   placeholder="이름" autocomplete="off" value="">
+<!--                            <button type="button" class="hide-password ">패스워드보이기</button>-->
                         </div>
-                        <div id="signin-extra-block">
-                            <div class="signin-extra mt-35 mb-35">
-                                <a href="join" class="color-gray underline">회원가입</a>
-                            </div>
-                            <div class="signin-extra mt-35 mb-35">
-                                <a href="/findPassword" class="color-gray underline">비밀번호 찾기</a>
-                            </div>
-                        </div>
+<!--                        <div id="signin-extra-block">-->
+<!--                            <div class="signin-extra mt-35 mb-35">-->
+<!--                                <a href="#" class="color-gray underline">회원가입</a>-->
+<!--                            </div>-->
+<!--                            <div class="signin-extra mt-35 mb-35">-->
+<!--                                <a href="#" class="color-gray underline">비밀번호 찾기</a>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </section>
                 <div class="sticky-bottom-btns pb-68 display-none-with-aos-keyboard login-btn">
-                    <a id="loginBtn" class="btn btn-lg btn-red full-width login-btn">
-                        <strong class="bold">로그인</strong>
-                    </a>
+                    <button type="button" id="findBtn" class="btn btn-lg btn-red full-width login-btn">
+                        <strong class="bold">사용자 찾기</strong>
+                    </button>
                 </div>
             </form>
             <!--            <div class="sticky-bottom-btns pb-68 display-none-with-aos-keyboard kakao-btn">-->
@@ -64,7 +65,7 @@
     <div th:replace="fragment/footer :: footer"/>
     <!-- footer 끝 -->
 </div>
-<script src="/js/login.js"></script>
+<script src="/js/findPw.js"></script>
 </body>
 
 </html>

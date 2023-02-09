@@ -17,7 +17,7 @@
     <header id="header">
         ㅎㄷㅎㄷ
     </header>
-<!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
+    <!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
     <div class="css-luwwab eug5r8l1">
         <div class="css-833hqy ecbxmj4">
             <div class="css-1v4whg ecbxmj3">컬렉션</div>
@@ -32,80 +32,48 @@
 
             <main id="main">
                 <div class="wrapper" id="profileReviewListScroll">
-                    <div class="container">
-                        <div class="dim-layer" style="display: none;">
-                            <div class="dimBg"></div>
-                            <div id="layer2" class="pop-layer" style="margin-top: -132.5px; margin-left: -205px;">
-                                <div class="pop-container">
-                                    <div class="pop-conts">
-                                        <a href="#"><p class="ctxt mb20">사용자 차단</p></a>
-                                        <br>
-                                        <a href="#"><p class="ctxt mb20">사용자 신고</p></a>
-                                        <br>
-                                        <div class="btn-r">
-                                            <a href="#" class="btn-layerClose" style="padding:  10px 140px 10px 140px;">닫기</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- </header> -->
-
                     <main id="main">
                         <section class="section section-overflow-hidden">
                         </section>
                         <section class="section container gutter-sm">
                             <div class="section-header mt-24" style="justify-content: space-between;">
-                                <h3 class="section-title font-16">컬렉션 <span th:value="${#lists.size(collections)}" class="count"></span>
+                                <h3 class="section-title font-16">컬렉션
+                                    <span th:text="${#lists.size(collections)}" class="count"></span>
                                 </h3>
                             </div>
-                            <div class="__mypage-collection-list">
-                                <div class="collection-list-item-sm">
-                                    <div class="collection-slides-sm" style="display: block"
-                                         th:each="collection : ${collections}">
-                                        <th:block th:if="${collection.colLock == false}">
+                            <div style="display: flex;flex-wrap: wrap;">
+                                <div class="__mypage-collection-list" th:each="collection : ${collections}"
+                                     style="margin-right: 25px;margin-bottom: 20px;">
+                                    <div class="collection-list-item-sm" style="display: block;width: 233px;">
+                                        <div class="collection-slides-sm" style="display: block">
                                             <div class="collection-list-item-sm">
-                                                <a href="mycollactionDetail.html">
+                                                <a th:href="'/timeline/collection/'+${timelineIdx}+'/detail/'+${collection.colIdx}">
                                                     <div class="collection-list-item-in">
-                                                        <div class="imgs">
-<!--                                                            <div-->
-<!--                                                                    class="img"-->
-<!--                                                                    style="-->
-<!--                                  background-image: url('https://image.toast.com/aaaaaqx/catchtable/shopinfo/s20676/20676_2161013243969631_thumbMenuImage.jpg');-->
-<!--                                "-->
-<!--                                                            ></div>-->
-                                                        </div>
+                                                        <img class="img"
+                                                             src="https://d1il53drs2cmia.cloudfront.net/resources/img/noimg/noimgv2.jpg"
+                                                             alt="">
                                                         <div class="__meta">
                                                             <h4 class="__title">
                                                                 <strong th:text="${prNick}">나</strong>의 컬렉션
                                                             </h4>
-                                                            <div class="__count">
-                                                                <button
-                                                                        class="bookmark-button on"
-                                                                        type="button"
-                                                                ></button>
-                                                                0
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="collection__meta">
                                                         <h4 class="__title" th:text="${collection.colTitle}">
                                                             스시오마카세!
                                                         </h4>
-                                                        <div class="__count">10</div>
                                                     </div>
                                                 </a>
                                             </div>
-                                        </th:block>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                                <th:block th:if="${collections.isEmpty()}">
-                                    <div class="collection-slides-sm">
-                                        <div class="nodata font-16 mb-36">공개된 컬렉션이 없습니다.</div>
-                                    </div>
-                                </th:block>
+                            <th:block th:if="${collections.isEmpty()}">
+                                <div class="collection-slides-sm">
+                                    <div class="nodata font-16 mb-36">공개된 컬렉션이 없습니다.</div>
+                                </div>
+                            </th:block>
 
 
                         </section>

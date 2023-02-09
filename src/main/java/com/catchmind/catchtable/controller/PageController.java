@@ -122,5 +122,29 @@ public class PageController {
         return "redirect:/";
     }
 
+    @GetMapping("/findPassword")
+    public ModelAndView findPw () {
+        return new ModelAndView("/findPw");
+    }
+    @PostMapping("/findPassword")
+    @ResponseBody
+    public Optional<Profile> findPassword (@RequestParam("prHp")String prHp,
+                                           @RequestParam("prName")String prName) {
+        Optional<Profile> profile = profileLogicService.findPw(prHp,prName);
+        return profile;
+    }
+    @GetMapping("/resetPassword/{prHp}")
+    public ModelAndView resetPw (@PathVariable String prHp, Model model){
+        model.addAttribute("prHp",prHp);
+        return new ModelAndView("/resetPassword");
+    }
+    @PostMapping("/resetPassword")
+    public String resetPassword (@RequestParam("prHp")String prHp,
+                                 ProfileRequest request){
+        System.out.println("🐓🐓🐓🐓🐓🐓🐓🐓🐓  "+request.prHp());
+        profileLogicService.updatePassword(prHp, request.toDto());
+        return "/login";
+    }
+
 
 }

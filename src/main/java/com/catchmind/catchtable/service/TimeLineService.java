@@ -33,6 +33,8 @@ public class TimeLineService {
     private final MyCollectionRepository collectionRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
     private final ReserveRepository reserveRepository;
+    private final BistroSaveRepository bistroSaveRepository;
+    private final PhotoRepository photoRepository;
 
     // 타임라인 헤더
     @Transactional
@@ -176,9 +178,27 @@ public class TimeLineService {
 
 
     // 컬렉션 리스트
-    public Page<MyCollectionDto> getCollection(Long timeLineIdx, Pageable pageable) {
-        Page<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx, false, pageable).map(MyCollectionDto::from);
+    public List<MyCollectionDto> getCollection(Long timeLineIdx) {
+        List<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx, false).stream().map(MyCollectionDto::from).toList();
         return collectionDtos;
+    }
+
+    // 컬렉션 상세의 식당리스트
+    public List<BistroSaveDto> getCollectionDetail(Long colIdx) {
+        List<BistroSaveDto> bistroSaveDtos = bistroSaveRepository.findAllByColIdx(colIdx).stream().map(BistroSaveDto::from).toList();
+        return bistroSaveDtos;
+    }
+
+    // 컬렉션 상세
+    public MyCollectionDto collection(Long colIdx) {
+        MyCollectionDto collectionDto = collectionRepository.findById(colIdx).map(MyCollectionDto::from).orElseThrow();
+        return collectionDto;
+    }
+
+    public PhotoDto bistroPhoto(String resaBisName) {
+        System.out.println(resaBisName);
+        PhotoDto bisPhoto = photoRepository.findByResAdmin_ResaBisName(resaBisName).map(PhotoDto::from).orElseThrow();
+        return bisPhoto;
     }
 
     // 팔로잉 리스트

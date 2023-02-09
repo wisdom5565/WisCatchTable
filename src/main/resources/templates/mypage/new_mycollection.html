@@ -75,6 +75,7 @@
                         </label>
                     </div>
                     <div class="__ml-auto">
+                        <label style="color: #8f8f8f; position: relative; top: 5px; right: 10px; font-size: small;">활성화 시 공개</label>
                         <label class="switch">
                             <input id="colLock" type="checkbox" checked>
                             <span class="gadget"></span>
@@ -90,10 +91,6 @@
     </div>
     <div th:replace="fragment/footer :: footer"/>
 </div>
-<script>
-    let colLock = document.getElementById("colLock");
-    console.log(colLock.checked);
-</script>
 <script src="/js/myCollection.js"></script>
 </body>
 </html>

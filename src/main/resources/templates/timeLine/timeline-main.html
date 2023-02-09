@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -163,13 +163,17 @@
                                                     <div class="v-scroll-inner">
                                                         <div id="shopReviewCardImgList_1272868" class="__photos"
                                                              style="display: flex; flex-wrap: nowrap;">
-                                                            <th:block th:each="photo : ${review.photo}">
+                                                            <div th:each="photo : ${review.photo}">
                                                                 <div class="swiper-slide"
                                                                      style="margin-right: 8px;">
-                                                                    <img th:src="'/photo/'+${photo.savedNm}"
-                                                                         alt="">
+                                                                    <th:block th:if="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                        <img th:src="${photo.savedPath}" alt="">
+                                                                    </th:block>
+                                                                    <th:block th:unless="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                        <img th:src="'/photo/'+${photo.savedNm}" alt="">
+                                                                    </th:block>
                                                                 </div>
-                                                            </th:block>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -225,8 +229,9 @@
                                                         <div class="container gutter-sm">
                                                             <div class="__comment-list __comment-detail-list">
                                                                 <div>
-                                                                    <article th:class="'__comment-item comDiv'+${review.revIdx}"
-                                                                             style="padding: 16px 20px 0px;">
+                                                                    <article
+                                                                            th:class="'__comment-item comDiv'+${review.revIdx}"
+                                                                            style="padding: 16px 20px 0px;">
 
                                                                     </article>
                                                                 </div>

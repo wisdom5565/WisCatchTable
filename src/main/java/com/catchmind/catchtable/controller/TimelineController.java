@@ -58,7 +58,7 @@ public class TimelineController {
     public String profile(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
                           @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        Page<ReviewResponse> response = timeLineService.getReview(prIdx,timeLineIdx, pageable);
+        Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
         boolean isFollow = false;
         List<FollowDto> loginFollowing = timeLineService.getFollowerList(prIdx);
         TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
@@ -81,24 +81,38 @@ public class TimelineController {
 
     // 공개된 컬렉션 페이지
     @GetMapping("/collection/{timeLineIdx}")
-    public String collection(@PathVariable Long timeLineIdx,
-                             @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map) {
-        Page<MyCollectionDto> collectionDtos = timeLineService.getCollection(timeLineIdx, pageable);
-//        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), collectionDtos.getTotalPages());
+    public String collection(@PathVariable Long timeLineIdx, ModelMap map) {
+        List<MyCollectionDto> response = timeLineService.getCollection(timeLineIdx);
         String prNick = timeLineService.getHeader(timeLineIdx).prNick();
-        map.addAttribute("collections", collectionDtos);
+        map.addAttribute("collections", response);
         map.addAttribute("prNick", prNick);
-//        map.addAttribute("paginationBarNumbers",barNumbers);
-        System.out.println(collectionDtos);
+        map.addAttribute("timelineIdx", timeLineIdx);
         return "timeline/profile-collection";
     }
+
+    //  공개된 컬렉션 상세 페이지
+    @GetMapping("/collection/{timeLineIdx}/detail/{colIdx}")
+    public String collection(@PathVariable Long timeLineIdx, @PathVariable Long colIdx,
+                             @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map) {
+        List<BistroSaveDto> responses = timeLineService.getCollectionDetail(colIdx);
+        System.out.println(responses);
+        MyCollectionDto myCollectionDto = timeLineService.collection(colIdx);
+        String prNick = timeLineService.getHeader(timeLineIdx).prNick();
+        System.out.println(responses);
+        map.addAttribute("prNick", prNick);
+        map.addAttribute("collection", myCollectionDto);
+        map.addAttribute("timelineIdx", timeLineIdx);
+        map.addAttribute("savedBistro", responses);
+        return "timeline/timeline-collectionDetail";
+    }
+
 
     // 프로필 리뷰 페이지
     @GetMapping("/review/{timeLineIdx}")
     public String review(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
                          @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        Page<ReviewResponse> response = timeLineService.getReview(prIdx,timeLineIdx, pageable);
+        Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), response.getTotalPages());
         TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
 
@@ -318,7 +332,7 @@ public class TimelineController {
     public CommentResponse getComment(@PathVariable Long comIdx) {
         System.out.println(comIdx);
         CommentDto response = timeLineService.getComment(comIdx);
-        CommentResponse newCom = new CommentResponse(response.comIdx(), response.profileDto().prNick(),response.profileDto().prIdx(),
+        CommentResponse newCom = new CommentResponse(response.comIdx(), response.profileDto().prNick(), response.profileDto().prIdx(),
                 response.comContent(), response.reviewDto().revIdx(), response.regDate(), true);
         log.info(String.valueOf(newCom));
         return newCom;

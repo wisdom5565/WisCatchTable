@@ -42,7 +42,7 @@
                             <div class="css-1waqr6j e1uzxhvi6">
                                 <div height="44" class="css-t7kbxx e1uzxhvi3">
                                     <input data-testid="input-box" id="colTitle" name="colTitle"
-                                           placeholder="컬렉션 이름을 입력해 주세요." type="text" height="44"
+                                           th:field="${myCollection.colTitle}" type="text" height="44"
                                            class="css-n2am0u e1uzxhvi2" value="">
                                 </div>
                             </div>
@@ -64,7 +64,8 @@
                                         <div class="placeholder css-1ofzfyp e1tjt2bn6" style="padding: 0px 15px 32px">
                                             <div class="css-168e7y9 e1fgvk593">
                                                 <input data-testid="input-box" id="colContent" name="colContent"
-                                                       placeholder="컬렉션에 대한 설명을 입력해 주세요." type="text" height="44"
+                                                       th:field="${myCollection.colContent}"
+                                                       type="text" height="44"
                                                        class="css-n2am0u e1uzxhvi2" value="" style="padding: 0;">
                                             </div>
                                         </div>
@@ -80,7 +81,8 @@
                                 <!-- <span data-testid="label-required-text" class="css-hwfcu5 e1vbjq4w0">*</span> -->
                             </label>
                         </div>
-                        <div class="__ml-auto">
+                        <div class="__ml-auto" style="display: flex">
+                            <label style="color: #8f8f8f; position: relative; top: 5px; right: 10px; font-size: small;">활성화 시 공개</label>
                             <label class="switch">
                                 <input id="colLock" type="checkbox" checked>
                                 <span class="gadget"></span>
@@ -97,10 +99,6 @@
     </div>
     <div th:replace="fragment/footer :: footer"/>
 </div>
-<script>
-    let colLock = document.getElementById("colLock");
-    console.log(colLock.checked);
-</script>
 <script src="/js/myCollection_mod.js"></script>
 </body>
 </html>

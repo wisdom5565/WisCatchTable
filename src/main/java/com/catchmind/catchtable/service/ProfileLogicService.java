@@ -96,6 +96,20 @@ public class ProfileLogicService {
             log.warn("업데이트 실패..!!!, 공지사항을 찾을 수 없음  - exNoticeDTO {} ", profileDto);
         }
     }
+    // 비밀번호찾기 > 비밀번호 수정
+    public void updatePassword(String prHp, ProfileDto profileDto) {
+        try {
+            System.out.println(profileDto);
+            Optional<Profile> profile = profileRepository.findByPrHp(prHp);
+            profile.ifPresent(
+                    member -> {
+                        if(profileDto.prUserpw() != null && profileDto.prUserpw() != "") {member.setPrUserpw(passwordEncoder.encode(profileDto.prUserpw()));}
+                    }
+            );
+        } catch (EntityNotFoundException e) {
+            log.warn("업데이트 실패..!!! ", profileDto);
+        }
+    }
 
     //    회원탈퇴
     public void delete(Long prIdx) {
@@ -138,11 +152,10 @@ public class ProfileLogicService {
                             collection.setColTitle(myCollectionDto.colTitle());
                         }
                         if (myCollectionDto.colContent() != null) {
-                            collection.setColContent(myCollectionDto.colTitle());
+                            collection.setColContent(myCollectionDto.colContent());
                         }
-                        if (!myCollectionDto.colLock()) {
-                            collection.setColLock(false);
-                        }
+                        if(myCollectionDto.colLock() != true) {collection.setColLock(false);}
+                        if(myCollectionDto.colLock() != false) {collection.setColLock(true);}
                     }
             );
         } catch (EntityNotFoundException e) {
@@ -177,6 +190,11 @@ public class ProfileLogicService {
 
     public Optional<Profile> checkNick(String prNick) {
         Optional<Profile> profile = profileRepository.findByPrNick(prNick);
+        return profile;
+    }
+    // 비밀번호 찾기
+    public Optional<Profile> findPw(String prHp, String prName){
+        Optional<Profile> profile = profileRepository.findByPrHpAndPrName(prHp,prName);
         return profile;
     }
 

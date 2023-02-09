@@ -40,14 +40,6 @@
                 저장한 레스토랑
                 <span class="count">10</span>
               </h3>
-              <!-- <div class="__d-flex __v-center font-12">
-                전체보기
-                <img
-                  src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/icons/arrow-right-20.svg"
-                  alt=""
-                  style="margin-left: 4px; width: 16px; height: 16px"
-                />
-              </div> -->
             </div>
           </div>
           <div class="section-body pb-32" style="padding-top: 10px">
@@ -61,12 +53,16 @@
                        th:value="${list.bistroDetailDto.bistroInfoDto.bisIdx}">
                 <div class="saved-restaurant-list-item">
                   <div class="restaurant-info">
-                    <a href="#" class="tb">
-                      <div
-                              class="img"
-                              style="background-image: url('../images/1.jpg')"
-                      ></div>
-                    </a>
+                    <th:block th:if="${list.bistroDetailDto.bistroInfoDto.photoDto.savedPath != null and list.bistroDetailDto.bistroInfoDto.photoDto.orgNm == null and list.bistroDetailDto.bistroInfoDto.photoDto.savedNm == null}">
+                      <a class="tb" th:href="'/shop/'+${list.resAdminDto.resaBisName}" >
+                        <img class="img" th:src="${list.bistroDetailDto.bistroInfoDto.photoDto.savedPath}" alt="">
+                      </a>
+                    </th:block>
+                    <th:block th:unless="${list.bistroDetailDto.bistroInfoDto.photoDto.savedPath != null and list.bistroDetailDto.bistroInfoDto.photoDto.orgNm == null and list.bistroDetailDto.bistroInfoDto.photoDto.savedNm == null}">
+                      <a class="tb" th:href="'/shop/'+${list.resAdminDto.resaBisName}">
+                        <img class="img" th:src="'/photo/'+${list.bistroDetailDto.bistroInfoDto.photoDto.savedNm}" alt="">
+                      </a>
+                    </th:block>
                     <a href="#" class="detail">
                       <h4 id="resaBisName" class="name" th:text="${list.resAdminDto.resaBisName}">
                         스시대옥</h4>

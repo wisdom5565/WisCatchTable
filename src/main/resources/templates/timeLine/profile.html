@@ -13,8 +13,26 @@
     <script src="/js/jquery-3.1.1.min.js"></script>
 </head>
 <style>
-    #follow, #unfollow {
-        width: 300px;
+    .social {
+        margin-top: 14px;
+        display: flex;
+        gap: 20px;
+        min-width: 50%;
+        justify-content: flex-start;
+        margin-left: 45px;
+    }
+    .social a {
+        display: flex;
+        width: 32px;
+        height: 32px;
+        border: 1px solid #c8c8c8;
+        box-sizing: border-box;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+    }
+    .mypage-profile-meta{
+        display: flex;
     }
 </style>
 <body>
@@ -22,7 +40,7 @@
     <header id="header">
         ㅎㄷㅎㄷ
     </header>
-<!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
+    <!--    <div th:replace="fragment/timeline_header :: timeline_header"/>-->
     <div class="css-luwwab eug5r8l1">
         <div class="css-833hqy ecbxmj4">
             <div class="css-1v4whg ecbxmj3">프로필</div>
@@ -55,26 +73,54 @@
                                         </div>
                                     </div>
                                     <div class="mypage-profile-meta">
-                                        <h4 class="name username"><span id="followingNick" class="txt"
-                                                                        style="max-width: none;"
-                                                                        th:text="${profile.prNick}">준숑이</span>
-                                        </h4>
-                                        <div class="meta">
-                                            <a th:href="'/timeline/following/'+ ${timeLineIdx}">
-                                                <dl>
-                                                    <dt>팔로잉</dt>
-                                                    <dd id="result" th:text="${profile.followingNum}">1</dd>
-                                                </dl>
-                                            </a>
-                                            <span>|</span>
-                                            <a th:href="'/timeline/follower/'+ ${timeLineIdx}">
-                                                <dl>
-                                                    <dt>팔로워</dt>
-                                                    <dd th:text="${profile.followerNum}">0</dd>
-                                                </dl>
-                                            </a>
+                                        <div>
+                                            <h4 class="name username"><span id="followingNick" class="txt"
+                                                                            style="max-width: none;"
+                                                                            th:text="${profile.prNick}">준숑이</span>
+                                            </h4>
+                                            <div class="meta">
+                                                <a th:href="'/timeline/following/'+ ${timeLineIdx}">
+                                                    <dl>
+                                                        <dt>팔로잉</dt>
+                                                        <dd id="result" th:text="${profile.followingNum}">1</dd>
+                                                    </dl>
+                                                </a>
+                                                <span>|</span>
+                                                <a th:href="'/timeline/follower/'+ ${timeLineIdx}">
+                                                    <dl>
+                                                        <dt>팔로워</dt>
+                                                        <dd th:text="${profile.followerNum}">0</dd>
+                                                    </dl>
+                                                </a>
+                                            </div>
                                         </div>
-
+                                        <div class="social">
+                                            <th:block th:each="snsList : ${profile.snsList}">
+                                                <th:block th:if="${snsList.snsType == 'INSTAGRAM'} "><a
+                                                        th:href="${snsList.snsAddr}" target="_blank"><img
+                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/insta.svg"
+                                                        alt="snsIcon"></a>
+                                                </th:block>
+                                                <th:block th:if="${snsList.snsType == 'YOUTUBE'}"><a
+                                                        th:href="${snsList.snsAddr}"
+                                                        target="_blank"><img
+                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/youtube.svg"
+                                                        alt="snsIcon"></a>
+                                                </th:block>
+                                                <th:block th:if="${snsList.snsType == 'TWITTER'}"><a
+                                                        th:href="${snsList.snsAddr}"
+                                                        target="_blank"><img
+                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/twitter.svg"
+                                                        alt="snsIcon"></a>
+                                                </th:block>
+                                                <th:block th:if="${snsList.snsType == 'BLOG'}"><a
+                                                        th:href="${snsList.snsAddr}"
+                                                        target="_blank"><img
+                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/blog.svg"
+                                                        alt="snsIcon"></a>
+                                                </th:block>
+                                            </th:block>
+                                        </div>
                                     </div>
                                     <div class="mypage-profile--desc" style="display: block;">
                                         <div class="__desc">
