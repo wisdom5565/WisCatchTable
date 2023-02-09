@@ -3,24 +3,23 @@ package com.catchmind.catchtable.service;
 import com.catchmind.catchtable.domain.BistroSave;
 import com.catchmind.catchtable.domain.MyCollection;
 import com.catchmind.catchtable.domain.Profile;
-import com.catchmind.catchtable.dto.BistroSaveDto;
-import com.catchmind.catchtable.dto.MyCollectionDto;
-import com.catchmind.catchtable.dto.ProfileDto;
-import com.catchmind.catchtable.dto.SnsDto;
+import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.MyCollectionRequest;
 import com.catchmind.catchtable.dto.network.request.SnsRequest;
-import com.catchmind.catchtable.repository.BistroSaveRepository;
-import com.catchmind.catchtable.repository.MyCollectionRepository;
-import com.catchmind.catchtable.repository.ProfileRepository;
-import com.catchmind.catchtable.repository.SnsRepository;
+import com.catchmind.catchtable.dto.network.response.ReviewResponse;
+import com.catchmind.catchtable.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +33,8 @@ public class ProfileLogicService {
     private final ProfileRepository profileRepository;
     private final BistroSaveRepository bistroSaveRepository;
     private final MyCollectionRepository myCollectionRepository;
+    private final ReviewRepository reviewRepository;
+    private final ReviewPhotoRepository reviewPhotoRepository;
     private final PasswordEncoder passwordEncoder =  new BCryptPasswordEncoder();
 
 
@@ -154,5 +155,45 @@ public class ProfileLogicService {
         System.out.println("🐒💙💙💙   " + newSns.toEntity());
         snsRepository.save(newSns.toEntity());
         return null;
+    }
+
+    // 내리뷰 조회
+    public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {
+        List<ReviewResponse> reviewList = new ArrayList<>();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
+
+        for (int i = 0; i < reviewDtos.size(); i++) {
+            List<ReviewPhotoDto> photoList = new ArrayList<>();
+            for (int j = 0; j < photoDtos.size(); j++) {
+                if (reviewDtos.get(i).revIdx() == photoDtos.get(j).reviewDto().revIdx()) {
+                    String orgNm = photoDtos.get(j).orgNm();
+                    String savedNm = photoDtos.get(j).savedNm();
+                    String savedPath = photoDtos.get(j).savedPath();
+                    ReviewDto reviewDto = photoDtos.get(j).reviewDto();
+                    ReviewPhotoDto real = ReviewPhotoDto.of(orgNm, savedNm, savedPath, reviewDto);
+                    photoList.add(real);
+                }
+            }
+
+            if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
+                ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
+                        reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate(), null, true);
+                reviewList.add(response);
+            } else {
+                ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
+                        reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
+                        reviewDtos.get(i).regDate()
+                        , reviewDtos.get(i).updateDate(), true);
+                reviewList.add(response);
+            }
+            System.out.println("i" + i + reviewList.get(i).photo());
+        }
+
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min((start + pageable.getPageSize()), reviewList.size());
+        PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end), pageable, reviewList.size());
+        return reviewResponsePage;
     }
 }

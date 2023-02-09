@@ -32,11 +32,11 @@ public class TimelineController {
     private final TimeLineService timeLineService;
     private final PaginationService paginationService;
 
-    // 타임라인 헤더
-    public TimeLineResponse header(Long prIdx) {
-        TimeLineResponse response = timeLineService.getHeader(prIdx);
-        return response;
-    }
+//    // 타임라인 헤더
+//    public TimeLineResponse header(Long prIdx) {
+//        TimeLineResponse response = timeLineService.getHeader(prIdx);
+//        return response;
+//    }
 
     // 전체 리뷰 페이지
     @GetMapping("")
@@ -55,23 +55,24 @@ public class TimelineController {
 
     // 프로필페이지
     @GetMapping("/profile/{timeLineIdx}")
-    public String profile(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
+    public String profile(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
+                          @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        TimeLineResponse header = header(prIdx);
-        TimeLineResponse response = timeLineService.getHeader(timeLineIdx);
+        Page<ReviewResponse> response = timeLineService.getReview(prIdx,timeLineIdx, pageable);
         boolean isFollow = false;
-        List<FollowDto> loginFollowing = timeLineService.getFollowingList(prIdx);
+        List<FollowDto> loginFollowing = timeLineService.getFollowerList(prIdx);
+        TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
         for (FollowDto follow : loginFollowing) {
             System.out.println("following" + follow.following());
             System.out.println("follower" + follow.follower());
-            if (timeLineIdx == follow.follower().prIdx()) {
+            if (timeLineIdx == follow.following().prIdx()) {
                 isFollow = true;
             }
         }
         System.out.println(isFollow);
 
-        map.addAttribute("header", header);
-        map.addAttribute("profile", response);
+        map.addAttribute("profile", profile);
+        map.addAttribute("reviews", response);
         map.addAttribute("timeLineIdx", timeLineIdx);
         map.addAttribute("prIdx", prIdx);
         map.addAttribute("isFollow", isFollow);
@@ -97,12 +98,11 @@ public class TimelineController {
     public String review(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
                          @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
-        TimeLineResponse header = header(prIdx);
-        Page<ReviewResponse> response = timeLineService.getReview(timeLineIdx, pageable);
+        Page<ReviewResponse> response = timeLineService.getReview(prIdx,timeLineIdx, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), response.getTotalPages());
         TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
 
-        map.addAttribute("header", header);
+
         map.addAttribute("profile", profile);
         map.addAttribute("reviews", response);
         map.addAttribute("paginationBarNumbers", barNumbers);
@@ -115,7 +115,6 @@ public class TimelineController {
     @GetMapping("/following/{timeLineIdx}")
     public String following(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
         Long prIdx = catchPrincipal.prIdx();
-        TimeLineResponse header = header(prIdx);
         TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
 
         List<FollowDto> followingDtos = timeLineService.getFollowerList(timeLineIdx);
@@ -135,7 +134,7 @@ public class TimelineController {
 
         System.out.println("비교 후 리스트 : " + followingList);
 
-        map.addAttribute("header", header);
+//        map.addAttribute("header", header);
         map.addAttribute("prIdx", prIdx);
         map.addAttribute("profile", profile);
         map.addAttribute("timeLineIdx", timeLineIdx);
@@ -147,7 +146,7 @@ public class TimelineController {
     @GetMapping("/follower/{timeLineIdx}")
     public String follower(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map) {
         Long prIdx = catchPrincipal.prIdx();
-        TimeLineResponse header = header(prIdx);
+//        TimeLineResponse header = header(prIdx);
         TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
 
         List<FollowDto> followerDtos = timeLineService.getFollowingList(timeLineIdx);
@@ -167,7 +166,7 @@ public class TimelineController {
         System.out.println("검사후 팔로워 리스트 : " + followerList);
 
 
-        map.addAttribute("header", header);
+//        map.addAttribute("header", header);
         map.addAttribute("prIdx", prIdx);
         map.addAttribute("timeLineIdx", timeLineIdx);
         map.addAttribute("followers", followerList);

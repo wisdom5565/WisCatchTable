@@ -61,8 +61,7 @@ public class TimeLineService {
             avgScore = totalScore / reviewDtos.size();
         }
 
-
-        TimeLineResponse timeLineResponse = new TimeLineResponse(prName, prNick, prRegion, prIntro, followingNum, followerNum, snsList, avgScore);
+        TimeLineResponse timeLineResponse = new TimeLineResponse(prName, prNick, prRegion, prIntro, followingNum, followerNum, snsList, Math.round(avgScore));
 
         return timeLineResponse;
     }
@@ -115,11 +114,11 @@ public class TimeLineService {
 
 
     // 개인리뷰 조회
-    public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {
+    public Page<ReviewResponse> getReview(Long prIdx, Long timelineIdx, Pageable pageable) {
         List<ReviewResponse> reviewList = new ArrayList<>();
-        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(timelineIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
-
 
         for (int i = 0; i < reviewDtos.size(); i++) {
             List<ReviewPhotoDto> photoList = new ArrayList<>();
@@ -133,17 +132,21 @@ public class TimeLineService {
                     photoList.add(real);
                 }
             }
+            boolean isReview = false;
+            for (ReviewDto login : loginReview) {
+                isReview = reviewDtos.get(i).revIdx().equals(login.revIdx());
+            }
+
             if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), null, reviewDtos.get(i).reserveDto().resIdx(),
-                        reviewDtos.get(i).regDate(), null, true);
+                        reviewDtos.get(i).regDate(), null, isReview);
                 reviewList.add(response);
             } else {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
                         reviewDtos.get(i).resAdminDto(), photoList, reviewDtos.get(i).reserveDto().resIdx(),
                         reviewDtos.get(i).regDate()
-                        , reviewDtos.get(i).updateDate(),
-                        true);
+                        , reviewDtos.get(i).updateDate(), isReview);
                 reviewList.add(response);
             }
             System.out.println("i" + i + reviewList.get(i).photo());

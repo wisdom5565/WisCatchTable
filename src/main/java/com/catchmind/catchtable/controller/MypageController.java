@@ -123,13 +123,14 @@ public class MypageController {
                                  @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
         Long prIdx = catchPrincipal.prIdx();
         TimeLineResponse header = header(prIdx);
-        Page<ReviewResponse> reviews = timeLineService.getReviews(pageable, prIdx);
+        Page<ReviewResponse> reviews = profileLogicService.getReview(prIdx, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
+        ProfileDto profile = profileLogicService.getProfileElements(prIdx);
+
+        ModelAndView modelAndView = new ModelAndView("/mypage/myReview");
         model.addAttribute("reviews", reviews);
         model.addAttribute("prIdx", prIdx);
         model.addAttribute("paginationBarNumbers", barNumbers);
-        ProfileDto profile = profileLogicService.getProfileElements(prIdx);
-        ModelAndView modelAndView = new ModelAndView("/mypage/myReview");
         modelAndView.addObject("profile",profile);
         modelAndView.addObject("header",header);
         return modelAndView;

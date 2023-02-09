@@ -22,6 +22,7 @@ public class ShopController {
     private final ReviewLogicService reviewLogicService;
     private final PaginationService paginationService;
     private final FacilityLogicService facilityLogicService;
+    private final ShopService shopService;
 
     @GetMapping("/review/{resaBisName}")
     public String shopReview(@PageableDefault(size=10, sort="bisIdx", direction = Sort.Direction.DESC) Pageable pageable,
@@ -125,7 +126,7 @@ public class ShopController {
         // 총 레스토랑 수
         int cnt= cntlist.size();
         map.addAttribute("cnt", cnt);
-
+        System.out.println(shopService.getReview());
 
         return "shop/list";
     }

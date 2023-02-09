@@ -39,13 +39,11 @@
                         <div width="100" class="css-16tcewl e16adls20">작성일</div>
                     </div>
                     <ul class="css-1fttcpj e1cfowvj5" th:each="notice: ${notice}">
-                        <!--                        <li><a href="/board/notice/detail/1566">-->
                         <li><a th:href="'notice/content/'+${notice.noIdx}">
-                            <!--                                <div class="css-14yglsw e1cfowvj4" th:href="'/notice/content/'+${notice.noIdx}">-->
                             <div class="css-14yglsw e1cfowvj4">
                                 <div class="css-3o6rrk e1cfowvj2" th:text="${notice.noIdx}">공지</div>
                                 <div class="css-fzefrb e1cfowvj2" th:text="${notice.noTitle}">[안내] 컬리 소비자 분쟁해결 기준 안내</div>
-                                <div class="css-3d2kks e1cfowvj2" th:text="${notice.adminDto().adName()}">캐치 테이블</div>
+                                <div class="css-3d2kks e1cfowvj2">캐치 테이블</div>
                                 <div class="css-b1hszl e1cfowvj2" th:text="${#temporals.format(notice.regDate, 'yyyy/MM/dd')}">2022.07.27</div>
                             </div>
                         </a></li>

@@ -119,7 +119,6 @@ let revComIdx = [];     // 댓글 리뷰 번호
 let isComm = [];    // 댓글 작성자 여부
 let dataList = [];
 let comPrIdx = [];
-let newComm = '';
 
 // 댓글 번호찾기
 function list(comIdx) {

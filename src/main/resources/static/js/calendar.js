@@ -4,7 +4,7 @@ let day;
 <!-- 캘린더를 위한 스크립트-->
 $("#datepicker").datepicker({
     language: "ko",
-    minDate: 0
+    minDate : new Date()
 });
 
 $(function () {
@@ -75,6 +75,8 @@ function sendRes() {
 function change(idx) {
     let get = document.getElementsByClassName("time")[idx].innerHTML;
     resTime = get.substr(0, 2);
+    let drawerBox = document.querySelector('.display');
+    drawerBox.css("display", "flex");
 }
 
 function sendPayment(){
