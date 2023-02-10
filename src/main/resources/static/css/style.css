@@ -3641,9 +3641,9 @@ hr {
 
 }
 
-.container.gutter-sm .v-scroll-inner {
-    padding: 0px 0px 20px;
-}
+/*.container.gutter-sm .v-scroll-inner {*/
+/*    padding: 0px 0px 20px;*/
+/*}*/
 
 .v-scroll::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/

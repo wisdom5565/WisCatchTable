@@ -25,10 +25,12 @@
             -ms-overflow-style: none;
             overflow-x: hidden;
         }
+
         .header-wrap {
             top: -6.5px;
             right: 8px;
         }
+
         .page_nation {
             display: flex;
             justify-content: center;
@@ -166,8 +168,75 @@
             color: #bfbfbf;
         }
 
+        .modal.modal-overlay {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            z-index: 1;
+            position: fixed;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .modal .modal-window {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 300px;
+            height: 200px;
+            position: relative;
+            top: -100px;
+            padding: 10px;
+        }
+
+        .modal .title {
+            padding-left: 10px;
+            display: inline;
+            /*text-shadow: 1px 1px 2px gray;*/
+            color: black;
+        }
+
+        .modal .title h2 {
+            display: inline;
+        }
+
+        .modal .close-area {
+            display: inline;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer;
+            /*text-shadow: 1px 1px 2px gray;*/
+            color: black;
+        }
+
+        .modal .content {
+            margin-top: 30px;
+            color: black;
+        }
+
+        .comment__review {
+            display: none;
+        }
+
+        .__block {
+            display: block;
+            overflow: hidden;
+            transition: height ease-out 1s 0s;
+        }
+
+        .__my-review-post .__photos .swiper-slide {
+            width: 255px;
+        }
+
         .__my-review-post .__photos .swiper-slide img {
-            margin-bottom: 15px;
+            display: block;
+            width: 250px;
+            height: 235px;
+            object-fit: cover;
         }
 
 
@@ -231,25 +300,6 @@
                                 </p>
 
                             </section>
-                            <!--                            <div class="rating-distribution">-->
-                            <!--                                <ul>-->
-                            <!--                                    <li><span class="score">5점</span><span class="progress"><span class="bar"-->
-                            <!--                                                style="width: 51.3661%;"></span></span><span class="count">94</span>-->
-                            <!--                                    </li>-->
-                            <!--                                    <li><span class="score">4점</span><span class="progress"><span class="bar"-->
-                            <!--                                                style="width: 33.8798%;"></span></span><span class="count">62</span>-->
-                            <!--                                    </li>-->
-                            <!--                                    <li><span class="score">3점</span><span class="progress"><span class="bar"-->
-                            <!--                                                style="width: 9.83607%;"></span></span><span class="count">18</span>-->
-                            <!--                                    </li>-->
-                            <!--                                    <li><span class="score">2점</span><span class="progress"><span class="bar"-->
-                            <!--                                                style="width: 1.63934%;"></span></span><span class="count">3</span>-->
-                            <!--                                    </li>-->
-                            <!--                                    <li><span class="score">1점</span><span class="progress"><span class="bar"-->
-                            <!--                                                style="width: 3.27869%;"></span></span><span class="count">6</span>-->
-                            <!--                                    </li>-->
-                            <!--                                </ul>-->
-                            <!--                            </div>-->
                         </div>
                     </div>
                 </section>
@@ -338,12 +388,8 @@
                                                               fill="black"></path>
                                                     </svg>
                                                 </i></a>
-                                                <div class="__rating-detail" style="padding-left: 4px;">
-                                                    <div class="__item">맛 <span>3.5</span></div>
-                                                    <div class="__item">분위기 <span>5.0</span></div>
-                                                    <div class="__item">서비스 <span>5.0</span></div>
-                                                </div>
-                                                <span class="__date" th:text="${review.regDate}">2022.12.15</span>
+                                                <span class="__date"
+                                                      th:text="${#temporals.format(review.regDate, 'yyyy년 MM월 dd일')}">2022.12.15</span>
                                             </div>
                                         </div>
                                         <div class="__body" style="position: relative; padding: 0px 16px;">
@@ -351,24 +397,72 @@
                                                 <div class="v-scroll-inner">
                                                     <div id="shopReviewCardImgList_1272868" class="__photos"
                                                          style="display: flex; flex-wrap: nowrap;">
-                                                        <div class="swiper-slide" style="margin-right: 8px;">
-                                                            <!--                                                                <img th:src="${review.savedPath}" alt="">-->
-                                                            <img/>
+                                                        <div th:each="photo : ${review.photo}">
+                                                            <div class="swiper-slide"
+                                                                 style="margin-right: 8px;">
+                                                                <th:block
+                                                                        th:if="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                    <img th:src="${photo.savedPath}" alt="">
+                                                                </th:block>
+                                                                <th:block
+                                                                        th:unless="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                    <img th:src="'/photo/'+${photo.savedNm}" alt="">
+                                                                </th:block>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="__review-post">
-                                                <p class="review-content " th:text="${review.revContent}"></p><a
-                                                    class="__more "></a>
+                                                <p class="review-content " th:text="${review.revContent}"></p>
                                             </div>
-                                            <div class="__d-flex __v-center"
-                                                 style="justify-content: space-between;">
-                                                <div class="__post-meta mb-24"><span class="__like">0</span><span
-                                                        class="__comment">0</span></div>
-                                                <div class="__review-meta"><a class="__more">MORE</a></div>
+                                            <div class="__d-flex __v-center" style="justify-content: space-between;">
+                                                <div class="__post-meta" style="margin-left: -15px;">
+                                                    <div th:class="'heart'+${review.revIdx}">
+                                                    </div>
+                                                    <div th:class="'comment'+${review.revIdx}">
+                                                    </div>
+                                                </div>
+                                                <div class="__review-meta"><a class="__more"
+                                                                              th:onclick="reportReview([[${review.revIdx}]], [[${review.resIdx}]], [[${review.isReview}]])">MORE</a>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--                                                댓글 시작-->
+                                        <main id="main" th:class="comment__review"
+                                              th:id="'showCom'+${review.revIdx}"
+                                              style="margin-top: 15px;padding-bottom: 24px;">
+                                            <article class="timeline-post-item" id="timeline-posts">
+                                                <div class="__comments">
+                                                    <div class="container gutter-sm">
+                                                        <div class="__comment-list __comment-detail-list">
+                                                            <div>
+                                                                <article
+                                                                        th:class="'__comment-item comDiv'+${review.revIdx}"
+                                                                        style="padding: 16px 20px 0px;">
+
+                                                                </article>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <form class="__comment-form">
+                                                <div class="__box"><input type="text"
+                                                                          placeholder="리뷰에 따뜻한 댓글을 달아주세요."
+                                                                          name="content" th:class="'newContent'
+                                                                              +${review.revIdx}"
+                                                                          value=""
+                                                                          style="font-family: auto; min-width: 150px;margin-right: 28px;margin-left: 16px;">
+                                                    <button type="button"
+                                                            th:onclick="newCom([[${review.revIdx}]],[[${prIdx}]])">
+                                                        등록
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </main>
+                                        <!--                                                댓글 끝-->
+                                        <hr class="hairline">
                                     </article>
                                 </div>
                             </div>
@@ -401,11 +495,42 @@
             </main>
         </div>
     </div>
-<!--footer-->
+    <div th:each="review : ${reviews}">
+        <div th:class="'modal ' +${review.revIdx} + ' modal-overlay'">
+            <div class="modal-window">
+                <div th:class="'close-area' + ' close'+${review.revIdx}" th:onclick="closeModal([[${review.revIdx}]])">X
+                </div>
+                <div class="content">
+                    <div class="drawer-box">
+                        <div class="drawer-box-header mb--20" style="padding: 0 20px 27px 0">
+                            <h2 th:class="'drawer-box-title ml-10 isRev'+${review.revIdx}" style="margin-bottom: 10px;">
+                                해당 리뷰를 신고하시겠습니까?
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="drawer-box-footer">
+                        <div class="btn-group">
+                            <button th:class="'btn btn-lg btn-red btn' + ${review.revIdx}" type="button"
+                                    style="width: 100%">
+                                신고하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="comReport">
+
+    </div>
+
+    <!--footer-->
     <div th:replace="fragment/footer :: footer"/>
-<!--/footer-->
+    <!--/footer-->
 </div>
 </body>
 <script type="text/javascript" src="/js/script.js"></script>
+<script src="/js/reviewHeartComm.js"></script>
+<script src="/js/report.js"></script>
 <!--<script type="text/javascript" src="/js/bar.js"></script>-->
 </html>

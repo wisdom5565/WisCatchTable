@@ -119,17 +119,29 @@
         color: black;
     }
 
+    /*헤더*/
     body {
         scrollbar-color: white;
         scrollbar-width: none;
         -ms-overflow-style: none;
         overflow-x: hidden;
     }
+
     .header-wrap {
         top: -6.5px;
         right: 8px;
     }
 
+    .__my-review-post .__photos .swiper-slide {
+        width: 255px;
+    }
+
+    .__my-review-post .__photos .swiper-slide img {
+        display: block;
+        width: 250px;
+        height: 235px;
+        object-fit: cover;
+    }
 </style>
 <body>
 <header id="header">
@@ -204,28 +216,30 @@
 
                                                     </div>
                                                     <h3 class="__title"></h3>
-                                                    <div class="__content" style="font-size: 1em">
+                                                    <div class="__content" style="font-size: 1.2em">
                                                         <div id="__content0_1422474" th:text="${review.revContent}">
                                                             대박.... 리모델링 하기 전부터 회사 회식 할때 마다 왔었는데 바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ
                                                             분위기도 좋고 친절 하고 .. 심지어 집근처... 자주 갈듯요!!
                                                         </div>
                                                     </div>
-                                                    <div class="restaurant-info"
-                                                         style="padding: 15px;margin-left: -15px;">
+                                                    <div class="restaurant-info" style="padding: 15px;">
                                                         <div class="__info" style="font-size: 1em;">
-                                                            <h4 class="__name">
-                                                                <span th:text="${review.resAdminDto.resaBisName}">미래회관 한남</span>
-                                                            </h4>
-                                                            <div class="__meta"
-                                                                 th:text="${review.resAdminDto.resaRegion}">돼지고기구이 • 한남
-                                                            </div>
+                                                            <a th:href="'/shop/'+${review.resAdminDto.resaBisName}">
+                                                                <h4 class="__name">
+                                                                    <span th:text="${review.resAdminDto.resaBisName}">미래회관 한남</span>
+                                                                </h4>
+                                                                <div class="__meta"
+                                                                     th:text="${review.resAdminDto.resaRegion}">돼지고기구이 •
+                                                                    한남
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                         <img src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/icon_arrow/arrow_left_black.svg"
                                                              alt="">
                                                     </div>
                                                 </div>
                                                 <div class="timeline-post-footer">
-                                                    <div class="__post-meta" style="margin-left: -15px;">
+                                                    <div class="__post-meta">
                                                         <div th:class="'heart'+${review.revIdx}">
                                                         </div>
                                                         <div th:class="'comment'+${review.revIdx}">
