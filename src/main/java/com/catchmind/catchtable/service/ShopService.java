@@ -111,31 +111,33 @@ public class ShopService {
         return reviewResponsePage;
     }
 
-//    public List<ShopReviewResponse> getReview() {
-//        List<ShopReviewResponse> shopReviewResponseList = new ArrayList<>();
-//        List<BistroInfoDto> bistroInfoDtos = bistroInfoRepository.findAll().stream().map(BistroInfoDto::from).toList();
-//        List<ReviewDto> reviewDtos = new ArrayList<>();
-//        double totalScore = 0;
-//        Double avg = 0.0;
-//        for (BistroInfoDto resaBisName : bistroInfoDtos) {
-//            reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName()).stream().map(ReviewDto::from).toList();
-//            Long reviewCnt = reviewRepository.countByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName());
-//            for (ReviewDto reviewDto : reviewDtos) {
-//                totalScore += reviewDto.revScore();
-//            }
-//            avg = (double) Math.round(totalScore / reviewDtos.size());
-//
-//            if (avg.isInfinite()) {
-//                ShopReviewResponse response = new ShopReviewResponse(0.0, reviewCnt);
-//                shopReviewResponseList.add(response);
-//            } else {
-//                ShopReviewResponse response = new ShopReviewResponse(avg, reviewCnt);
-//                shopReviewResponseList.add(response);
-//            }
-//        }
-//        System.out.println(shopReviewResponseList);
-//        return shopReviewResponseList;
-//    }
+    public List<ShopReviewResponse> getReview() {
+        List<ShopReviewResponse> shopReviewResponseList = new ArrayList<>();
+        List<BistroInfoDto> bistroInfoDtos = bistroInfoRepository.findAll().stream().map(BistroInfoDto::from).toList();
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+        double totalScore = 0;
+        double avg = 0;
+        for (BistroInfoDto resaBisName : bistroInfoDtos) {
+            reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName()).stream().map(ReviewDto::from).toList();
+            Long reviewCnt = reviewRepository.countByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName());
+            if(reviewDtos.isEmpty()){
+                ShopReviewResponse response = new ShopReviewResponse(0.0, reviewCnt);
+                shopReviewResponseList.add(response);
+            }else{
+                for (ReviewDto reviewDto : reviewDtos) {
+                    System.out.println(reviewDto.revScore());
+                    totalScore += reviewDto.revScore();
+                    System.out.println(totalScore);
+                }
+                System.out.println(avg = totalScore / reviewDtos.size());
+                ShopReviewResponse response =new ShopReviewResponse(Math.round(avg * 10) / 10
+,reviewCnt);
+                shopReviewResponseList.add(response);
+            }
+        }
+        System.out.println(shopReviewResponseList);
+        return shopReviewResponseList;
+    }
 
 }
 

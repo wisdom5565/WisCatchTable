@@ -1,12 +1,15 @@
 package com.catchmind.catchtable.service;
 
+import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.domain.Reserve;
 import com.catchmind.catchtable.domain.type.ReservationType;
+import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.ReviewDto;
 import com.catchmind.catchtable.dto.ReviewPhotoDto;
 import com.catchmind.catchtable.dto.network.request.ReviewPhotoRequest;
 import com.catchmind.catchtable.dto.network.request.ReviewRequest;
+import com.catchmind.catchtable.repository.ProfileRepository;
 import com.catchmind.catchtable.repository.ReserveRepository;
 import com.catchmind.catchtable.repository.ReviewPhotoRepository;
 import com.catchmind.catchtable.repository.ReviewRepository;
@@ -29,6 +32,7 @@ public class MydiningService {
     private final ReserveRepository reserveRepository;
     private final ReviewRepository reviewRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
+    private final ProfileRepository profileRepository;
 
     @Transactional
     public ReserveDto getDetail(Long resIdx) {
@@ -52,6 +56,13 @@ public class MydiningService {
         ReviewRequest request = reviews;
         System.out.println(request);
         ReviewDto newReview = request.of(request.prIdx(), request.revContent(), (request.revScore()*0.5), request.resaBisName(), request.resIdx()).toDto();
+        // 프로필에 리뷰 갯수 증가
+        Optional<Profile> findProfile =  profileRepository.findById(request.prIdx());
+        findProfile.ifPresent(
+                profile -> {
+                    profile.setPrReview(profile.getPrReview() + 1);
+                }
+        );
         Long saveIdx = reviewRepository.save(newReview.toEntity()).getRevIdx();
 
         if (saveIdx != null) {

@@ -126,7 +126,7 @@
                                                         </h4>
                                                     </a>
                                                     <div class="header-right">
-                                                        <div th:onclick="reportReview([[${review.revIdx}]], [[${review.resIdx}]], [[${review.isReview}]])"
+                                                        <div th:onclick="reportReview([[${review.revIdx}]], [[${review.resIdx}]], [[${review.isReview}]],[[${prIdx}]])"
                                                              class="__more-profile" id="btn-example">MORE
                                                         </div>
                                                     </div>
@@ -249,7 +249,7 @@
     </div>
     <!--리뷰신고-->
     <div th:each="review : ${reviews}">
-        <div th:class="'modal ' +${review.revIdx} + ' modal-overlay'">
+        <div th:class="'modal revs' +${review.revIdx} + ' modal-overlay'">
             <div class="modal-window">
                 <div th:class="'close-area' + ' close'+${review.revIdx}" th:onclick="closeModal([[${review.revIdx}]])">X
                 </div>

@@ -263,7 +263,7 @@
     </div>
     <!--리뷰신고-->
     <div th:each="review : ${reviews}">
-        <div th:class="'modal ' +${review.revIdx} + ' modal-overlay'">
+        <div th:class="'modal revs' +${review.revIdx} + ' modal-overlay'">
             <div class="modal-window">
                 <div th:class="'close-area' + ' close'+${review.revIdx}" th:onclick="closeModal([[${review.revIdx}]])">X
                 </div>

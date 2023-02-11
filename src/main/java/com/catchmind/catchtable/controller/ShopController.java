@@ -266,6 +266,7 @@ public class ShopController {
         // 총 레스토랑 수
         int cnt = cntlist.size();
         map.addAttribute("cnt", cnt);
+        shopService.getReview();
 
 
         return "shop/list";

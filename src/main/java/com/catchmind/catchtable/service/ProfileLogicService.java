@@ -3,6 +3,7 @@ package com.catchmind.catchtable.service;
 import com.catchmind.catchtable.domain.BistroSave;
 import com.catchmind.catchtable.domain.MyCollection;
 import com.catchmind.catchtable.domain.Profile;
+import com.catchmind.catchtable.domain.Review;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.MyCollectionRequest;
 import com.catchmind.catchtable.dto.network.request.SnsRequest;
@@ -13,15 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -208,7 +208,7 @@ public class ProfileLogicService {
 
     public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {
         List<ReviewResponse> reviewList = new ArrayList<>();
-        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdxOrderByRevIdxDesc(prIdx).stream().map(ReviewDto::from).toList();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
         for (int i = 0; i < reviewDtos.size(); i++) {

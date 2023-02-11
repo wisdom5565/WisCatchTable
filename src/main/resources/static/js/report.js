@@ -1,8 +1,8 @@
 //리뷰 신고
-function reportReview(revIdx, resIdx, isReview) {
+function reportReview(revIdx, resIdx, isReview, prIdx) {
     // 리뷰작성자가 아닌경우
     if(!isReview) {
-        $('.' + revIdx).css("display", "flex");
+        $('.revs' + revIdx).css("display", "flex");
         $('.btn' + revIdx).click(function () {
             $.ajax({
                 type: 'GET',
@@ -20,11 +20,11 @@ function reportReview(revIdx, resIdx, isReview) {
     } else {
         $('.isRev' + revIdx).text("해당 리뷰를 삭제하시겠습니까?");
         $('.btn' + revIdx).text("리뷰 삭제하기");
-        $('.' + revIdx).css("display", "flex");
+        $('.revs' + revIdx).css("display", "flex");
         $('.btn' + revIdx).click(function () {
             $.ajax({
                 type: 'GET',
-                url: "/timeline/del/review/" + revIdx + "/" + resIdx,
+                url: "/timeline/del/review/" + revIdx + "/" + resIdx + "/" + prIdx,
                 success: function (data) {
                     console.log(data);
                     if(data != null) {
@@ -87,7 +87,7 @@ function reportComment(comIdx, isComm, revComIdx) {        // 매개변수로 �
 
 // 리뷰 신고창 닫기
 function closeModal(revIdx) {
-    $('.' + revIdx).css("display", "none");
+    $('.revs' + revIdx).css("display", "none");
 }
 
 // 댓글 신고창 닫기

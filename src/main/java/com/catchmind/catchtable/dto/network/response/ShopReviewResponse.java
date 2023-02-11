@@ -6,7 +6,7 @@ import com.catchmind.catchtable.dto.PhotoDto;
 import java.util.List;
 
 public record ShopReviewResponse(
-        Double avgScore,
+        double avgScore,
         Long reviewCnt
 ) {
 }

@@ -9,6 +9,7 @@ import com.catchmind.catchtable.dto.network.response.ReviewResponse;
 import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
 import com.catchmind.catchtable.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -374,11 +375,22 @@ public class TimeLineService {
     }
 
     @Transactional
-    public void delReview(Long revIdx, Long resIdx) {
+    public void delReview(Long revIdx, Long resIdx, Long prIdx) {
+        Profile findProfile = profileRepository.findById(prIdx).orElse(null);
+        if(findProfile.getPrReview() != 0) {
+            findProfile.setPrReview(findProfile.getPrReview() - 1);
+        } else {
+            findProfile.setPrReview(0);
+        }
+
         Reserve findReserve = reserveRepository.findById(resIdx).orElse(null);
         findReserve.setRevStatus(false);
 
-        reviewRepository.deleteById(revIdx);
+        try {
+            reviewRepository.deleteById(revIdx);
+        } catch(EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 

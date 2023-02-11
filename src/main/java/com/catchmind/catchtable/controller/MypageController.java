@@ -145,12 +145,9 @@ public class MypageController {
         for (int i = 0; i < arr1.length; i++) {
 
             if (arr1[i] != null && arr1[i] != "") {
-
                 profileLogicService.saveSNS(request, prIdx, arr1[i], arr2[i]);
-
             }
         }
-
         return "redirect:/mypage";
     }
 

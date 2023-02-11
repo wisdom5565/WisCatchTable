@@ -42,6 +42,7 @@ public class TimelineController {
             Page<ReviewResponse> reviews = timeLineService.getReviews(pageable);
             List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
             map.addAttribute("reviews", reviews);
+            map.addAttribute("prIdx", null);
             map.addAttribute("paginationBarNumbers", barNumbers);
         } else {
             Long prIdx = catchPrincipal.prIdx();
@@ -378,12 +379,10 @@ public class TimelineController {
 //    }
 
     // 리뷰삭제
-    @GetMapping("/del/review/{revIdx}/{resIdx}")
+    @GetMapping("/del/review/{revIdx}/{resIdx}/{prIdx}")
     @ResponseBody
-    public String delReview(@PathVariable Long revIdx, @PathVariable Long resIdx) {
-        System.out.println("삭제" + revIdx);
-        System.out.println("삭제" + resIdx);
-        timeLineService.delReview(revIdx, resIdx);
+    public String delReview(@PathVariable Long revIdx, @PathVariable Long resIdx, @PathVariable Long prIdx) {
+        timeLineService.delReview(revIdx, resIdx, prIdx);
         return "OK";
     }
 
