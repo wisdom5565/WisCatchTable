@@ -130,8 +130,7 @@ public class ShopService {
                     System.out.println(totalScore);
                 }
                 System.out.println(avg = totalScore / reviewDtos.size());
-                ShopReviewResponse response =new ShopReviewResponse(Math.round(avg * 10) / 10
-,reviewCnt);
+                ShopReviewResponse response =new ShopReviewResponse(avg ,reviewCnt);
                 shopReviewResponseList.add(response);
             }
         }

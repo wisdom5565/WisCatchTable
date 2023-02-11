@@ -35,33 +35,9 @@
                             <!-- <img class="menu-img" src="./image/example.jpg"> -->
                             <h4 class="menu-name" th:text = "${menus.meName()}"><strong>평일_런치</strong></h4>
                         </div>
-                        <span class="price" th:text =  "|${menus.mePrice()}원|">53,000원</span>
+                        <span class="price" th:text =  "${menus.mePrice()}">53,000원</span>
                     </div>
                 </div>
-<!--                <div class="menu-list">-->
-<!--                    <div class="menu-info">-->
-<!--                        <h4 class="menu-name" ><strong>주말/공휴일_런치</strong></h4>-->
-<!--                        <span class="price" >68,000원</span>-->
-<!--                    </div>-->
-<!--                 </div>-->
-<!--                    <div class="menu-list">-->
-<!--                        <div class="menu-info">-->
-<!--                               <h4 class="menu-name"><strong>평일/주말/공휴일_디너</strong></h4>-->
-<!--                            <span class="price">68,000원</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="menu-list">-->
-<!--                        <div class="menu-info">-->
-<!--                               <h4 class="menu-name" ><strong>평일/주말/공휴일_디너</strong></h4>-->
-<!--                            <span class="price" >68,000원</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="menu-list">-->
-<!--                        <div class="menu-info">-->
-<!--                               <h4 class="menu-name"><strong>평일/주말/공휴일_디너</strong></h4><span class="price">68,000원</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
                     <div class="container gutter-sm pt-20 mb-30">
                         <p class="font-12 mb-6">* 메뉴와 가격은 레스토랑 사정에 따라 달라질 수 있습니다.</p>
                     </div>
@@ -74,4 +50,6 @@
 <!--/footer-->
 </div>
 </body>
+<!-- * -->
+<script src="/js/header.js"></script>
 </html>

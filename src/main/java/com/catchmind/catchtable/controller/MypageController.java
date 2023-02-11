@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.controller;
 
 
+import com.catchmind.catchtable.domain.Sns;
 import com.catchmind.catchtable.dto.BistroSaveDto;
 import com.catchmind.catchtable.dto.MyCollectionDto;
 import com.catchmind.catchtable.dto.ProfileDto;
@@ -12,6 +13,7 @@ import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.BistroSaveRepository;
 import com.catchmind.catchtable.repository.ProfileRepository;
+import com.catchmind.catchtable.repository.SnsRepository;
 import com.catchmind.catchtable.service.PaginationService;
 import com.catchmind.catchtable.service.ProfileLogicService;
 import com.catchmind.catchtable.service.TimeLineService;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("mypage")
@@ -47,6 +50,8 @@ public class MypageController {
     private BistroSaveRepository bistroSaveRepository;
     @Autowired
     private TimeLineService timeLineService;
+    @Autowired
+    private SnsRepository snsRepository;
 
 
     // 마이페이지 헤더
@@ -62,13 +67,27 @@ public class MypageController {
             ModelAndView modelAndView = new ModelAndView("/login");
             return modelAndView;
         }
+        boolean isSnsAddr = false;
         Long prIdx = catchPrincipal.prIdx();
         TimeLineResponse header = header(prIdx);
+        for(int i=0; i < header.snsList().size(); i++){
+            if(!header.snsList().get(i).snsAddr().isBlank()){
+                isSnsAddr = false;
+                break;
+            }else{
+                isSnsAddr = true;
+            }
+        }
+        if(header.snsList().isEmpty()){
+            isSnsAddr = true;
+        }
+
         System.out.println(catchPrincipal.prIdx());
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         ModelAndView modelAndView = new ModelAndView("/mypage/mypage_main");
         modelAndView.addObject("profile", profile);
         modelAndView.addObject("header", header);
+        modelAndView.addObject("isSnsAddr", isSnsAddr);
         modelAndView.addObject("prIdx", prIdx);
         return modelAndView;
     }
@@ -95,9 +114,6 @@ public class MypageController {
         modelAndView.addObject("profile", profile);
 //        if(profile.prBirth()!=null || profile.prBirth() != ""){
         String[] arr = profile.prBirth().split(",");
-        System.out.println("전지혜 " + arr[0]);
-        System.out.println("전지혜 " + arr[1]);
-        System.out.println("전지혜 " + arr[2]);
         modelAndView.addObject("header", header);
         modelAndView.addObject("birth0", arr[0]);
         modelAndView.addObject("birth1", arr[1]);
@@ -110,44 +126,80 @@ public class MypageController {
     @PostMapping("/modify")
     public String updateProfile(@AuthenticationPrincipal CatchPrincipal catchPrincipal, ProfileRequest request) {
         Long prIdx = catchPrincipal.prIdx();
-//        System.out.println("이거뭐야  "+prIdx);
-//        System.out.println(request.toDto());
         profileLogicService.updateProfile(prIdx, request.toDto());
-//        System.out.println(request);
         return "redirect:/mypage";
     }
 
+    // sns추가 페이지
     @GetMapping("/newSNS")
     public ModelAndView SNS(@AuthenticationPrincipal CatchPrincipal catchPrincipal,
                             Model model) {
         Long prIdx = catchPrincipal.prIdx();
         TimeLineResponse header = header(prIdx);
+
+        String insAddr;
+        String twtAddr;
+        String youtubeAddr;
+        String blogAddr;
+
+        for(int i=0;i<header.snsList().size();i++){
+            if(header.snsList().get(i).snsType().equals("INSTAGRAM")){
+                insAddr=header.snsList().get(i).snsAddr();
+                model.addAttribute("insAddr",insAddr);
+            }else if(header.snsList().get(i).snsType().equals("TWITTER")){
+                twtAddr=header.snsList().get(i).snsAddr();
+                model.addAttribute("twtAddr",twtAddr);
+            }else if(header.snsList().get(i).snsType().equals("YOUTUBE")){
+                youtubeAddr=header.snsList().get(i).snsAddr();
+                model.addAttribute("youtubeAddr",youtubeAddr);
+            }else if(header.snsList().get(i).snsType().equals("BLOG")){
+                blogAddr=header.snsList().get(i).snsAddr();
+                model.addAttribute("blogAddr",blogAddr);
+            }
+        }
+
+        boolean isSnsAddr = false;
+        for(int i=0; i < header.snsList().size(); i++){
+            if(header.snsList().get(i).snsAddr().isBlank()){
+                isSnsAddr = true;
+            }
+        }
+        if(header.snsList().isEmpty()){
+            isSnsAddr = true;
+        }
+
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
         model.addAttribute("prIdx", prIdx);
         model.addAttribute("header", header);
         model.addAttribute("profile", profile);
+        model.addAttribute("isSnsAddr", isSnsAddr);
         return new ModelAndView("/mypage/newSNS");
     }
 
-    // sns 추가
+    // sns 추가 및 업데이트
     @PostMapping("/newSNS")
     public String saveSNS(@AuthenticationPrincipal CatchPrincipal catchPrincipal,
                           SnsRequest request,
                           HttpServletResponse response
     ) {
         Long prIdx = catchPrincipal.prIdx();
+        TimeLineResponse header = header(prIdx);
+
         String[] arr1;
         String[] arr2;
-        arr1 = request.snsAddr().split(",");
+        System.out.println(request.snsAddr());
+        arr1 = request.snsAddr().split(",",-1);
         arr2 = request.snsType().split(",");
 
-
-        for (int i = 0; i < arr1.length; i++) {
-
-            if (arr1[i] != null && arr1[i] != "") {
+        for(int i = 0; i<arr1.length; i++){
+            Optional<Sns> sns= snsRepository.findByProfile_PrIdxAndSnsType(prIdx,arr2[i]);
+            if(sns.isEmpty()){
                 profileLogicService.saveSNS(request, prIdx, arr1[i], arr2[i]);
+            }else{
+                profileLogicService.snsUpdate(prIdx,arr2[i],arr1[i]);
             }
         }
+
         return "redirect:/mypage";
     }
 

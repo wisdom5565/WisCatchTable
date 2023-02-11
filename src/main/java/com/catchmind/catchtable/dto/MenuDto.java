@@ -10,12 +10,12 @@ public record MenuDto(
         ResAdminDto resAdminDto,
         String meName,
         String meContent,
-        int mePrice,
+        String mePrice,
         LocalDateTime regDate,
         LocalDateTime updateDate
 ) {
 
-    public static MenuDto of(Long meIdx, ResAdminDto resAdminDto, String meName, String meContent, int mePrice, LocalDateTime regDate, LocalDateTime updateDate){
+    public static MenuDto of(Long meIdx, ResAdminDto resAdminDto, String meName, String meContent, String mePrice, LocalDateTime regDate, LocalDateTime updateDate){
         return new MenuDto( meIdx,resAdminDto,meName,meContent,mePrice,regDate,updateDate);
     }
 

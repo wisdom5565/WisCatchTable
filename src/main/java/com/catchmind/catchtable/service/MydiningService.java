@@ -3,7 +3,6 @@ package com.catchmind.catchtable.service;
 import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.domain.Reserve;
 import com.catchmind.catchtable.domain.type.ReservationType;
-import com.catchmind.catchtable.dto.ProfileDto;
 import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.ReviewDto;
 import com.catchmind.catchtable.dto.ReviewPhotoDto;

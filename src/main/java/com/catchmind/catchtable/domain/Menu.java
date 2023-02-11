@@ -18,7 +18,7 @@ public class Menu extends AuditingFields {
     @Setter private ResAdmin resAdmin;
     @Setter private String meName;
     @Setter private String meContent;
-    @Setter private int mePrice;
+    @Setter private String mePrice;
 
     protected Menu(){}
 }
@@ -27,6 +27,6 @@ public class Menu extends AuditingFields {
 //bis_name	식당 이름	varchar
 //me_name	메뉴 이름	varchar
 //me_content	메뉴 설명	varchar
-//me_price	메뉴 가격	int
+//me_price	메뉴 가격	varchar
 //reg_date	등록날짜	datetime
 //update_date	수정날짜	datetime

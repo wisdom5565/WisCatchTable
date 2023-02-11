@@ -43,48 +43,44 @@
 
                                 <!--                            sns입력 시작-->
                                 <div class="form-block mb-24">
-                                    <div class="mb-6"><label class="color-gray font-12">인스타그램</label></div>
                                     <div style="position: relative;"><i
                                             style="display: block; position: absolute; top: 50%; transform: translateY(-50%); left: 10px;"><img
                                             src="https://d1il53drs2cmia.cloudfront.net/resources/img/icons/insta.svg"
                                             style="height: 20px; width: 20px;"></i>
-                                        <input type="text" class="form-input" placeholder="인스타그램 프로필 주소를 입력해주세요"
-                                               id="sns_Ins" name="snsAddr" style="padding-left: 40px;" value="">
+                                        <input class="form-input" th:value="${insAddr != null} ? ${insAddr} : ''" placeholder="인스타그램 주소를 입력해주세요"
+                                               id="sns_Ins" name="snsAddr" style="padding-left: 40px;">
                                         <input type="hidden" name="snsType" value="INSTAGRAM">
+
                                     </div>
                                 </div>
 
                                 <div class="form-block mb-24">
-                                    <div class="mb-6"><label class="color-gray font-12">트위터</label></div>
                                     <div style="position: relative;"><i
                                             style="display: block; position: absolute; top: 50%; transform: translateY(-50%); left: 10px;"><img
                                             src="https://d1il53drs2cmia.cloudfront.net/resources/img/icons/twitter.svg"
                                             style="height: 20px; width: 20px;"></i>
-                                        <input type="text" class="form-input" placeholder="트위터 프로필 주소를 입력해주세요"
-                                               id="sns_twi" name="snsAddr" value="" style="padding-left: 40px;">
+                                        <input th:value="${twtAddr != null} ? ${twtAddr} : ''" placeholder="트위터 주소를 입력해주세요"
+                                               class="form-input" id="sns_twi" name="snsAddr" style="padding-left: 40px;">
                                         <input type="hidden" name="snsType" value="TWITTER">
                                     </div>
                                 </div>
 
                                 <div class="form-block mb-24">
-                                    <div class="mb-6"><label class="color-gray font-12">유튜브</label></div>
                                     <div style="position: relative;"><i
                                             style="display: block; position: absolute; top: 50%; transform: translateY(-50%); left: 10px;"><img
                                             src="https://d1il53drs2cmia.cloudfront.net/resources/img/icons/youtube.svg"
                                             style="height: 20px; width: 20px;"></i>
-                                        <input type="text" class="form-input" placeholder="유튜브 프로필 주소를 입력해주세요"
-                                               id="sns_you" name="snsAddr" style="padding-left: 40px;">
+                                        <input th:value="${youtubeAddr != null} ? ${youtubeAddr} : ''"  placeholder="유튜브 주소를 입력해주세요" class="form-input" id="sns_you" name="snsAddr" style="padding-left: 40px;" >
                                         <input type="hidden" name="snsType" value="YOUTUBE">
                                     </div>
                                 </div>
 
                                 <div class="form-block mb-24">
-                                    <div class="mb-6"><label class="color-gray font-12">블로그</label></div>
                                     <div style="position: relative;"><i
                                             style="display: block; position: absolute; top: 50%; transform: translateY(-50%); left: 10px;"><img
                                             src="https://d1il53drs2cmia.cloudfront.net/resources/img/icons/blog.svg"
                                             style="height: 20px; width: 20px;"></i>
-                                        <input type="text" class="form-input" placeholder="블로그 프로필 주소를 입력해주세요"
+                                        <input th:value="${blogAddr != null} ? ${blogAddr} : ''" placeholder="블로그 주소를 입력해주세요" class="form-input"
                                                id="sns_blog" name="snsAddr" style="padding-left: 40px;">
                                         <input type="hidden" name="snsType" value="BLOG">
                                     </div>

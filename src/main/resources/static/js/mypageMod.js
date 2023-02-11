@@ -11,7 +11,8 @@ function modOk(){
     // const expNameText = /[가-힣]+$/;                    // 한글만 가능
     const expNameText = /^[A-Za-z가-힣]{2,20}$/;           //
     const expHpText = /^\d{3}\d{3,4}\d{4}$/;                // (-) 제외
-    const expPwText = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}/;
+    const expPwText = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}/;
+    // const expPwText = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}/;
     const expNickText = /^[A-Za-z가-힣]{4,20}$/;           //
 
 

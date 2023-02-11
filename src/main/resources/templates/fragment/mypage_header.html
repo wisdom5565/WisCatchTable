@@ -90,28 +90,36 @@
                                                          th:text="${header.prName}">황지연님</strong></div>
                 <div class="social">
                     <th:block th:each="snsList : ${header.snsList}">
-                        <th:block th:if="${snsList.snsType == 'INSTAGRAM'} "><a
-                                th:href="${snsList.snsAddr}" target="_blank"><img
-                                src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/insta.svg"
-                                alt="snsIcon"></a>
+                        <th:block th:if="${snsList.snsAddr} != ''">
+                            <th:block th:if="${snsList.snsType == 'INSTAGRAM'} "><a
+                                    th:href="${snsList.snsAddr}" target="_blank"><img
+                                    src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/insta.svg"
+                                    alt="snsIcon"></a>
+                            </th:block>
                         </th:block>
-                        <th:block th:if="${snsList.snsType == 'YOUTUBE'}"><a th:href="${snsList.snsAddr}"
-                                                                             target="_blank"><img
-                                src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/youtube.svg"
-                                alt="snsIcon"></a>
+                        <th:block th:if="${snsList.snsAddr} != ''">
+                            <th:block th:if="${snsList.snsType == 'YOUTUBE'}"><a th:href="${snsList.snsAddr}"
+                                                                                 target="_blank"><img
+                                    src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/youtube.svg"
+                                    alt="snsIcon"></a>
+                            </th:block>
                         </th:block>
-                        <th:block th:if="${snsList.snsType == 'TWITTER'}"><a th:href="${snsList.snsAddr}"
-                                                                             target="_blank"><img
-                                src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/twitter.svg"
-                                alt="snsIcon"></a>
+                        <th:block th:if="${snsList.snsAddr} != ''">
+                            <th:block th:if="${snsList.snsType == 'TWITTER'}"><a th:href="${snsList.snsAddr}"
+                                                                                 target="_blank"><img
+                                    src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/twitter.svg"
+                                    alt="snsIcon"></a>
+                            </th:block>
                         </th:block>
-                        <th:block th:if="${snsList.snsType == 'BLOG'}"><a th:href="${snsList.snsAddr}"
-                                                                          target="_blank"><img
-                                src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/blog.svg"
-                                alt="snsIcon"></a>
+                        <th:block th:if="${snsList.snsAddr} != ''">
+                            <th:block th:if="${snsList.snsType == 'BLOG'}"><a th:href="${snsList.snsAddr}"
+                                                                              target="_blank"><img
+                                    src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/blog.svg"
+                                    alt="snsIcon"></a>
+                            </th:block>
                         </th:block>
                     </th:block>
-                    <button th:if="${header.snsList.size() == 0}" onclick="location.href='/newSNS'">
+                    <button th:if="${isSnsAddr == true}" onclick="location.href='/mypage/newSNS'">
                         SNS 추가하기
                     </button>
                 </div>
@@ -130,9 +138,7 @@
                 </i>
                 <div th:text="${header.prRegion == null or header.prRegion == ''} ? '아직 활동 지역이 없습니다.' : ${header.prRegion}"></div>
                 <!-- <button class="follower btn btn-orange btn-rounded"><span class="label">팔로우</span></button> -->
-<!--&lt;!&ndash;                <button th:if="${header.snsList.size() != 0}" onclick="location.href='/newSNS'" style="position: relative; top: 5px; left: 42px; font-size: small;">&ndash;&gt;-->
-<!--                    SNS 추가하기-->
-                </button>
+
             </div>
             <div class="css-1l4w6pd ebhkjs76">
                 <button th:onclick="'location.href=\'' + @{/timeline/following/} + ${prIdx} + '\''" class="css-1vvajao ebhkjs70">팔로잉 [[${header.followingNum}]]</button>

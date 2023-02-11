@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div th:replace="fragment/link :: link"/>
-    <title th:text="${bisInfo.resAdminDto().resaBisName()}">텍사스 데 브라질 센트럴시티점</title>
+    <title th:text="${bisDetail.resAdminDto.resaBisName()}">텍사스 데 브라질 센트럴시티점</title>
     <link rel="stylesheet" href="/css/style.css">
     <div id="ch-plugin" class="notranslate">
         <div id="ch-plugin-core"></div>
@@ -15,7 +15,23 @@
                     style="position:relative!important;height:100%!important;width:100%!important;border:none!important;"></iframe>
         </div>
     </div>
+    <style>
+        .__restaurant-notice-v2 .__restaurant-notice-v2-item .__notice-content .__desc {
+            margin-right: 15px;
+        }
 
+        .video-swiper-wrapper {
+            /*max-width: 800px;*/
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .container.gutter-sm .v-scroll {
+            margin-left: 0px;
+            /*margin-right: -20px;*/
+            /*padding-bottom: 20px;*/
+        }
+    </style>
     <style data-styled="active" data-styled-version="5.1.1">
         body {
             scrollbar-color: white;
@@ -31,18 +47,10 @@
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-            type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f813af5669862c77201e5b06934d8538&libraries=services"
-    ></script>
-
-    <!--    <style>-->
-    <!--        .restaurant-detail-header{-->
-    <!--            -webkit-backdrop-filter: blur(18px);-->
-    <!--            backdrop-filter: blur(18px);-->
-    <!--        }-->
-    <!--    </style>-->
-
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f813af5669862c77201e5b06934d8538&libraries=services"></script>
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b5d757c54c1d945c4c71d8f3f60e1a69&amp;autoload=false&amp;libraries=services,clusterer"
+            async=""></script>
 </head>
 
 <body>
@@ -54,31 +62,15 @@
         <!--메인 시작-->
         <main id="main">
             <section class="restaurant-detail-header mb-40" style="position: relative;">
-                <!--             <section class="restaurant-detail-header mb-40" th:style="'position: relative; backdrop-filter: blur(18px); background-size:cover;  background-image:url(' + ${bisInfo.photoDto().savedPath()} + ');'" >-->
                 <div class="video-swiper-wrapper">
                     <div class="swiper swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
                         <div class="img-container">
                             <div class="img swiper-lazy swiper-lazy-loaded">
-                                <th:block
-                                        th:if="${bisInfo.photoDto().savedPath() != null and bisInfo.photoDto().orgNm() == null and bisInfo.photoDto().savedNm() == null}">
-                                    <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/375x250.png"
-                                         class="guide-img" style="width: 100%; max-height:500px; display: block;"
-                                         th:src="${bisInfo.photoDto().savedPath()}">
-                                </th:block>
-                                <th:block
-                                        th:unless="${bisInfo.photoDto().savedPath() != null and bisInfo.photoDto().orgNm() == null and bisInfo.photoDto().savedNm() == null}">
-                                    <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/375x250.png"
-                                         class="guide-img" style="width: 100%; max-height:500px; display: block;"
-                                         th:src="'/photo/' + ${bisInfo.photoDto().savedNm()}">
-                                </th:block>
+                                <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/375x250.png"
+                                     class="guide-img" style="width: 100%; max-height:500px; display: block;" th:src="${shopPic}">
+
                             </div>
                         </div>
-                        <!--                            <div-->
-                        <!--                                class="swiper-pagination center swiper-pagination-fraction swiper-pagination-horizontal">-->
-
-                        <!--                                <span class="swiper-pagination-current">1</span> / <span-->
-                        <!--                                    class="swiper-pagination-total">9</span>-->
-                        <!--                            </div>-->
                     </div>
                     <a href="#target" class="btn-location">위치</a>
                 </div>
@@ -86,18 +78,22 @@
             <section class="section">
                 <div class="container gutter-sm">
                     <div class="restaurant-summary mb-20">
-                        <h2 id="resa_bis_name" class="name" th:text="${bisInfo.resAdminDto().resaBisName()}"></h2>
-                        <p class="slogan" style="line-height: 1.5;" th:text="${bisInfo.bisDesc()}">고속터미널역에 위치한 무한 리필
-                            스테이크 맛집</p><span
-                            class="tags">스테이크,립 • 반포</span>
+                        <h2 id="resa_bis_name" class="name"
+                            th:text="${bisDetail.bistroInfoDto().resAdminDto().resaBisName()}"></h2>
+                        <p class="slogan" style="line-height: 1.5;" th:text="${bisDetail.bistroInfoDto().bisDesc()}">
+                            고속터미널역에 위치한 무한 리필 스테이크 맛집</p>
+                        <span class="tags"
+                              th:text="|${bisDetail.bistroInfoDto().bisCategory()} • ${bisDetail.bistroInfoDto().bisRegion()}|">스테이크,립 • 반포</span>
                     </div>
                     <div class="restaurant-meta mb-16">
                         <div class="rating"><span class="star" th:text="${avgpoint}">3.3</span><span class="count"
-                                                                                                     th:text="${revcnt}">(165)</span>
+                                                                                                     th:text="|(${revcnt})|">(165)</span>
                         </div>
                         <div class="price">
-                            <span class="lunch" th:text=" |점심 ${bisInfo.bisLunch()} 만원|">점심 5 - 7만원</span>
-                            <span class="dinner" th:text=" |저녁 ${bisInfo.bisDinner()} 만원|">저녁 6.8만원</span></div>
+                            <span class="lunch"
+                                  th:text=" |점심 ${bisDetail.bistroInfoDto().bisLunch()} 만원|">점심 5 - 7만원</span>
+                            <span class="dinner"
+                                  th:text=" |저녁 ${bisDetail.bistroInfoDto().bisDinner()} 만원|">저녁 6.8만원</span></div>
                     </div>
                 </div>
             </section>
@@ -105,11 +101,12 @@
             <section class="section pb-30 pt-20 ">
                 <div class="container gutter-sm">
                     <div class="section-body">
-                        <div class="mb-8"><a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown"
-                                             style="border: 1px solid #666; border-radius: 6px;"><span><span
-                                class="label calendar">오늘(목) / 2명</span></span></a></div>
-                        <div class="btn-centered"><a th:onclick="checkBlock([[${bisInfo.resAdminDto().resaBisName()}]])"
-                                                     class="btn btn-rounded btn-outline-red"><span
+<!--                        <div class="mb-8"><a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown"-->
+<!--                                             style="border: 1px solid #666; border-radius: 6px;"><span><span-->
+<!--                                class="label calendar">오늘(목) / 2명</span></span></a></div>-->
+                        <div class="btn-centered"><a
+                                th:onclick="checkBlock([[${bisDetail.resAdminDto().resaBisName()}]])"
+                                class="btn btn-rounded btn-outline-red"><span
                                 class="label arrow">예약가능 날짜 찾기</span></a></div>
             </section>
             <hr class="separator">
@@ -198,7 +195,7 @@
                     <div class="section-header">
                         <h3 class="section-title">메뉴</h3>
                         <div class="utils"><a class="__btn-all"
-                                              th:href="'/shop/menulist/' + ${bisInfo.resAdminDto().resaBisName()}">전체보기</a>
+                                              th:href="'/shop/menulist/' + ${bisDetail.resAdminDto().resaBisName()}">전체보기</a>
                         </div>
                     </div>
                     <div class="section-body">
@@ -210,7 +207,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div><a th:href="'/shop/menulist/' + ${bisInfo.resAdminDto().resaBisName()}"
+                        <div><a th:href="'/shop/menulist/' + ${bisDetail.resAdminDto().resaBisName()}"
                                 class="btn-menupan-photo"><span>메뉴 전체보기</span></a></div>
                     </div>
                 </div>
@@ -221,7 +218,7 @@
                     <div class="section-header mb-25">
                         <h3 class="section-title">최신 리뷰</h3>
                         <div class="utils"><a class="__btn-all"
-                                              th:href="|/shop/review/${bisInfo.resAdminDto.resaBisName}?page=0&size=10&sort=regDate|">전체보기</a>
+                                              th:href="|/shop/review/${bisDetail.resAdminDto.resaBisName}?page=0&size=10&sort=regDate|">전체보기</a>
                         </div>
                     </div>
                     <div class="section-body">
@@ -238,12 +235,12 @@
                                             <a class="review-post-list-item" th:each="review,revStat:${reviews}"
                                                th:if="${revStat.index>(revStat.size-4)}">
                                                 <div class="tb">
-                                                    <th:block th:if="${review.photoList != null}">
-                                                        <div class="img" th:each="photo: ${review.photoList[0]}"
-                                                             th:onclick="|location.href='@{/shop/review/{url}(url=${review.resAdminDto.resaBisName})}'|">
-                                                            <img th:src="${photo}" alt=""
-                                                                 style="width: 300px; height:200px; object-fit: cover;">
-                                                        </div>
+                                                    <th:block >
+<!--                                                        <div class="img" th:each="photo: ${review.photoList[0]}"-->
+<!--                                                             th:onclick="|location.href='@{/shop/review/{url}(url=${review.resAdminDto.resaBisName})}'|">-->
+<!--                                                            <img th:src="${photo}" alt=""-->
+<!--                                                                 style="width: 300px; height:200px; object-fit: cover;">-->
+<!--                                                        </div>-->
                                                     </th:block>
                                                 </div>
                                                 <div class="detail">
@@ -261,23 +258,17 @@
                                                                                   th:text="${review.revScore}">5.0</span>
                                                         </div>
                                                     </div>
-                                                    <!--                                                        <div class="profile">-->
-                                                    <!--                                                                <h4 class="name username  "><span class="txt" th:text="${review.revIdx}">빠빠티</span>-->
-                                                    <!--                                                                </h4><span class="date" th:text="${review.regDate}">2022.12.13</span>-->
-                                                    <!--                                                        </div>-->
-                                                    <!--                                                        <div class="rating"><span class="star" th:text="${review.revScore}">5.0</span></div>-->
                                                 </div>
                                                 <div class="comment-area">
                                                     <div class="review-comment" style="margin-top: 8px;">
                                                         <p class="desc" th:text="${review.revContent}">직원들이 다 친절하게
-                                                            대응해주시고 바쁘신 와중에도 좋은 서비스를 해주셔서
-                                                            감사했습니다</p>
+                                                            대응해주시고 바쁘신 와중에도 좋은 서비스를 해주셔서 감사했습니다</p>
                                                     </div>
                                                 </div>
                                             </a>
                                             <div class="showall">
                                                 <a class="arrow"
-                                                   th:href="|/shop/review/${bisInfo.resAdminDto.resaBisName}?page=0&size=10&sort=regDate|"><span>리뷰<br>전체보기</span></a>
+                                                   th:href="|/shop/review/${bisDetail.resAdminDto.resaBisName}|"><span>리뷰<br>전체보기</span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -286,7 +277,7 @@
                         </div>
                     </div>
                     <a class="btn-menupan-photo" id="target"
-                       th:href="|/shop/review/${bisInfo.resAdminDto.resaBisName}?page=0&size=10&sort=regDate|"><span>리뷰 전체보기</span></a>
+                       th:href="|/shop/review/${bisDetail.resAdminDto.resaBisName}|"><span>리뷰 전체보기</span></a>
             </section>
             <hr class="separator">
             <!--                <div>-->
@@ -443,7 +434,7 @@
                                 <p th:text="${bisDetail.bdAddr()}">서울특별시 서초구 사평대로 205 CENTRALCITY 반포천 복개주차장</p>
                             </div>
                         </div>
-                        <a class="btn-menupan-photo"><span>레스토랑 길찾기</span></a>
+                        <!--                        <a class="btn-menupan-photo"><span>레스토랑 길찾기</span></a>-->
                     </div>
                 </div>
             </section>
@@ -491,7 +482,6 @@
                             <div class="desc-block">
                                 <dl>
                                     <dt><a class="__toggle">정기 휴무</a></dt>
-                                    <!--     th:text="${shop.bdHoliday}"-->
                                     <dd class="color-gray" th:text="${bisDetail.bdHoliday()}">연중무휴</dd>
                                 </dl>
                             </div>

@@ -3,7 +3,7 @@ package com.catchmind.catchtable.service;
 import com.catchmind.catchtable.domain.BistroSave;
 import com.catchmind.catchtable.domain.MyCollection;
 import com.catchmind.catchtable.domain.Profile;
-import com.catchmind.catchtable.domain.Review;
+import com.catchmind.catchtable.domain.Sns;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.MyCollectionRequest;
 import com.catchmind.catchtable.dto.network.request.SnsRequest;
@@ -14,14 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -201,9 +202,22 @@ public class ProfileLogicService {
     //sns추가
     public String saveSNS(SnsRequest snsRequest, Long prIdx, String arr1, String arr2) {
         SnsDto newSns = snsRequest.of(prIdx, arr1, arr2).toDto();
-        System.out.println("🐒💙💙💙   " + newSns.toEntity());
         snsRepository.save(newSns.toEntity());
         return null;
+    }
+    // sns업데이트
+    public void snsUpdate(Long prIdx, String snsType, String snsAddr){
+        try {
+            Optional<Sns> sns = snsRepository.findByProfile_PrIdxAndSnsType(prIdx, snsType);
+            sns.ifPresent(
+                    collection -> {
+                        collection.setSnsAddr(snsAddr);
+                    }
+            );
+        } catch (EntityNotFoundException e) {
+            log.warn("업데이트 실패..!!!, 공지사항을 찾을 수 없음  - myCollectionDTO {} ", prIdx);
+        }
+
     }
 
     public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {

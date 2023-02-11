@@ -20,5 +20,17 @@ public record BistroSaveDto(
         );
     }
 
+    public static BistroSaveDto of(
+            Long saveIdx,
+            ResAdminDto reviewDto,
+            ProfileDto profileDto,
+            BistroDetailDto bistroDetailDto,
+            Long colIdx
+
+    ) {
+        return new BistroSaveDto(saveIdx,reviewDto,profileDto,bistroDetailDto,colIdx);
+    }
+
+
 
 }

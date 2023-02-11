@@ -30,7 +30,7 @@ public class QMenu extends EntityPathBase<Menu> {
 
     public final StringPath meName = createString("meName");
 
-    public final NumberPath<Integer> mePrice = createNumber("mePrice", Integer.class);
+    public final StringPath mePrice = createString("mePrice");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;

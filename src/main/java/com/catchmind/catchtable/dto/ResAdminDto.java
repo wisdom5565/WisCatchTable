@@ -34,4 +34,9 @@ public record ResAdminDto(
                 resaBisName
         );
     }
+
+    public static ResAdminDto ofName(String resaBisName) {
+        return new ResAdminDto(null,null,null,null,null,resaBisName,null);
+    }
+
 }

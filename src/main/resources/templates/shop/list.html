@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>즐거운 미식 생활의 시작, 캐치테이블</title>
     <div th:replace="fragment/link :: link"/>
-<!--    <link rel="stylesheet" href="/css/list_style.css">-->
+    <!--    <link rel="stylesheet" href="/css/list_style.css">-->
     <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
@@ -15,10 +15,12 @@
             -ms-overflow-style: none;
             overflow-x: hidden;
         }
+
         .header-wrap {
             top: -6.5px;
             right: 8px;
         }
+
         .page_nation {
             display: flex;
             justify-content: center;
@@ -120,6 +122,11 @@
             margin-left: 15px;
         }
 
+        .info-icon-div-1 {
+            margin-left: 860px;
+        }
+
+
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -131,81 +138,76 @@
     <div class="wrapper">
         <main id="main" style="padding-bottom: 0px;">
             <div class="search-header __autohide" style="background: none; top: 48px;">
-                <div style="background: rgb(255, 255, 255);">
-                    <div class="__filter-list">
-                        <div class="__actions">
-                            <a class="__map" id="btnGoMap">
-                                <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/wad-custom/filter-header/filter_header_map.svg">
-                            </a>
-                            <a class="__setting __active" id="btnShowFilter">
-                                <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/wad-custom/filter-header/filter_header_setting_on.svg">
-                                <span class="__count">1</span>
-                            </a>
-                        </div>
-                        <span class="__split"></span>
-                        <div class="__list">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide swiper-slide-active" style="margin-right: 8px;">
-                                    <a class="__active">
-                                        <span>한우오마카...</span>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide swiper-slide-next" style="margin-right: 8px;">
-                                    <a>
-                                        <span>내 주변</span>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" style="margin-right: 8px;">
-                                    <a>
-                                        <span>지역</span>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" style="margin-right: 8px;">
-                                    <a>
-                                        <span>가격</span>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" style="margin-right: 8px;">
-                                    <a>
-                                        <span>분위기</span>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" style="margin-right: 8px;">
-                                    <a>
-                                        <span>편의시설</span>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide" style="margin-right: 8px;">
-                                    <a>
-                                        <span>테이블 타입</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--                        <div class="datetime-selector">-->
-                    <!--                            <a>-->
-                    <!--                                <span class="value">내일(화) / 2명 / 오후 7:00</span>-->
-                    <!--                            </a>-->
-                    <!--                        </div>-->
-                </div>
+                <!--                <div style="background: rgb(255, 255, 255);">-->
+                <!--                    <div class="__filter-list">-->
+                <!--                        <div class="__actions">-->
+                <!--                            <a class="__map" id="btnGoMap">-->
+                <!--                                <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/wad-custom/filter-header/filter_header_map.svg">-->
+                <!--                            </a>-->
+                <!--                            <a class="__setting __active" id="btnShowFilter">-->
+                <!--                                <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/wad-custom/filter-header/filter_header_setting_on.svg">-->
+                <!--                                <span class="__count">1</span>-->
+                <!--                            </a>-->
+                <!--                        </div>-->
+                <!--                        <span class="__split"></span>-->
+                <!--                        <div class="__list">-->
+                <!--                            <div class="swiper-wrapper">-->
+                <!--                                <div class="swiper-slide swiper-slide-active" style="margin-right: 8px;">-->
+                <!--                                    <a class="__active">-->
+                <!--                                        <span>한우오마카...</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                                <div class="swiper-slide swiper-slide-next" style="margin-right: 8px;">-->
+                <!--                                    <a>-->
+                <!--                                        <span>내 주변</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                                <div class="swiper-slide" style="margin-right: 8px;">-->
+                <!--                                    <a>-->
+                <!--                                        <span>지역</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                                <div class="swiper-slide" style="margin-right: 8px;">-->
+                <!--                                    <a>-->
+                <!--                                        <span>가격</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                                <div class="swiper-slide" style="margin-right: 8px;">-->
+                <!--                                    <a>-->
+                <!--                                        <span>분위기</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                                <div class="swiper-slide" style="margin-right: 8px;">-->
+                <!--                                    <a>-->
+                <!--                                        <span>편의시설</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                                <div class="swiper-slide" style="margin-right: 8px;">-->
+                <!--                                    <a>-->
+                <!--                                        <span>테이블 타입</span>-->
+                <!--                                    </a>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    &lt;!&ndash;                        <div class="datetime-selector">&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            <a>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                                <span class="value">내일(화) / 2명 / 오후 7:00</span>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                            </a>&ndash;&gt;-->
+                <!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+                <!--                </div>-->
 
                 <!-- <hr class="separator"> -->
+                <!--                ******* -->
                 <div class="__search-result-header mb-20">
                     <div class="__total-count">
                         <strong th:text="|총 ${cnt}개|">104</strong>의 레스토랑
                     </div>
-                    <!--                        <a class="__sort">-->
-                    <!--                            <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/icons/icon_sort_20221020.svg" alt="">-->
-                    <!--                            <span class="__label">추천 순</span>-->
-                    <!--                            <i>-->
-                    <!--                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-                    <!--                                    <path d="M4.94 6L8 9.05333L11.06 6L12 6.94L8 10.94L4 6.94L4.94 6Z" fill="black"></path>-->
-                    <!--                                </svg>-->
-                    <!--                            </i>-->
-                    <!--                        </a>-->
                     <div class="info-icon-div-1">
-                        <a href="#layer2" id="btn-example" class="info-icon-div" th:text="${filtername}">최근 등록순</a>
+                        <a href="#layer2" th:if="${filtername!=null}" id="btn-example" class="info-icon-div"
+                           th:text="${filtername}">최근 등록순</a>
+                        <a href="#layer2" th:unless="${filtername!=null}" id="btn-example"
+                           class="info-icon-div">최근 등록순</a>
                     </div>
                     <div class="dim-layer">
                         <div class="dimBg"></div>
@@ -214,38 +216,36 @@
                                 <div class="pop-conts">
                                     <div class="drawer-box">
                                         <div class="review_sort">
-                                            <a th:href="|/shop/review/${shopname}?page=0&size=10&sort=regDate|"
+                                            <a href="/shop/list?page=0&size=10&sort=regDate"
                                                class="btn_recent">최근 등록순
-                                                <img class="btn_recent" th:if="${sort=='regDate'}" id="btn_check"
+                                                <img class="btn_recent" th:if="${sort=='regDate'}"
+                                                     id="btn_check"
+                                                     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
+                                                <img class="btn_recent"
+                                                     th:if="${sort!='regDate'&&sort!='revScoreGood'}"
+                                                     id="btn_check"
                                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
                                             </a>
                                         </div>
                                         <div class="review_sort">
-                                            <a th:href="|/shop/review/${shopname}?page=0&size=10&sort=revScoreGood|"
+                                            <a href="/shop/list?page=0&size=10&sort=revScoreGood"
                                                class="btn_good">별점 높은순
-                                                <img class="btn_good" th:if="${sort=='revScoreGood'}" id="btn_check"
-                                                     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
-                                            </a>
-                                        </div>
-                                        <div class="review_sort">
-                                            <a th:href="|/shop/review/${shopname}?page=0&size=10&sort=revScoreBad|"
-                                               class="btn_bad">별점 낮은순
-                                                <img class="btn_bad" th:if="${sort=='revScoreBad'}" id="btn_check"
+                                                <img class="btn_good" th:if="${sort=='revScoreGood'}"
+                                                     id="btn_check"
                                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
                                             </a>
                                         </div>
                                         <div class="btn-r">
-                                            <a href="" class="btn-layerClose" style="padding:  10px 140px 10px 140px;">확인</a>
+                                            <a href="" class="btn-layerClose"
+                                               style="padding:  10px 140px 10px 140px;">확인</a>
                                         </div>
                                     </div>
-                                    <!-- <div class="btn-r" >
-                                        <a href="#" class="btn-layerClose" style="padding:  10px 140px 10px 140px;">닫기</a>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--                ********-->
             </div>
 
             <section class="section">
@@ -254,19 +254,22 @@
                         <div style="padding-bottom: 10px;">
                             <div id="searchList_">
                                 <div id="searchList__0" data-dummy="40">
-                                    <div th:each="list : ${shopList}">
+                                    <div th:each="list : ${booklist}">
                                         <div class="saved-restaurant-list-item" style="padding-bottom: 40px;">
                                             <div class="restaurant-info">
                                                 <div class="tb">
                                                     <th:block
-                                                            th:if="${list.photoDto.savedPath != null and list.photoDto.orgNm == null and list.photoDto.savedNm == null}">
-                                                        <a th:href="@{/shop/{id}(id=${list.resAdminDto.resaBisName})}">
-                                                            <img class="img" th:src="${list.photoDto.savedPath}">
+                                                            th:if="${list.bistroInfoDto.photoDto.savedPath != null and list.bistroInfoDto.photoDto.orgNm == null and list.bistroInfoDto.photoDto.savedNm == null}">
+                                                        <a th:href="@{/shop/{id}(id=${list.bistroInfoDto.resAdminDto.resaBisName})}">
+                                                            <img class="img" style="height: 120px";
+                                                                 th:src="${list.bistroInfoDto.photoDto.savedPath}">
                                                         </a>
                                                     </th:block>
-                                                    <th:block th:unless="${list.photoDto.savedPath != null and list.photoDto.orgNm == null and list.photoDto.savedNm == null}">
-                                                        <a th:href="@{/shop/{id}(id=${list.resAdminDto.resaBisName})}">
-                                                            <img class="img" th:src="'/photo/'+${list.photoDto.savedNm}">
+                                                    <th:block
+                                                            th:unless="${list.bistroInfoDto.photoDto.savedPath != null and list.bistroInfoDto.photoDto.orgNm == null and list.bistroInfoDto.photoDto.savedNm == null}">
+                                                        <a th:href="@{/shop/{id}(id=${list.bistroInfoDto.resAdminDto.resaBisName})}">
+                                                            <img class="img" style="height: 120px";
+                                                                 th:src="'/photo/'+${list.bistroInfoDto.photoDto.savedNm}">
                                                         </a>
                                                     </th:block>
                                                 </div>
@@ -274,27 +277,40 @@
                                                 <div class="detail">
                                                     <div class="detail-header">
                                                         <div class="txt">
-                                                            <a th:href="@{/shop/{id}(id=${list.resAdminDto.resaBisName})}">
-                                                                <h4 class="name"
-                                                                    th:text=" ${list.resAdminDto.resaBisName}">한우물</h4>
-                                                            </a>
-                                                            <p class="excerpt" th:text=" ${list.bisDesc}">이태원 퀴논길에 위치한
-                                                                한우 컴팩트 그릴링 코스 전문점</p>
+                                                            <div style="display:flex; justify-content: space-between;">
+                                                                <a th:href="@{/shop/{id}(id=${list.bistroInfoDto.resAdminDto.resaBisName})}">
+                                                                    <h4 class="name"
+                                                                        th:text=" ${list.bistroInfoDto.resAdminDto.resaBisName}">
+                                                                        한우물</h4>
+
+                                                                </a>
+                                                                <div>
+                                                                    <img th:src="${list.isSaved} ?'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjE0LjUiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNENUQ1RDUiLz4KICAgIDxwYXRoIGQ9Ik0xOSA4SDExQzkuODk1NDMgOCA5IDguODk1NDMgOSAxMFYyM0wxNS41IDE5LjI1TDIxIDIzVjEwQzIxIDguODk1NDMgMjAuMTA0NiA4IDE5IDhaIiBmaWxsPSIjRkYzRDAwIi8+Cjwvc3ZnPgo=' :'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjE1IiBmaWxsPSIjRDlEOUQ5Ii8+CiAgICA8cGF0aCBkPSJNMTUuNzgxNyAxOC44MzY5TDE1LjUyMjIgMTguNjZMMTUuMjUwMSAxOC44MTY5TDkuNSAyMi4xMzQzVjEwQzkuNSA5LjE3MTU3IDEwLjE3MTYgOC41IDExIDguNUgxOUMxOS44Mjg0IDguNSAyMC41IDkuMTcxNTcgMjAuNSAxMFYyMi4wNTM5TDE1Ljc4MTcgMTguODM2OVoiIHN0cm9rZT0id2hpdGUiLz4KPC9zdmc+Cg=='"
+                                                                         class="btn-bookmark"
+                                                                         th:onclick="bookmark([[${prIdx}]],[[${list.bistroInfoDto.resAdminDto.resaBisName}]],this);">
+                                                                </div>
+                                                            </div>
+
+                                                            <p class="excerpt" th:text=" ${list.bistroInfoDto.bisDesc}">
+                                                                이태원 퀴논길에 위치한 한우 컴팩트 그릴링 코스 전문점</p>
                                                         </div>
-                                                        <a><img src="/images/bookmark_1.svg" class="btn-bookmark"></a>
+
                                                     </div>
+                                                    <!--  *****-->
                                                     <div class="restaurant-meta">
                                                         <div class="__d-flex mb-6">
                                                             <div class="rating">
-                                                                <span class="star">4.6</span>&nbsp;
-                                                                <span class="count">(580)</span>
+                                                                <span class="star"
+                                                                      th:text="${list.bistroInfoDto.revAvg}">4.6</span>&nbsp;
+                                                                <span class="count"
+                                                                      th:text="|(${list.bistroInfoDto.revCnt})|">(580)</span>
                                                             </div>
                                                         </div>
-                                                        <span class="tags"
-                                                              th:text=" ${list.bisCategory}">한식 • 이태원</span>
+                                                        <span class="tags" th:text=" ${list.bistroInfoDto.bisCategory}">한식 • 이태원</span>
                                                         <span class="price"
-                                                              th:text="|점심 ${list.bisLunch}만원 · 저녁 ${list.bisDinner}만원|"></span>
+                                                              th:text="|점심 ${list.bistroInfoDto.bisLunch}만원 · 저녁 ${list.bistroInfoDto.bisDinner}만원|"></span>
                                                     </div>
+                                                    <!--                                                    *****-->
                                                     <div class="timetable-list timetable-list-sm">
                                                         <a class="timetable-list-item disabled"
                                                            style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span
@@ -303,8 +319,8 @@
                                                            style="display: none; margin-bottom: auto; margin-top: auto; min-width: 70px;"><span
                                                                 class="time">&nbsp;</span></a>
                                                         <a class="timetable-list-item"
-                                                           style="margin-bottom: auto; margin-top: auto; min-width: 70px;"
-                                                           th:onclick="checkBlock([[${list.resAdminDto.resaBisName}]])">
+                                                           style="margin-bottom: auto; margin-top: 12px; min-width: 70px;"
+                                                           th:onclick="checkBlock([[${list.bistroInfoDto.resAdminDto.resaBisName}]])">
                                                             <span class="time">예약하기</span></a>
                                                     </div>
                                                 </div>
@@ -319,21 +335,28 @@
                 <!--페이징 처리-->
                 <div class="page_wrap">
                     <div class="page_nation" aria-label="Page navigation example">
-                        <a th:href="@{/shop/list(page=${shopList.number - 1})}"
-                           th:class="'page-prev' + (${shopList.number} <= 0 ? ' page-disabled':'')"></a>
+                        <a th:href="@{'/shop/list/'+'?page='+${pageable.getPageNumber() - 1}+'&size=10&sort='+${sort}}"
+                           th:class="'page-prev' + (${pageable.getPageNumber()} <= 0 ? ' page-disabled':'')">
+
+                        </a>
                         <span th:each="pageNumber : ${paginationBarNumbers}">
-                        <a th:text="${pageNumber + 1}" th:href="@{/shop/list(page=${pageNumber})}"
-                           th:class="(${pageNumber} == ${shopList.number} ? 'active' : '')">1</a></span>
-                        <a th:href="@{/shop/list(page=${shopList.number + 1})}" th:class="'page-next' +
-                        (${shopList.number} >= ${shopList.totalPages - 1} ? '':' page-disabled')"></a>
+                        <a th:text="${pageNumber + 1}"
+                           th:href="@{'/shop/list/'+'?page='+${pageNumber}+'&size=10&sort='+${sort}}"
+                           th:class="(${pageNumber} == ${pageable.getPageNumber()} ? 'active' : '')">1</a>
+                        </span>
+
+                        <a th:href="@{'/shop/list/'+'?page='+${pageable.getPageNumber() + 1}+'&size=10&sort='+${sort}}"
+                           th:class="'page-next' +
+                        (${pageable.getPageNumber()} >= ${totalpage - 1} ? ' page-disabled':'')">
+                        </a>
                     </div>
                 </div>
                 <!--페이징 끝-->
             </section>
     </div>
     </main>
+    <div th:replace="fragment/footer :: footer"/>
 </div>
-<div th:replace="fragment/footer :: footer"/>
 </div>
 </body>
 <script type="text/javascript" src="/js/script.js"></script>

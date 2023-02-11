@@ -216,13 +216,16 @@
                                                             </div>
                                                             <div class="restaurant-info">
                                                                 <div class="tb">
-                                                                    <img
-                                                                            src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/ssaDlD6I18uoLj-S43RDQxQ/sadld6i18uolj-s43rdqxq_2212214481546986.jpg?small220"
-                                                                    />
+                                                                    <th:block th:if="${list.bistroInfo.photo.savedPath != null and list.bistroInfo.photo.orgNm == null and list.bistroInfo.photo.savedNm == null}">
+                                                                            <img class="img" th:src="${list.bistroInfo.photo.savedPath}" alt="">
+                                                                    </th:block>
+                                                                    <th:block th:unless="${list.bistroInfo.photo.savedPath != null and list.bistroInfo.photo.orgNm == null and list.bistroInfo.photo.savedNm == null}">
+                                                                            <img class="img" th:src="'/photo/'+${list.bistroInfo.photo.savedNm}" alt="">
+                                                                    </th:block>
                                                                 </div>
                                                                 <div class="info">
                                                                     <h3 th:text="${list.resAdmin.resaBisName}"></h3>
-                                                                    <div class="meta"><span th:text="${list.bistroInfo.bisCategory}"></span></div>
+                                                                    <div class="meta"><span>[[${list.bistroInfo.bisCategory}]] · [[${list.bistroInfo.bisRegion}]]</span></div>
                                                                     <div class="date"><span>[[${list.resMonth}]]월 [[${list.resDay}]]일 [[${list.resTime}]]시 [[${list.resPerson}]]명</span></div>
                                                                 </div>
                                                             </div>

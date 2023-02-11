@@ -214,7 +214,15 @@
                                                                     <!--                                                                    <div class="desc">총 1회 방문</div>-->
                                                                 </div>
                                                                 <div class="restaurant-info">
-                                                                    <div class="tb"><img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s20174/20174_2143012474882250.jpg?small220">
+                                                                    <div class="tb">
+                                                                        <div class="tb">
+                                                                            <th:block th:if="${list.bistroInfo.photo.savedPath != null and list.bistroInfo.photo.orgNm == null and list.bistroInfo.photo.savedNm == null}">
+                                                                                <img class="img" th:src="${list.bistroInfo.photo.savedPath}" alt="">
+                                                                            </th:block>
+                                                                            <th:block th:unless="${list.bistroInfo.photo.savedPath != null and list.bistroInfo.photo.orgNm == null and list.bistroInfo.photo.savedNm == null}">
+                                                                                <img class="img" th:src="'/photo/'+${list.bistroInfo.photo.savedNm}" alt="">
+                                                                            </th:block>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="info">
                                                                         <h3 th:text="${list.resAdmin.resaBisName}"></h3>

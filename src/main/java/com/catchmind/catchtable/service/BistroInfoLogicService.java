@@ -3,6 +3,8 @@ package com.catchmind.catchtable.service;
 
 import com.catchmind.catchtable.domain.BistroInfo;
 import com.catchmind.catchtable.dto.BistroInfoDto;
+import com.catchmind.catchtable.dto.ReviewDto;
+import com.catchmind.catchtable.dto.network.response.ShopReviewResponse;
 import com.catchmind.catchtable.repository.BistroInfoRepository;
 import com.catchmind.catchtable.repository.PhotoRepository;
 import com.catchmind.catchtable.repository.ReviewRepository;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -67,6 +70,39 @@ public class  BistroInfoLogicService {
     }
 
 
+    public List<ShopReviewResponse> getReview() {
+        List<ShopReviewResponse> shopReviewResponseList = new ArrayList<>();
+        List<BistroInfoDto> bistroInfoDtos = bistroInfoRepository.findAll().stream().map(BistroInfoDto::from).toList();
+        List<ReviewDto> reviewDtos = new ArrayList<>();
+//        List<Long> reviewCnt = new ArrayList<>();
+//        List<Double> avgScore = new ArrayList<>();
+        double totalScore = 0;
+        Double avg =  null;
+        for(BistroInfoDto resaBisName: bistroInfoDtos) {
+            reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName()).stream().map(ReviewDto::from).toList();
+            Long reviewCnt = reviewRepository.countByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName());
+            for(ReviewDto reviewDto :  reviewDtos) {
+                totalScore += reviewDto.revScore();
+            }
+            avg = (double) Math.round(totalScore / reviewDtos.size());
+
+            if(avg.isInfinite()) {
+//                avgScore.add(0.0);
+                ShopReviewResponse response = new ShopReviewResponse(avg, reviewCnt);
+                shopReviewResponseList.add(response);
+            } else {
+//                avgScore.add(avg);
+                ShopReviewResponse response = new ShopReviewResponse(avg,reviewCnt);
+                shopReviewResponseList.add(response);
+            }
+        }
+        System.out.println(shopReviewResponseList);
+        return shopReviewResponseList;
     }
+
+
+
+
+}
 
 
