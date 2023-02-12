@@ -67,7 +67,8 @@
                         <div class="img-container">
                             <div class="img swiper-lazy swiper-lazy-loaded">
                                 <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/375x250.png"
-                                     class="guide-img" style="width: 100%; max-height:500px; display: block;" th:src="${shopPic}">
+                                     class="guide-img" style="width: 100%; max-height:500px; display: block;"
+                                     th:src="${shopPic}">
 
                             </div>
                         </div>
@@ -101,9 +102,7 @@
             <section class="section pb-30 pt-20 ">
                 <div class="container gutter-sm">
                     <div class="section-body">
-<!--                        <div class="mb-8"><a href="#" class="btn btn-lg btn-outline btn-cta full-width arrowdown"-->
-<!--                                             style="border: 1px solid #666; border-radius: 6px;"><span><span-->
-<!--                                class="label calendar">오늘(목) / 2명</span></span></a></div>-->
+
                         <div class="btn-centered"><a
                                 th:onclick="checkBlock([[${bisDetail.resAdminDto().resaBisName()}]])"
                                 class="btn btn-rounded btn-outline-red"><span
@@ -182,8 +181,6 @@
                         <ol id="toc-content">
                             <br><br>
                             <li th:text=" |- ${bisDetail.bdPark} |"></li>
-                            <!--                            <li>- 신세계 파미에주차장 이용</li><br>-->
-                            <!--                            <li>- 신세계 백화점 주차장도 이용 가능 (경부선 주차장은 지원불가)</li>-->
                             <br><br>
                         </ol>
                     </div>
@@ -203,8 +200,9 @@
                             <div class="__menupan-item" th:each="menus : ${menu}">
                                 <div class="__name">
                                     <h4 th:text="${menus.meName()}">평일_런치</h4>
-                                    <div class="__price" th:text="|${menus.mePrice()}원|">53,000원</div>
+                                    <div class="__price" th:text="|${menus.mePrice()}|">53,000원</div>
                                 </div>
+
                             </div>
                         </div>
                         <div><a th:href="'/shop/menulist/' + ${bisDetail.resAdminDto().resaBisName()}"
@@ -232,16 +230,23 @@
                                 <div class="v-scroll">
                                     <div class="v-scroll-inner">
                                         <div class="review-post-list">
-                                            <a class="review-post-list-item" th:each="review,revStat:${reviews}"
+                                            <a class="review-post-list-item" th:each="review,revStat:${reviewAndPhoto}"
                                                th:if="${revStat.index>(revStat.size-4)}">
                                                 <div class="tb">
-                                                    <th:block >
-<!--                                                        <div class="img" th:each="photo: ${review.photoList[0]}"-->
-<!--                                                             th:onclick="|location.href='@{/shop/review/{url}(url=${review.resAdminDto.resaBisName})}'|">-->
-<!--                                                            <img th:src="${photo}" alt=""-->
-<!--                                                                 style="width: 300px; height:200px; object-fit: cover;">-->
-<!--                                                        </div>-->
-                                                    </th:block>
+                                                    <div class="img">
+                                                        <th:block
+                                                                th:if="${review.reviewPhotoDto.savedPath != null and review.reviewPhotoDto.orgNm == null and review.reviewPhotoDto.savedNm == null}">
+                                                            <img th:src="${review.reviewPhotoDto.savedPath}" alt=""
+                                                                 style="width: 300px; height:200px; object-fit: cover;">
+                                                        </th:block>
+                                                        <th:block
+                                                                th:unless="${review.reviewPhotoDto.savedPath != null and review.reviewPhotoDto.orgNm == null and review.reviewPhotoDto.savedNm == null}">
+                                                            <img
+                                                                    th:src="'/photo/'+${review.reviewPhotoDto.savedNm}"
+                                                                    alt=""
+                                                                    style="width: 300px; height:200px; object-fit: cover;">
+                                                        </th:block>
+                                                    </div>
                                                 </div>
                                                 <div class="detail">
                                                     <div class="post-meta">
@@ -251,7 +256,7 @@
                                                         </div>
                                                         <div class="profile">
                                                             <h4 class="name username  "><span class="txt"
-                                                                                              th:text="${review.profileDto.prNick}">빠빠티</span>
+                                                                                              th:text="${review.prNick}">빠빠티</span>
                                                             </h4><span class="date" th:text="${review.regDate}">2022.12.13</span>
                                                         </div>
                                                         <div class="rating"><span class="star"
@@ -280,142 +285,7 @@
                        th:href="|/shop/review/${bisDetail.resAdminDto.resaBisName}|"><span>리뷰 전체보기</span></a>
             </section>
             <hr class="separator">
-            <!--                <div>-->
-            <!--                    <div id="toast"></div>-->
-            <!--                    <section class="section pt-30 pb-30">-->
-            <!--                        <div class="container gutter-sm">-->
-            <!--                            <div class="section-header">-->
-            <!--                                <h3 class="section-title" style="max-width: 80%;">비슷한 메뉴 레스토랑 추천</h3>-->
-            <!--                                <div class="utils"><a class="btn-all" >전체보기</a></div>-->
-            <!--                            </div>-->
-            <!--                            <div class="section-body">-->
-            <!--                                <div class="v-scroll">-->
-            <!--                                    <div class="v-scroll-inner">-->
-            <!--                                        <div class="restaurant-list restaurant-list-sm"-->
-            <!--                                            style="display: flex; flex-wrap: nowrap;">-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s17689/17689_21112613464753839.jpeg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" >-->
-            <!--                                                    <a href="">-->
-            <!--                                                        <h3 class="name">돈텔비프</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.2</span><span-->
-            <!--                                                                class="tags">돼지고기구이 • 압구정로데오</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s5438/5438_2152511324134422.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" />-->
-            <!--                                                    <a href="">-->
-            <!--                                                        <h3 class="name">이인 yiin</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.9</span><span-->
-            <!--                                                                class="tags">다이닝바 • 마포</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s22318/22318_21111613055172966.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark"><a href="">-->
-            <!--                                                        <h3 class="name">여의도 셋째집</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.6</span><span-->
-            <!--                                                                class="tags">돼지고기구이 • 여의도</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s22722/22722_2112713291927549.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">신사탄화 숯마카세</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.6</span><span-->
-            <!--                                                                class="tags">한우오마카세 • 신사</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s873/873_1951011540602748.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">돝고기506</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.3</span><span-->
-            <!--                                                                class="tags">돼지고기구이 • 역삼</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s17461/17461_2061217041236923.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">청담고수 2호점</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.3</span><span-->
-            <!--                                                                class="tags">육류,고기요리 • 청담</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s3605/3605_201910433437134.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">정육공방</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.7</span><span-->
-            <!--                                                                class="tags">한우오마카세 • 논현</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s22429/22429_21112914572512121.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">너비집</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.5</span><span-->
-            <!--                                                                class="tags">한우오마카세 • 을지로</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s22566/22566_2273113120987832.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">푸에르코 여의도</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.4</span><span-->
-            <!--                                                                class="tags">육류,고기요리 • 여의도</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="restaurant-list-item"><a href="" class="tb">-->
-            <!--                                                    <div class="img"-->
-            <!--                                                        style="background-image: url(&quot;https://image.toast.com/aaaaaqx/catchtable/shopinfo/s18248/18248_209313505531825.jpg?small400&quot;);">-->
-            <!--                                                    </div>-->
-            <!--                                                </a>-->
-            <!--                                                <div class="detail"><img src="/images/bookmark_1.svg" class="btn-bookmark" ><a href="">-->
-            <!--                                                        <h3 class="name">이도맨숀</h3>-->
-            <!--                                                        <div class="meta"><span class="score">4.0</span><span-->
-            <!--                                                                class="tags">육류,고기요리 • 여의도</span></div>-->
-            <!--                                                    </a></div>-->
-            <!--                                            </div>-->
-            <!--                                            <div class="showall">-->
-            <!--                                                <a href="#showall1">-->
-            <!--                                                    <span>전체보기</span></a>-->
-            <!--                                                </div>-->
-            <!--                                        </div>-->
-            <!--                                    </div>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </section>-->
-            <!--                </div>-->
+
             <hr class="separator">
             <section class="section pt-30 pb-20">
                 <div class="container gutter-sm">
@@ -427,14 +297,11 @@
                             <div class="map" id="map"
                                  style="height: 240px; overflow: hidden; background: url(&quot;https://t1.daumcdn.net/mapjsapi/images/2x/bg_tile.png&quot;);">
 
-
                             </div>
                             <div class="addr">
-                                <!--                                    <a class="btn-copy">매장주소 복사하기</a>-->
                                 <p th:text="${bisDetail.bdAddr()}">서울특별시 서초구 사평대로 205 CENTRALCITY 반포천 복개주차장</p>
                             </div>
                         </div>
-                        <!--                        <a class="btn-menupan-photo"><span>레스토랑 길찾기</span></a>-->
                     </div>
                 </div>
             </section>
@@ -468,13 +335,7 @@
                             <div class="desc-block">
                                 <dl>
                                     <dt><a class="__toggle">영업시간</a></dt>
-                                    <!--                                         th:text="${shop.bdHour}"-->
                                     <dd class="color-gray" th:text="${bisDetail.bdHour()}">
-                                        <!-- - 평일 11:30 - 22:00 Last order 점심15:00 / 저녁 21:30 <br> 런치:-->
-                                        <!-- 11:30-15:00<br> 디너: 1부 17:30 / 2부 19:30<br> Break Time 16:00 - 17:30-->
-                                        <!-- <br><br>- 주말&amp;공휴일 11:30 - 22:00 Last order 점심15:00 / 저녁 21:30 <br> 런치: 1부-->
-                                        <!-- 11:30 / 2부 13:30<br> 디너: 1부 17:00 / 2부 19:30<br> Break Time 16:00 - -->
-                                        <!-- 17:00<br> <br>-->
                                         9:00 - 10:00
                                     </dd>
                                 </dl>
@@ -488,7 +349,6 @@
                             <div class="desc-block">
                                 <dl>
                                     <dt>홈페이지</dt>
-                                    <!--    th:text="${shop.bdHome}"-->
                                     <dd><span style="color: rgb(0, 0, 255); cursor: pointer;"
                                               th:text="${bisDetail.bdHome()}">http://www.texasdebrazil.co.krr/</span>
                                     </dd>

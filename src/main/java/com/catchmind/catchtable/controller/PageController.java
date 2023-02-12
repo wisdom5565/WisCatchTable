@@ -1,12 +1,12 @@
 package com.catchmind.catchtable.controller;
 
+import com.catchmind.catchtable.domain.BistroDetail;
 import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.dto.PendingDto;
 import com.catchmind.catchtable.dto.network.request.ProfileRequest;
+import com.catchmind.catchtable.dto.network.response.IndexResponse;
 import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
-import com.catchmind.catchtable.service.PendingService;
-import com.catchmind.catchtable.service.ProfileLogicService;
-import com.catchmind.catchtable.service.TimeLineService;
+import com.catchmind.catchtable.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,14 +28,19 @@ public class PageController {
     private final TimeLineService timeLineService;
     private final PendingService pendingService;
 
-    // 마이페이지 헤더
-    public TimeLineResponse header(Long prIdx) {
-        TimeLineResponse response = timeLineService.getHeader(prIdx);
-        return response;
-    }
+    private final ReviewLogicService reviewLogicService;
+    private final BistroDetailLogicService bistroDetailLogicService;
+
     @GetMapping("")
-    public ModelAndView index() {
-        return new ModelAndView("/index");
+    public String index(Model model) {
+        List<IndexResponse> list = reviewLogicService.indexReviewList();
+        List<BistroDetail> bisList = bistroDetailLogicService.indexList();
+        System.out.println(list);
+        System.out.println("aaaaaaaaaaaaaaaa"+bisList);
+        model.addAttribute("list",list);
+        model.addAttribute("bisList",bisList);
+
+        return "index";
     }
 
     @GetMapping("/login")

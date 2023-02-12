@@ -1091,16 +1091,16 @@ table .align-middle {
     max-height: 80px;
 }
 
-.timeline-post-content .__content>div {
-    line-height: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    word-break: break-all;
-    max-height: 40px;
-}
+/*.timeline-post-content .__content>div {*/
+/*    line-height: 20px;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*    display: -webkit-box;*/
+/*    -webkit-line-clamp: 2;*/
+/*    -webkit-box-orient: vertical;*/
+/*    word-break: break-all;*/
+/*    max-height: 40px;*/
+/*}*/
 
 .timeline-post-content .__content.__open+.__toggle {
     display: none;

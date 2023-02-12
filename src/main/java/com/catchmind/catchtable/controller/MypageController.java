@@ -26,6 +26,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -205,21 +206,23 @@ public class MypageController {
 
     // 내 리뷰 보기
     @GetMapping("/review")
-    public ModelAndView myReview(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal,
-                                 @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String myReview(Model model, @AuthenticationPrincipal CatchPrincipal catchPrincipal,
+                                 @PageableDefault(size = 10, sort = "revIdx", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map) {
+        if(catchPrincipal == null) {
+            return "redirect:/login";
+        }
         Long prIdx = catchPrincipal.prIdx();
         TimeLineResponse header = header(prIdx);
         Page<ReviewResponse> reviews = profileLogicService.getReview(prIdx, pageable);
         List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
         ProfileDto profile = profileLogicService.getProfileElements(prIdx);
 
-        ModelAndView modelAndView = new ModelAndView("/mypage/myReview");
-        model.addAttribute("reviews", reviews);
-        model.addAttribute("prIdx", prIdx);
-        model.addAttribute("paginationBarNumbers", barNumbers);
-        modelAndView.addObject("profile", profile);
-        modelAndView.addObject("header", header);
-        return modelAndView;
+        map.addAttribute("reviews", reviews);
+        map.addAttribute("prIdx", prIdx);
+        map.addAttribute("paginationBarNumbers", barNumbers);
+        map.addAttribute("profile", profile);
+        map.addAttribute("header", header);
+        return "/mypage/myReview";
     }
 
     // 내 컬렉션 보기

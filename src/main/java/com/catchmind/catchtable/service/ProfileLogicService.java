@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -222,7 +223,7 @@ public class ProfileLogicService {
 
     public Page<ReviewResponse> getReview(Long prIdx, Pageable pageable) {
         List<ReviewResponse> reviewList = new ArrayList<>();
-        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdxOrderByRevIdxDesc(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx,Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
         for (int i = 0; i < reviewDtos.size(); i++) {
@@ -250,7 +251,6 @@ public class ProfileLogicService {
                         , reviewDtos.get(i).updateDate(), true);
                 reviewList.add(response);
             }
-            System.out.println("i" + i + reviewList.get(i).photo());
         }
 
         final int start = (int) pageable.getOffset();

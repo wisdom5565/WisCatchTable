@@ -59,7 +59,7 @@ function sendRes() {
             } else {
                 let btn = '';
                 for (let i = 0; i < data.length; i++) {
-                    btn += "<button onclick='change(" + i + ")' class='timetable-list-item' style='margin-bottom: auto; margin-top: auto; min-width: 70px;'>"
+                    btn += "<button onclick='change(" + i + ")' class='timetable-list-item'>"
                         + "<span id='time' class='time'>" + data[i].shopResTime + ":00 </span></button>"
 
                 }

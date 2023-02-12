@@ -110,28 +110,36 @@
                                         </div>
                                         <div class="social">
                                             <th:block th:each="snsList : ${profile.snsList}">
-                                                <th:block th:if="${snsList.snsType == 'INSTAGRAM'} "><a
-                                                        th:href="${snsList.snsAddr}" target="_blank"><img
-                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/insta.svg"
-                                                        alt="snsIcon"></a>
+                                                <th:block th:if="${snsList.snsAddr} != ''">
+                                                    <th:block th:if="${snsList.snsType == 'INSTAGRAM'} "><a
+                                                            th:href="${snsList.snsAddr}" target="_blank"><img
+                                                            src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/insta.svg"
+                                                            alt="snsIcon"></a>
+                                                    </th:block>
                                                 </th:block>
-                                                <th:block th:if="${snsList.snsType == 'YOUTUBE'}"><a
-                                                        th:href="${snsList.snsAddr}"
-                                                        target="_blank"><img
-                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/youtube.svg"
-                                                        alt="snsIcon"></a>
+                                                <th:block th:if="${snsList.snsAddr} != ''">
+                                                    <th:block th:if="${snsList.snsType == 'YOUTUBE'}"><a
+                                                            th:href="${snsList.snsAddr}"
+                                                            target="_blank"><img
+                                                            src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/youtube.svg"
+                                                            alt="snsIcon"></a>
+                                                    </th:block>
                                                 </th:block>
-                                                <th:block th:if="${snsList.snsType == 'TWITTER'}"><a
-                                                        th:href="${snsList.snsAddr}"
-                                                        target="_blank"><img
-                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/twitter.svg"
-                                                        alt="snsIcon"></a>
+                                                <th:block th:if="${snsList.snsAddr} != ''">
+                                                    <th:block th:if="${snsList.snsType == 'TWITTER'}"><a
+                                                            th:href="${snsList.snsAddr}"
+                                                            target="_blank"><img
+                                                            src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/twitter.svg"
+                                                            alt="snsIcon"></a>
+                                                    </th:block>
                                                 </th:block>
-                                                <th:block th:if="${snsList.snsType == 'BLOG'}"><a
-                                                        th:href="${snsList.snsAddr}"
-                                                        target="_blank"><img
-                                                        src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/blog.svg"
-                                                        alt="snsIcon"></a>
+                                                <th:block th:if="${snsList.snsAddr} != ''">
+                                                    <th:block th:if="${snsList.snsType == 'BLOG'}"><a
+                                                            th:href="${snsList.snsAddr}"
+                                                            target="_blank"><img
+                                                            src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons-sns/blog.svg"
+                                                            alt="snsIcon"></a>
+                                                    </th:block>
                                                 </th:block>
                                             </th:block>
                                         </div>
@@ -143,7 +151,7 @@
                                         <th:block th:if="${timeLineIdx != prIdx}">
                                             <div th:class="profile">
                                                 <input type="hidden" class="isfollow" th:value="${isFollow}">
-                                                    <input type="hidden" class="login-idx" th:value="${prIdx}">
+                                                <input type="hidden" class="login-idx" th:value="${prIdx}">
                                                 <input type="hidden" class="timeline-idx" th:value="${timeLineIdx}">
                                             </div>
                                         </th:block>

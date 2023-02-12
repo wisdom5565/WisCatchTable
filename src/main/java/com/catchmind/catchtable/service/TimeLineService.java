@@ -43,7 +43,7 @@ public class TimeLineService {
         ProfileDto profileDto = profileRepository.findById(prIdx).map(ProfileDto::from).orElseThrow();
         List<SnsDto> snsList = snsRepository.findAllByProfile_PrIdx(prIdx).stream().map(SnsDto::from).toList();
         System.out.println("❌" + snsList);
-        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx,Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
         Long followingNum = followRepository.countByFollower_PrIdx(prIdx);      // 로그인한 유저의 팔로잉 수
         Long followerNum = followRepository.countByFollowing_PrIdx(prIdx);      // 로그인한 유저의 팔로워 수
 
@@ -74,7 +74,7 @@ public class TimeLineService {
     public Page<ReviewResponse> getReviews(Pageable pageable, Long prIdx) {
         List<ReviewDto> reviewDtos = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "revIdx"))
                 .stream().map(ReviewDto::from).toList();
-        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
         List<ReviewResponse> reviewList = new ArrayList<>();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
@@ -93,7 +93,9 @@ public class TimeLineService {
             }
             boolean isReview = false;
             for (ReviewDto login : loginReview) {
-                isReview = reviewDtos.get(i).revIdx().equals(login.revIdx());
+                if(reviewDtos.get(i).profileDto().prIdx() == login.profileDto().prIdx()) {
+                    isReview = true;
+                }
             }
             if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
                 ReviewResponse response = new ReviewResponse(reviewDtos.get(i).revIdx(), reviewDtos.get(i).profileDto(), reviewDtos.get(i).revContent(), reviewDtos.get(i).revScore(),
@@ -158,8 +160,8 @@ public class TimeLineService {
     // 개인리뷰 조회
     public Page<ReviewResponse> getReview(Long prIdx, Long timelineIdx, Pageable pageable) {
         List<ReviewResponse> reviewList = new ArrayList<>();
-        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(timelineIdx).stream().map(ReviewDto::from).toList();
-        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(timelineIdx, Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
         for (int i = 0; i < reviewDtos.size(); i++) {
@@ -219,7 +221,7 @@ public class TimeLineService {
 
     // 컬렉션 리스트
     public List<MyCollectionDto> getCollection(Long timeLineIdx) {
-        List<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx, false).stream().map(MyCollectionDto::from).toList();
+        List<MyCollectionDto> collectionDtos = collectionRepository.findAllByProfile_PrIdxAndColLock(timeLineIdx, true).stream().map(MyCollectionDto::from).toList();
         return collectionDtos;
     }
 

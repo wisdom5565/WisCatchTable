@@ -16,6 +16,10 @@
         padding: 6px 0;
     }
 
+    .hidden {
+        display: none;
+    }
+
     /* 버튼 및 모달 */
     .modal.modal-overlay {
         top: 0;
@@ -56,13 +60,13 @@
         margin-top: 30px;
         color: black;
     }
-    .open{
-        display:flex;
-        keyboard: false;
-        backdrop: 'static';
+
+    .__h-center:hover {
+        border-color: #ff3d00;
+        color: #ff3d00;
     }
-    .close {
-        display: none;
+    .visiter-info {
+        display : none;
     }
 </style>
 <body>
@@ -100,11 +104,18 @@
                                             </dd>
                                         </dl>
                                     </div>
+                                    <div class="__more-info">
+                                        <dl class="visiter-info" style="display: none;">
+                                            <dt>방문자</dt>
+                                            <dd><span id="visitName"></span> (<span id="visitHp"></span>)
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                             <div class="__visitor-info">
                                 <div class="__d-flex __h-center">
-                                    <a href="" class="__edit" onclick="openOthers()">다른 사람이 방문해요</a>
+                                    <a class="__edit">다른 사람이 방문해요</a>
                                 </div>
                             </div>
                         </div>
@@ -231,8 +242,7 @@
         </main>
     </div>
     <!--      다른 사람이 방문해요 모달-->
-    <div class="MuiPaper-root jss7 MuiDrawer-paper MuiDrawer-paperAnchorBottom MuiPaper-elevation0 modal modal-overlay close"
-         tabindex="-1">
+    <div class="modal modal-overlay hidden" tabindex="-1">
         <div class="modal-window">
             <div class="drawer-box">
                 <div class="drawer-box-header">
@@ -240,17 +250,18 @@
                 </div>
                 <div class="drawer-box-body">
                     <div class="mb-8"><label class="font-14">방문자 성함</label></div>
-                    <input type="text" class="form-input mb-25"
-                           placeholder="방문하실 분의 성함을 입력해 주세요." value="">
+                    <input type="text" class="form-input mb-25" id="vsName"
+                           placeholder="방문하실 분의 성함을 입력해 주세요.">
                     <div class="mb-8"><label class="font-14">방문자 연락처</label></div>
-                    <input type="tel" class="form-input"
+                    <input type="tel" class="form-input" id="vsHp"
                            placeholder="방문하실 분의 휴대폰 번호를 입력해 주세요." value="">
                 </div>
                 <div class="drawer-box-footer">
                     <div class="btn-group">
-                        <button class="btn btn-lg outline">취소</button>
-                        <button
-                                class="btn btn-lg btn-red">확인
+                        <button class="btn btn-lg outline" style="border: 1px solid gainsboro;border-radius: 10px;"
+                                onclick="closeModal()">취소
+                        </button>
+                        <button class="btn btn-lg btn-red" onclick="block()">확인
                         </button>
                     </div>
                 </div>
@@ -261,10 +272,29 @@
 </div>
 </body>
 <script>
-    function openOthers() {
-        $('.modal').removeClass('close');
-        $('.modal').addClass('open');
-        $('.modal').modal({backdrop: 'static'});
+    // let visitName = $('#visitName');
+    // let visiteHp = $('#visiteHp');
+
+    $('.__edit').click(function () {
+        $('.modal').css("display", "flex");
+    });
+
+    function closeModal() {
+        $('.modal').css("display", "none");
     }
+
+        $("#vsName").change(function () {
+            console.log(this.value)
+            $('#visitName').html(this.value);
+        });
+    $("#vsHp").change(function () {
+        console.log(this.value)
+        $('#visitHp').html(this.value);
+    });
+    function block() {
+        $('.visiter-info').css("display", "flex");
+        $('.modal').css("display", "none");
+    }
+
 </script>
 </html>

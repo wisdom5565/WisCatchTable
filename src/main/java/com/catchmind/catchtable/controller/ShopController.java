@@ -6,23 +6,24 @@ import com.catchmind.catchtable.domain.Photo;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.BistroSaveRequest;
 import com.catchmind.catchtable.dto.network.response.ReviewResponse;
+import com.catchmind.catchtable.dto.network.response.ShopListResponse;
+import com.catchmind.catchtable.dto.network.response.ShopResponse;
 import com.catchmind.catchtable.dto.security.CatchPrincipal;
 import com.catchmind.catchtable.repository.BistroInfoRepository;
 import com.catchmind.catchtable.repository.BistroSaveRepository;
 import com.catchmind.catchtable.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("shop")
@@ -225,14 +226,34 @@ public class ShopController {
 
     }
 
-
-
     @GetMapping("/list")
+    public String list(@PageableDefault(size=10, sort="resaBisName", direction = Sort.Direction.DESC) Pageable pageable,
+                       ModelMap map, @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        if(catchPrincipal == null) {
+            Page<ShopListResponse> shopList = shopService.shopList(pageable,null);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), shopList.getTotalPages());
+            map.addAttribute("shopList" , shopList);
+            map.addAttribute("paginationBarNumbers", barNumbers);
+            map.addAttribute("prIdx", null);
+            System.out.println(shopList);
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            Page<ShopListResponse> shopList = shopService.shopList(pageable, prIdx);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), shopList.getTotalPages());
+            map.addAttribute("shopList" , shopList);
+            map.addAttribute("paginationBarNumbers", barNumbers);
+            map.addAttribute("prIdx", prIdx);
+            System.out.println(shopList);
+        }
+        return "shop/list";
+    }
+
+    @GetMapping("/list/{bisCategory}")
     public String list(@PageableDefault(size=10, sort="bisIdx", direction = Sort.Direction.DESC) Pageable pageable,
                        @RequestParam(value = "page",required = false) Integer page,
                        @RequestParam(value="size",required = false) Integer size,
                        @RequestParam(value="sort",required = false) String sort,
-                       ModelMap map,String resaBisName,
+                       ModelMap map,@PathVariable String bisCategory,
                        @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
         PageRequest pageRequest=null;
         String filtername=null;
@@ -263,17 +284,17 @@ public class ShopController {
                 pageRequest = PageRequest.of(page, size, Sort.by("regDate").descending());
                 filtername = "별점 높은순";
             }
-            list = bistroInfoLogicService.shopList(pageRequest);
+            list = bistroInfoLogicService.shopCategoryList(bisCategory,pageRequest);
         }catch (Exception e){
             System.out.println("페이저블 겟쏘트"+pageable.getSort());
             pageRequest = PageRequest.of(0, 10, Sort.by("regDate").descending());
-            list = bistroInfoLogicService.shopList(pageRequest);
+            list = bistroInfoLogicService.shopCategoryList(bisCategory,pageRequest);
             map.addAttribute("sort","regDate");
         }
         System.out.println("listgetnumber = " +list.getNumber());
-        Page<BistroInfoDto> bistroInfos = bistroInfoRepository.findAll(pageable).map(BistroInfoDto::from);
+        Page<BistroInfoDto> bistroInfos = bistroInfoRepository.findAllByBisCategoryContaining(bisCategory,pageable).map(BistroInfoDto::from);
         System.out.println("llist.getTotalPages() : " +list.getTotalPages());
-        List<BistroInfo> cntlist = bistroInfoLogicService.shopList();
+        List<BistroInfo> cntlist = bistroInfoLogicService.shopCountList(bisCategory);
         //List<ReviewDto> reviewList = reviewLogicService.reviewList();
         List<Integer> barNumbers;
         try {
@@ -302,6 +323,7 @@ public class ShopController {
             }
         }
 
+        map.addAttribute("bisCategory", bisCategory);
         map.addAttribute("bistroSavesList",bistroSavesList);
         map.addAttribute("booklist",booklist);
         map.addAttribute("shopList", list);
@@ -316,29 +338,124 @@ public class ShopController {
         return "shop/list";
     }
 
+    @GetMapping("/list/region/{bisRegion}")
+    public String regionList(@PageableDefault(size=10, sort="bisIdx", direction = Sort.Direction.DESC) Pageable pageable,
+                             @RequestParam(value = "page",required = false) Integer page,
+                             @RequestParam(value="size",required = false) Integer size,
+                             @RequestParam(value="sort",required = false) String sort,
+                             ModelMap map,@PathVariable String bisRegion,
+                             @AuthenticationPrincipal CatchPrincipal catchPrincipal) {
+        PageRequest pageRequest=null;
+        String filtername=null;
+        Page<BistroInfoDto> list=null;
+        bistroInfoLogicService.getReview();
+        //세션으로 prIdx 불러오기
+        Long prIdx = catchPrincipal.prIdx();
+        map.addAttribute("prIdx",prIdx);
+
+        try {
+            if (sort!=null) {
+                System.out.println("sort가 널이 아님");
+                map.addAttribute("sort",sort);
+
+            }
+        }catch (Exception e){
+            System.out.println("sort is null!");
+            map.addAttribute("sort","regDate");
+        }
+        try {
+            if (sort.equals("regDate")) {
+                System.out.println("1");
+                pageRequest = PageRequest.of(page, size, Sort.by("regDate").descending());
+                filtername = "최근 등록순";
+            } else if (sort.equals("revScoreGood")) {
+                System.out.println("2");
+                pageRequest = PageRequest.of(page, size, Sort.by("regDate").descending());
+                filtername = "별점 높은순";
+            }
+            list = bistroInfoLogicService.shopRegionList(bisRegion,pageRequest);
+        }catch (Exception e){
+            System.out.println("페이저블 겟쏘트"+pageable.getSort());
+            pageRequest = PageRequest.of(0, 10, Sort.by("regDate").descending());
+            list = bistroInfoLogicService.shopRegionList(bisRegion,pageRequest);
+            map.addAttribute("sort","regDate");
+        }
+        System.out.println("listgetnumber = " +list.getNumber());
+        Page<BistroInfoDto> bistroInfos = bistroInfoRepository.findAllByBisRegionContaining(bisRegion,pageable).map(BistroInfoDto::from);
+        System.out.println("llist.getTotalPages() : " +list.getTotalPages());
+        List<BistroInfo> cntlist = bistroInfoLogicService.shopCountList(bisRegion);
+        //List<ReviewDto> reviewList = reviewLogicService.reviewList();
+        List<Integer> barNumbers;
+        try {
+            barNumbers = paginationService.getPaginationBarNumber(page, bistroInfos.getTotalPages());
+        }catch(Exception e){
+            barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), bistroInfos.getTotalPages());
+            map.addAttribute("sort","regDate");
+        }
+
+        //
+        List<BistroSave> bistroSavesList = bistroSaveRepository.findAllByProfile_PrIdx(prIdx);
+
+        List<BookmarkDto> booklist = new ArrayList<BookmarkDto>();
+        for(BistroInfoDto info : list){
+            boolean temp = false;
+            for(BistroSave save : bistroSavesList){
+                if(info.resAdminDto().resaBisName().equals(save.getResAdmin().getResaBisName())){
+                    temp=true;
+                    break;
+                }
+            }
+            if(temp){
+                booklist.add(new BookmarkDto(info,true));
+            }else{
+                booklist.add(new BookmarkDto(info,false));
+            }
+        }
+
+        map.addAttribute("bisCategory", bisRegion);
+        map.addAttribute("bistroSavesList",bistroSavesList);
+        map.addAttribute("booklist",booklist);
+        map.addAttribute("shopList", list);
+        map.addAttribute("paginationBarNumbers",barNumbers);
+        map.addAttribute("filtername",filtername);
+        map.addAttribute("totalpage",bistroInfos.getTotalPages());
+        map.addAttribute("pageable",pageable);
+        // 총 레스토랑 수
+        int cnt= cntlist.size();
+        map.addAttribute("cnt", cnt);
+
+        return "shop/list";
+    }
 
     // 북마크 저장
     @PostMapping(path = "/new/bookmark")
     @ResponseBody
-    public void newBookmark(@RequestBody BistroSaveRequest request) {
+    public String newBookmark(@RequestBody BistroSaveRequest request) {
         System.out.println(request);
-        bistroSaveService.newBookmark(request);
+        BistroSave bistroSave = bistroSaveService.newBookmark(request);
+        if(bistroSave != null) {
+            return "OK";
+        } else {
+            return "NO";
+        }
     }
 
     // 북마크 삭제
     @PostMapping(path = "/del/bookmark")
     @ResponseBody
-    public void delBookmark(@RequestBody BistroSaveRequest request) {
+    public String delBookmark(@RequestBody BistroSaveRequest request) {
         System.out.println("컨트롤러 진입"+request);
-        bistroSaveService.delBookmark(request);
+        Optional<BistroSave> bistroSave =  bistroSaveService.delBookmark(request);
+        if(bistroSave != null) {
+            return "OK";
+        } else {
+            return "NO";
+        }
     }
 
 
     @GetMapping("/{resaBisName}")
     public String service(@PathVariable String resaBisName, ModelMap map) {
-//        BistroInfoDto list = bistroInfoLogicService.infoList(resaBisName);
-//        System.out.println(list);
-//        map.addAttribute("bisInfo", list);
 
         BistroDetailDto lists = bistroDetailLogicService.detailList(resaBisName);
         map.addAttribute("bisDetail" ,lists);
@@ -355,7 +472,7 @@ public class ShopController {
 
         //식당 평균 별점
         List<ReviewDto> rlists = reviewLogicService.reviewList(resaBisName);
-        System.out.println(rlists);
+        List<ShopResponse> reviewAndPhoto = reviewLogicService.reviewPhotoList(resaBisName);
         Double sum=0.0;
         Double avg=0.0;
         int cnt=0;
@@ -368,13 +485,34 @@ public class ShopController {
         map.addAttribute("reviews",rlists);
         map.addAttribute("avgpoint",average);
         map.addAttribute("revcnt",cnt);
+        map.addAttribute("reviewAndPhoto",reviewAndPhoto);
 
         List<Photo> photos = photoLogicService.photoDto(resaBisName);
-        map.addAttribute("shopPic",photos.get(0).getSavedPath());
+        map.addAttribute("shopPic",photos);
         return "shop/shop";
 
     }
 
+    @GetMapping("/search/list")
+    public String searchList(@RequestParam(value = "resaBisName", required = false) String resaBisName,@PageableDefault(size = 5, sort = "bisIdx", direction = Sort.Direction.DESC) Pageable pageable, Model map) {
+        System.out.println(resaBisName);
+        if(resaBisName == null){
+            resaBisName = "";
+        }
+        Page<BistroInfo> list = null;
+        if (resaBisName == "") {
+            list = bistroInfoLogicService.searchList(resaBisName, pageable);
+        } else {
+            list = bistroInfoLogicService.searchList(resaBisName, pageable);
+        }
+        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), list.getTotalPages());
+        System.out.println(list);
+        map.addAttribute("paginationBarNumbers", barNumbers);
+        map.addAttribute("list", list);
+        map.addAttribute("totalpage",list.getTotalPages());
+        map.addAttribute("resaBisName",resaBisName);
+        return "shop/search_list";
+    }
 
 
 

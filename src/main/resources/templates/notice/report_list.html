@@ -54,14 +54,13 @@
                         <div width="100" class="css-16tcewl e16adls20">작성일</div>
                     </div>
                     <ul class="css-1fttcpj e1cfowvj5" th:if="${!#lists.isEmpty(notice)}" th:each="notice:${notice}">
-                        <li><a href="/board/notice/detail/1692">
+                        <li>
                             <div class="css-14yglsw e1cfowvj4">
                                 <div class="css-3o6rrk e1cfowvj2" th:text="${notice.derIdx}">1</div>
                                 <div class="css-3d2kks e1cfowvj2">리뷰</div>
                                 <div class="css-fzefrb e1cfowvj2" th:text="${notice.derContent}">리뷰 내용이 너무 홍보성 가득함</div>
                                 <div class="css-b1hszl e1cfowvj2" th:text="${#temporals.format(notice.regDate, 'yyyy.MM.dd')}">2022.12.20</div>
                             </div>
-                        </a>
                         </li>
 
 

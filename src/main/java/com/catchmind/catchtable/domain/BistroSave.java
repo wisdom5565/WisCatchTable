@@ -19,7 +19,8 @@ public class BistroSave {
 
     @ManyToOne(optional = false) @JoinColumn(name = "prIdx")
     private Profile profile;
-    @ManyToOne(optional = false) @JoinColumn(name = "bdIdx")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "bdIdx")
     private BistroDetail bistroDetail;
 
     private Long colIdx;
@@ -36,10 +37,15 @@ public class BistroSave {
     }
 
     @Builder
-    public BistroSave( Long prIdx, String resaBisName ) {
-//        this.saveIdx = saveIdx;
-        this.resAdmin = new ResAdmin(resaBisName);
-        this.profile = new Profile(prIdx);
+    public BistroSave(Profile profile, ResAdmin resAdmin, BistroDetail bistroDetail) {
+        this.resAdmin = resAdmin;
+        this.profile = profile;
+        this.bistroDetail = bistroDetail;
+    }
+
+    public static BistroSave of(Profile profile, ResAdmin resAdmin, BistroDetail bistroDetail) {
+        return new BistroSave(profile, resAdmin, bistroDetail);
+
     }
 
 

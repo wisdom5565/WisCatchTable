@@ -31,6 +31,14 @@ public record BistroSaveDto(
         return new BistroSaveDto(saveIdx,reviewDto,profileDto,bistroDetailDto,colIdx);
     }
 
+    public BistroSave toEntity() {
+        return BistroSave.of(
+                profileDto.toEntityIdx(),
+                resAdminDto.toEntity(),
+                bistroDetailDto.toEntityIdx()
+        );
+    }
+
 
 
 }
