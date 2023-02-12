@@ -1,6 +1,5 @@
 package com.catchmind.catchtable.service;
 
-import com.catchmind.catchtable.domain.BistroDetail;
 import com.catchmind.catchtable.domain.BistroSave;
 import com.catchmind.catchtable.dto.network.request.BistroSaveRequest;
 import com.catchmind.catchtable.repository.BistroDetailRepository;

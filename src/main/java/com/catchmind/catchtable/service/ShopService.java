@@ -1,9 +1,11 @@
 package com.catchmind.catchtable.service;
 
-import com.catchmind.catchtable.dto.*;
+import com.catchmind.catchtable.dto.BistroDetailDto;
+import com.catchmind.catchtable.dto.BistroSaveDto;
+import com.catchmind.catchtable.dto.ReviewDto;
+import com.catchmind.catchtable.dto.ReviewPhotoDto;
 import com.catchmind.catchtable.dto.network.response.ReviewResponse;
 import com.catchmind.catchtable.dto.network.response.ShopListResponse;
-import com.catchmind.catchtable.dto.network.response.ShopReviewResponse;
 import com.catchmind.catchtable.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

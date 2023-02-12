@@ -5,8 +5,6 @@ import com.catchmind.catchtable.dto.ResAdminDto;
 import com.catchmind.catchtable.dto.ReserveDto;
 import com.catchmind.catchtable.dto.ReviewPhotoDto;
 
-import java.util.List;
-
 public record IndexResponse(
         long revIdx,
         ProfileDto profileDto,

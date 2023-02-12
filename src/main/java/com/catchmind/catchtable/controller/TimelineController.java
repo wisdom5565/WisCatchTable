@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.controller;
 
 import com.catchmind.catchtable.domain.Follow;
+import com.catchmind.catchtable.domain.Review;
 import com.catchmind.catchtable.dto.*;
 import com.catchmind.catchtable.dto.network.request.CommentHeartRequest;
 import com.catchmind.catchtable.dto.network.request.FollowRequest;
@@ -12,6 +13,7 @@ import com.catchmind.catchtable.service.TimeLineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;

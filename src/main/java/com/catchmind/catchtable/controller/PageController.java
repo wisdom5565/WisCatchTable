@@ -5,7 +5,6 @@ import com.catchmind.catchtable.domain.Profile;
 import com.catchmind.catchtable.dto.PendingDto;
 import com.catchmind.catchtable.dto.network.request.ProfileRequest;
 import com.catchmind.catchtable.dto.network.response.IndexResponse;
-import com.catchmind.catchtable.dto.network.response.TimeLineResponse;
 import com.catchmind.catchtable.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

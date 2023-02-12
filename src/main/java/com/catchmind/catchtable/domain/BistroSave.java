@@ -25,10 +25,10 @@ public class BistroSave {
 
     private Long colIdx;
 
-    protected BistroSave () {}
+    protected BistroSave() {}
 
     @Builder
-    public BistroSave(Long saveIdx, ResAdmin resAdmin, Profile profile, BistroDetail bistroDetail,Long colIdx) {
+    public BistroSave(Long saveIdx, ResAdmin resAdmin, Profile profile, BistroDetail bistroDetail, Long colIdx) {
         this.saveIdx = saveIdx;
         this.resAdmin = resAdmin;
         this.profile = profile;
