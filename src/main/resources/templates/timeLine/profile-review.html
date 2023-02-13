@@ -143,7 +143,7 @@
             <div th:replace="fragment/timeline-aside :: timeline-aside"/>
         </div>
         <div class="css-171zbec eug5r8l0">
-            <div class="css-j0lifa ed9qr673">
+            <div class="css-j0lifa ed9qr673" style="padding: 0">
                 <div class="css-fhxb3m ed9qr672">
                     <h2 class="css-1268zpe ed9qr671">[[${profile.prNick}]]님의 모든 리뷰 보기</h2>
                 </div>
@@ -153,71 +153,100 @@
                 <section class="section mb-20">
                     <div class="container gutter-sm" style="padding: 0;">
                         <div class="section-body">
-                            <div class="__my-review-list ml--20 mr--20" th:each="review : ${reviews}">
+                            <div class="__my-review-list ml--20 mr--20">
                                 <div id="shopReviewListScroll">
                                     <div id="shopReviewListScroll_0" data-dummy="495.6363830566406" style="">
-                                        <article class="__my-review-post" style="overflow-x: hidden;">
-                                            <div class="__body"
-                                                 style="position: relative; padding: 0px 16px; display: flex;">
-                                                <div id="shopReviewCardImgList_1272868" class="v-scroll">
-                                                    <div class="v-scroll-inner" style="padding: 0;">
+                                        <article class="__my-review-post"
+                                                 style="overflow-x: hidden; margin-left: -15px;"
+                                                 th:each="review : ${reviews}">
+                                            <div class="__header">
+                                                <div class="__user-info"
+                                                     style="justify-content: space-between;">
+                                                    <a class="profile"
+                                                       th:href="'/timeline/profile/' + ${review.profileDto.prIdx}">
+                                                        <div class="profile-pic">
+                                                            <img src="https://dau2wmhjxkxtx.cloudfront.net/web-static/static_webapp_v2/img/noimg/profile_default_v2.png"
+                                                                 alt="" class="img"></div>
+                                                        <h4 class="name username">
+                                                            <span class="txt"
+                                                                  th:text="${review.profileDto.prNick}">박건</span>
+                                                        </h4>
+                                                    </a>
+                                                    <div class="header-right">
+                                                        <div th:onclick="reportReview([[${review.revIdx}]], [[${review.resIdx}]], [[${review.isReview}]],[[${prIdx}]])"
+                                                             class="__more-profile" id="btn-example">MORE
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="__body" style="position: relative; padding: 0px 16px;">
+                                                <div id="shopReviewCardImgList_1272868" class="v-scroll" style="padding: 0">
+                                                    <div class="v-scroll-inner">
                                                         <div id="shopReviewCardImgList_1272868" class="__photos"
                                                              style="display: flex; flex-wrap: nowrap;">
-                                                            <th:block th:each="photo : ${review.photo}">
+                                                            <div th:each="photo : ${review.photo}">
                                                                 <div class="swiper-slide"
                                                                      style="margin-right: 8px;">
-                                                                    <img th:src="'/photo/'+${photo.savedNm}"
-                                                                         alt="">
+                                                                    <th:block
+                                                                            th:if="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                        <img th:src="${photo.savedPath}" alt="">
+                                                                    </th:block>
+                                                                    <th:block
+                                                                            th:unless="${photo.savedPath != null and photo.savedNm == null and photo.orgNm == null}">
+                                                                        <img th:src="'/photo/'+${photo.savedNm}" alt="">
+                                                                    </th:block>
                                                                 </div>
-                                                            </th:block>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="timeline-post-content" style="margin-left: 32px;">
-                                                    <div class="__post-meta" style="margin-top: 0;">
-                                                        <div class="small-header">
-                                                            <div class="__rating" th:text="${review.revScore}">5.0</div>
-                                                            <div class="header-right" style="margin-left: 80px">
-                                                                <div th:onclick="reportReview([[${review.revIdx}]], [[${review.resIdx}]], [[${review.isReview}]])"
-                                                                     class="__more-profile" id="btn-example">MORE
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div class="timeline-post-content">
+                                                    <div class="__post-meta"
+                                                         style="display: flex; justify-content: space-between;">
+                                                        <div class="__rating" th:text="${review.revScore}">5.0</div>
+                                                        <th:block th:if="${review.updateDate != null}">
+                                                            <div th:text="${#temporals.format(review.updateDate, 'yyyy년 MM월 dd일')}"></div>
+                                                        </th:block>
+                                                        <th:block th:unless="${review.updateDate != null}">
+                                                            <div th:text="${#temporals.format(review.regDate, 'yyyy년 MM월 dd일')}"></div>
+                                                        </th:block>
+
                                                     </div>
                                                     <h3 class="__title"></h3>
-                                                    <div class="__content " style="height: 132px;">
-                                                        <div id="__content0_1422474" class=""
-                                                             th:text="${review.revContent}">대박.... 리모델링 하기 전부터 회사 회식 할때
-                                                            마다 왔었는데 바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ 분위기도 좋고 친절 하고 .. 심지어 집근처...
-                                                            자주 갈듯요!!
-                                                        </div>
+                                                    <div class="__content" style="font-size: 1.2em">
+                                                        <p id="__content0_1422474" th:text="${review.revContent}" style="white-space: pre-line;">
+                                                            대박.... 리모델링 하기 전부터 회사 회식 할때 마다 왔었는데 바뀌고 나선 처음 !! 너무 맛있어요 ㅜㅠ
+                                                            분위기도 좋고 친절 하고 .. 심지어 집근처... 자주 갈듯요!!
+                                                        </p>
                                                     </div>
-
-                                                    <div class="restaurant-info" style="margin: 0;">
-                                                        <img src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/s25173/25173_224110153262533_thumbMenuImage.jpeg?small220"
-                                                             alt="" class="thumb">
-                                                        <div class="__info">
-                                                            <h4 class="__name">
-                                                                <span th:text="${review.resAdminDto.resaBisName}">미래회관 한남</span>
-                                                            </h4>
-                                                            <div class="__meta"
-                                                                 th:text="${review.resAdminDto.resaRegion}">돼지고기구이 • 한남
-                                                            </div>
+                                                    <div class="restaurant-info" style="padding: 15px;">
+                                                        <div class="__info" style="font-size: 1em;">
+                                                            <a th:href="'/shop/'+${review.resAdminDto.resaBisName}">
+                                                                <h4 class="__name">
+                                                                    <span th:text="${review.resAdminDto.resaBisName}">미래회관 한남</span>
+                                                                </h4>
+                                                                <div class="__meta"
+                                                                     th:text="${review.resAdminDto.resaRegion}">돼지고기구이 •
+                                                                    한남
+                                                                </div>
+                                                            </a>
                                                         </div>
                                                         <img src="https://catchtable.co.kr/web-static/static_webapp_v2/img/icons/icon_arrow/arrow_left_black.svg"
                                                              alt="">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="timeline-post-footer">
-                                                <div class="__post-meta">
-                                                    <div th:class="'heart'+${review.revIdx}">
-                                                    </div>
-                                                    <div th:class="'comment'+${review.revIdx}">
+                                                <div class="timeline-post-footer">
+                                                    <div class="__post-meta">
+                                                        <div th:class="'heart'+${review.revIdx}">
+                                                        </div>
+                                                        <div th:class="'comment'+${review.revIdx}">
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--                                                댓글 시작-->
                                             <main id="main" th:class="comment__review"
                                                   th:id="'showCom'+${review.revIdx}"
                                                   style="margin-top: 15px;padding-bottom: 24px;">
@@ -226,8 +255,9 @@
                                                         <div class="container gutter-sm">
                                                             <div class="__comment-list __comment-detail-list">
                                                                 <div>
-                                                                    <article th:class="'__comment-item comDiv'+${review.revIdx}"
-                                                                             style="padding: 16px 20px 0px;">
+                                                                    <article
+                                                                            th:class="'__comment-item comDiv'+${review.revIdx}"
+                                                                            style="padding: 16px 20px 0px;">
 
                                                                     </article>
                                                                 </div>
@@ -249,7 +279,10 @@
                                                     </div>
                                                 </form>
                                             </main>
-                                            <hr class="hairline" style="margin-bottom: 30px">
+                                            <!--                                                댓글 끝-->
+                                            <hr class="hairline">
+
+
                                         </article>
                                     </div>
                                 </div>

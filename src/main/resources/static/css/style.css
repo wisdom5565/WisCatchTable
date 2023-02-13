@@ -3419,14 +3419,14 @@ hr {
     flex-direction: column;
     align-items: flex-start;
 }
-.__my-review-post .__review-post p {
-    line-height: 22px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-}
+/*.__my-review-post .__review-post p {*/
+/*    line-height: 22px;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*    display: -webkit-box;*/
+/*    -webkit-line-clamp: 5;*/
+/*    -webkit-box-orient: vertical;*/
+/*}*/
 .__my-review-post .__review-post .__more {
     display: inline-flex;
     color: #828282;

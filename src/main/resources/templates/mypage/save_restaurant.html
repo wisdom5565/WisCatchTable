@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/css/mypage.css">
   <link rel="stylesheet" href="/css/collection_detail.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <!--  <script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
 </head>
 <style>
   .headerCategory {
@@ -84,7 +84,7 @@
                         <span class="price">점심&nbsp;[[${list.bistroDetailDto.bistroInfoDto.bisLunch}]]&nbsp;저녁&nbsp;[[${list.bistroDetailDto.bistroInfoDto.bisDinner}]]</span>
                       </div>
                     </a>
-                    <button onclick="delRes()" class="btn-bookmark active">북마크</button>
+                    <button th:onclick="delRes([[${list.saveIdx}]])" id="bookmark" class="btn-bookmark active">북마크</button>
                   </div>
                   <div class="restaurant-meta mb-30"></div>
 

@@ -1,6 +1,5 @@
 package com.catchmind.catchtable.service;
 
-import com.catchmind.catchtable.domain.Photo;
 import com.catchmind.catchtable.dto.PhotoDto;
 import com.catchmind.catchtable.dto.ReviewDto;
 import com.catchmind.catchtable.dto.ReviewPhotoDto;

@@ -373,13 +373,12 @@ public class MypageController {
     }
 
     // 저장된 식당 삭제
-    @DeleteMapping("/saveList")
+    @DeleteMapping("/saveList/{saveIdx}")
     @ResponseBody
-    public String delRes(@RequestBody BistroSaveDto request) {
-        System.out.println("💕💕💕💕 !!  " + request.saveIdx());
-        Long saveIdx = request.saveIdx();
+    public String delRes(@PathVariable Long saveIdx) {
+        System.out.println(saveIdx);
         profileLogicService.delRes(saveIdx);
-        return "ok";
+        return "OK";
     }
 
     // 회원 탈퇴

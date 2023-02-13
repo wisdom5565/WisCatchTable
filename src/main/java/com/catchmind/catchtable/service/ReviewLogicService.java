@@ -8,9 +8,6 @@ import com.catchmind.catchtable.dto.network.response.ShopResponse;
 import com.catchmind.catchtable.repository.ReviewPhotoRepository;
 import com.catchmind.catchtable.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
