@@ -5,6 +5,12 @@ function sendit(){
     const userpw = document.getElementById('prUserpw');
     const userpw_re = document.getElementById('passwordConfirm');
     const nick = document.getElementById('prNick');
+    // const checkBtn = document.getElementById('checkBtn');
+    // let nickCheck = document.getElementById('checked_nick');
+    const birthY = document.getElementById('birthY');
+    const birthM = document.getElementById('birthM');
+    const birthD = document.getElementById('birthD');
+    // const submitButton = document.querySelector('#submit-button');
 
 
     // 정규 표현식
@@ -14,7 +20,10 @@ function sendit(){
     // const expPwText = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}/;
     // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}/
     const expPwText = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}/;    
-    const expNickText = /^[A-Za-z가-힣\d]{4,20}$/;            //
+    const expNickText = /^[A-Za-z가-힣\d]{1,20}$/;            //
+    const expBirthYText = /^(19[0-9][0-9]|20\d{2})$/
+    const expBirthMText = /^(0[0-9]|1[0-2])$/
+    const expBirthDText = /^(0[1-9]|[1-2][0-9]|3[0-1])$/
 
 
     if(!expNameText.test(name.value)){
@@ -45,8 +54,41 @@ function sendit(){
     }
 
     if(!expNickText.test(nick.value)){
-        alert('닉네임은 4자 이상 20자 이하의 한글, 영문 대소문자, 숫자를 사용할 수 있습니다.');
+        alert('닉네임은 20자 이하의 한글, 영문 대소문자, 숫자를 사용할 수 있습니다.');
         nick.focus();
+        return false;
+    }
+
+    // if(nick.value == "" || nickCheck.value == ""){
+    //     // nickCheck.value = 'y';
+    //     alert('닉네임 중복 확인을 해주세요.');
+    //     nick.focus();
+    //     return false;
+    // } else if (){
+    //     nickCheck.value = "y";
+    // }
+
+    if ($('.nick_input').attr("check_result") == "fail"){
+        alert("닉네임 중복체크를 해주시기 바랍니다.");
+        $('.nick_input').focus();
+        return false;
+    }
+
+    if(!expBirthYText.test(birthY.value)){
+        alert("생년월일의 연도를 입력해 주세요");
+        birthY.focus();
+        return false;
+    }
+
+    if(!expBirthMText.test(birthM.value)){
+        alert("생년월일의 월을 입력해 주세요");
+        birthM.focus();
+        return false;
+    }
+
+    if(!expBirthDText.test(birthD.value)) {
+        alert('생년월일의 일을 입력해 주세요');
+        birthD.focus();
         return false;
     }
 
@@ -54,7 +96,19 @@ function sendit(){
 }
 
 function double_check(){
+
     const nick = document.getElementById('prNick');
+
+    $('.nick_input').change(function () {
+        // $('#id_check_sucess').hide();
+        // $('.id_overlap_button').show();
+        $('.nick_input').attr("check_result", "fail");
+    })
+
+    if ($('.nick_input').val() == '') {
+        alert('닉네임을 입력해 주세요')
+        return;
+    }
 
     $.ajax({
         url:'/idCheck'
@@ -65,15 +119,19 @@ function double_check(){
         ,success:function (data){
             console.log(data);
             if(data){
-                alert("사용가능 닉네임입니다")
-
+                alert("사용가능한 닉네임입니다")
+                $('.nick_input').attr("check_result", "success");
+                // checkBtn.disabled = true;
             }
             else {
-                alert("중복된 닉네임 입니다")
+                alert("중복된 닉네임입니다")
+                nick.focus();
+                // checkValue.value("");
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             alert("ERROR : " + textStatus + " : " + errorThrown);
         }
     })
+
 }

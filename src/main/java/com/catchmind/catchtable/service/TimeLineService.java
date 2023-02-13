@@ -43,7 +43,7 @@ public class TimeLineService {
         ProfileDto profileDto = profileRepository.findById(prIdx).map(ProfileDto::from).orElseThrow();
         List<SnsDto> snsList = snsRepository.findAllByProfile_PrIdx(prIdx).stream().map(SnsDto::from).toList();
         System.out.println("❌" + snsList);
-        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx,Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> reviewDtos = reviewRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
         Long followingNum = followRepository.countByFollower_PrIdx(prIdx);      // 로그인한 유저의 팔로잉 수
         Long followerNum = followRepository.countByFollowing_PrIdx(prIdx);      // 로그인한 유저의 팔로워 수
 
@@ -74,7 +74,7 @@ public class TimeLineService {
     public Page<ReviewResponse> getReviews(Pageable pageable, Long prIdx) {
         List<ReviewDto> reviewDtos = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "revIdx"))
                 .stream().map(ReviewDto::from).toList();
-        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC, "revIdx")).stream().map(ReviewDto::from).toList();
+        List<ReviewDto> loginReview = reviewRepository.findAllByProfile_PrIdx(prIdx, Sort.by(Sort.Direction.DESC,"revIdx")).stream().map(ReviewDto::from).toList();
         List<ReviewResponse> reviewList = new ArrayList<>();
         List<ReviewPhotoDto> photoDtos = reviewPhotoRepository.findAll().stream().map(ReviewPhotoDto::from).toList();
 
@@ -178,7 +178,9 @@ public class TimeLineService {
             }
             boolean isReview = false;
             for (ReviewDto login : loginReview) {
-                isReview = reviewDtos.get(i).revIdx().equals(login.revIdx());
+                if(reviewDtos.get(i).profileDto().prIdx() == login.profileDto().prIdx()) {
+                    isReview = true;
+                }
             }
 
             if (photoList.isEmpty() || reviewDtos.get(i).updateDate() == null) {
@@ -196,6 +198,7 @@ public class TimeLineService {
             System.out.println("i" + i + reviewList.get(i).photo());
         }
 
+        reviewList.sort((o1, o2) -> o2.revIdx().compareTo(o1.revIdx()));
         final int start = (int) pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), reviewList.size());
         PageImpl<ReviewResponse> reviewResponsePage = new PageImpl<>(reviewList.subList(start, end), pageable, reviewList.size());

@@ -9,7 +9,7 @@ const agreements = {
   RequiredSignupAge: false,                 // termsOfService
   RequiredTermsCondition: false,            // privacyPolicy
   RequiredTermsOfPrivacy: false,            // allowPromotions
-  RequiredTermsOfPrivacyPersonel: false, 
+  RequiredTermsOfPrivacyPersonal: false,
   OptionalTermsOfPrivacy: false
   // SignupEventAll: false
 };
@@ -27,9 +27,9 @@ function toggleCheckbox(e) {
 }
 
 function checkAllStatus() {
-  const { RequiredSignupAge, RequiredTermsCondition, RequiredTermsOfPrivacy, RequiredTermsOfPrivacyPersonel, OptionalTermsOfPrivacy } = agreements;
+  const { RequiredSignupAge, RequiredTermsCondition, RequiredTermsOfPrivacy, RequiredTermsOfPrivacyPersonal, OptionalTermsOfPrivacy } = agreements;
           // termsOfService, privacyPolicy, allowPromotions
-  if ( RequiredSignupAge && RequiredTermsCondition && RequiredTermsOfPrivacy && RequiredTermsOfPrivacyPersonel && OptionalTermsOfPrivacy ) {
+  if ( RequiredSignupAge && RequiredTermsCondition && RequiredTermsOfPrivacy && RequiredTermsOfPrivacyPersonal && OptionalTermsOfPrivacy ) {
                        // termsOfService && privacyPolicy && allowPromotions
     checkAll.checked = true;
   } else {
@@ -38,8 +38,8 @@ function checkAllStatus() {
 }
 
 function toggleSubmitButton() {
-  const { RequiredSignupAge, RequiredTermsCondition, RequiredTermsOfPrivacy, RequiredTermsOfPrivacyPersonel } = agreements;       // termsOfService, privacyPolicy
-  if ( RequiredSignupAge && RequiredTermsCondition && RequiredTermsOfPrivacy && RequiredTermsOfPrivacyPersonel ) {                // termsOfService && privacyPolicy
+  const { RequiredSignupAge, RequiredTermsCondition, RequiredTermsOfPrivacy, RequiredTermsOfPrivacyPersonal } = agreements;       // termsOfService, privacyPolicy
+  if ( RequiredSignupAge && RequiredTermsCondition && RequiredTermsOfPrivacy && RequiredTermsOfPrivacyPersonal ) {                // termsOfService && privacyPolicy
     submitButton.disabled = false;
   } else {
     submitButton.disabled = true;

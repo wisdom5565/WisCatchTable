@@ -141,48 +141,52 @@
                     <div class="__total-count">
                         <strong th:text="|총 ${shopList.getTotalElements()}개|">104</strong>의 레스토랑
                     </div>
+                    <div class="info-icon-div-1">
+                        <a href="#layer2" th:if="${filtername!=null}" id="btn-example" class="info-icon-div"
+                           th:text="${filtername}">최근 등록순</a>
+                        <a href="#layer2" th:unless="${filtername!=null}" id="btn-example"
+                           class="info-icon-div">최근 등록순</a>
+                    </div>
                 </div>
-                <!--                    <div class="info-icon-div-1">-->
-                <!--                        <a href="#layer2" th:if="${filtername!=null}" id="btn-example" class="info-icon-div"-->
-                <!--                           th:text="${filtername}">최근 등록순</a>-->
-                <!--                        <a href="#layer2" th:unless="${filtername!=null}" id="btn-example"-->
-                <!--                           class="info-icon-div">최근 등록순</a>-->
-                <!--                    </div>-->
-                <!--                    <div class="dim-layer">-->
-                <!--                        <div class="dimBg"></div>-->
-                <!--                        <div id="layer2" class="pop-layer">-->
-                <!--                            <div class="pop-container">-->
-                <!--                                <div class="pop-conts">-->
-                <!--                                    <div class="drawer-box">-->
-                <!--                                        <div class="review_sort">-->
-                <!--                                            <a href="/shop/list?page=0&size=10&sort=regDate"-->
-                <!--                                               class="btn_recent">최근 등록순-->
-                <!--                                                <img class="btn_recent" th:if="${sort=='regDate'}"-->
-                <!--                                                     id="btn_check"-->
-                <!--                                                     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">-->
-                <!--                                                <img class="btn_recent"-->
-                <!--                                                     th:if="${sort!='regDate'&&sort!='revScoreGood'}"-->
-                <!--                                                     id="btn_check"-->
-                <!--                                                     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">-->
-                <!--                                            </a>-->
-                <!--                                        </div>-->
-                <!--                                        <div class="review_sort">-->
-                <!--                                            <a href="/shop/list?page=0&size=10&sort=revScoreGood"-->
-                <!--                                               class="btn_good">별점 높은순-->
-                <!--                                                <img class="btn_good" th:if="${sort=='revScoreGood'}"-->
-                <!--                                                     id="btn_check"-->
-                <!--                                                     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">-->
-                <!--                                            </a>-->
-                <!--                                        </div>-->
-                <!--                                        <div class="btn-r">-->
-                <!--                                            <a href="" class="btn-layerClose"-->
-                <!--                                               style="padding:  10px 140px 10px 140px;">확인</a>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
+                <div class="dim-layer">
+                    <div class="dimBg"></div>
+                    <div id="layer2" class="pop-layer">
+                        <div class="pop-container">
+                            <div class="pop-conts">
+                                <div class="drawer-box">
+                                    <div class="review_sort">
+                                        <a href="/shop/list?sort=regDate"
+                                           class="btn_recent">최근 등록순
+                                            <img class="btn_recent" th:if="${sort=='regDate'}"
+                                                 id="btn_check"
+                                                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
+                                        </a>
+                                    </div>
+                                    <div class="review_sort">
+                                        <a href="/shop/list?sort=revScore"
+                                           class="btn_good">별점 높은순
+                                            <img class="btn_good" th:if="${sort=='revScore'}"
+                                                 id="btn_check"
+                                                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
+                                        </a>
+                                    </div>
+                                    <div class="review_sort">
+                                        <a href="/shop/list?sort=revCnt"
+                                           class="btn_good">리뷰 많은순
+                                            <img class="btn_good" th:if="${sort=='revCnt'}"
+                                                 id="btn_check"
+                                                 src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
+                                        </a>
+                                    </div>
+                                    <div class="btn-r">
+                                        <a href="" class="btn-layerClose"
+                                           style="padding:  10px 140px 10px 140px;">확인</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!--                ********-->
             </div>
@@ -281,12 +285,12 @@
                 <!--페이징 처리-->
                 <div class="page_wrap">
                     <div class="page_nation" aria-label="Page navigation example">
-                        <a th:href="@{/shop/list(page=${shopList.number - 1})}"
+                        <a th:href="@{/shop/list(sort=${sort},page=${shopList.number - 1})}"
                            th:class="'page-prev' + (${shopList.number} <= 0 ? ' page-disabled':'')"></a>
                         <span th:each="pageNumber : ${paginationBarNumbers}">
-                        <a th:text="${pageNumber + 1}" th:href="@{/shop/list(page=${pageNumber})}"
+                        <a th:text="${pageNumber + 1}" th:href="@{/shop/list(sort=${sort},page=${pageNumber})}"
                            th:class="(${pageNumber} == ${shopList.number} ? 'active' : '')">1</a></span>
-                        <a th:href="@{/shop/list(page=${shopList.number + 1})}" th:class="'page-next' +
+                        <a th:href="@{/shop/list(sort=${sort},page=${shopList.number + 1})}" th:class="'page-next' +
                     (${shopList.number} >= ${shopList.totalPages - 1} ? ' page-disabled':'')"></a>
                     </div>
                 </div>

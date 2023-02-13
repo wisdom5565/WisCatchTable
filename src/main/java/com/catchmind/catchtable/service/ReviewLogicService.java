@@ -59,16 +59,6 @@ public class ReviewLogicService {
         return shopResponseList;
     }
 
-    public Page<ReviewDto> reviewList(String resaBisName, PageRequest pageRequest) {
-        Page<ReviewDto> reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName(resaBisName, pageRequest).map(ReviewDto::from);
-        return reviewDtos;
-    }
-
-    public Page<ReviewDto> reviewList(String resaBisName, Pageable pageable) {
-        Page<ReviewDto> reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName(resaBisName, pageable).map(ReviewDto::from);
-        return reviewDtos;
-    }
-
 
     public List<IndexResponse> indexReviewList() {
         List<ReviewDto> reviewDtos = reviewRepository.findTop6By().stream().map(ReviewDto::from).toList();

@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record ReviewResponse(
-        long revIdx,
+        Long revIdx,
         ProfileDto profileDto,
         String revContent,
-        double revScore,
+        Double revScore,
         ResAdminDto resAdminDto,
         List<ReviewPhotoDto> photo,
         Long resIdx,

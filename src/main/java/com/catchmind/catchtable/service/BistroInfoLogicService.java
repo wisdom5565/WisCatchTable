@@ -30,34 +30,13 @@ public class  BistroInfoLogicService {
     }
 
     public Page<BistroInfoDto> shopCategoryList(String bisCategory,Pageable pageable) {
-        //List<PhotoDto> photoDtos = photoRepository.findAll().stream().map(PhotoDto::from).toList();
-        //컬럼 추가 안하고싶을때  //Page 타입은 .map까지만
-//        double total = 0;
-//        double avg = 0;
-//        List<ReviewDto> reviewDtos = new ArrayList<>();
+
         List<BistroInfoDto> bistroInfoDtos = bistroInfoRepository.findAllByBisCategoryContaining(bisCategory).stream().map(BistroInfoDto::from).toList();
         List<BistroInfoDto> bistroInfoDtoList=null;
-//        for(BistroInfoDto bistroInfoDto:bistroInfoDtos){
-//            BistroInfo bistroInfo = (BistroInfo)bistroInfoDto;
-//            bistroInfoDtoList.add(BistroInfoDto.from(bistroInfoDto,reviewRepository.findAllByResAdmin_ResaBisName(bistroInfoDto.resAdminDto().resaBisName()).stream().toList()));
-//        }
+
 
         Page<BistroInfoDto> page = new PageImpl<>(bistroInfoDtos);
 
-//        for(int i = 0; i < bistroInfoDtos.size(); i++) {
-//            reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName
-//                    (bistroInfoDtos.get(i).resAdminDto().resaName()).stream().map(ReviewDto::from).toList();
-//            total += reviewDtos.get(i).revScore();
-//        }
-//        avg = total / reviewDtos.size();
-
-
-
-
-//        final int start = (int) pageable.getOffset();
-//        final int end = Math.min((start + pageable.getPageSize()), reviewDtos.size());
-//        PageImpl<ReviewDto> reviewResponse = new PageImpl<>(reviewDtos.subList(start, end), pageable, reviewDtos.size());
-//        return reviewResponse;
         return page;
 
     }
@@ -109,39 +88,6 @@ public class  BistroInfoLogicService {
     public Page<BistroInfo> searchList(String resaBisName, Pageable pageable) {
         return bistroInfoRepository.findByResAdmin_ResaBisNameContaining(resaBisName,pageable);
     }
-
-
-    public List<ShopReviewResponse> getReview() {
-        List<ShopReviewResponse> shopReviewResponseList = new ArrayList<>();
-        List<BistroInfoDto> bistroInfoDtos = bistroInfoRepository.findAll().stream().map(BistroInfoDto::from).toList();
-        List<ReviewDto> reviewDtos = new ArrayList<>();
-//        List<Long> reviewCnt = new ArrayList<>();
-//        List<Double> avgScore = new ArrayList<>();
-        double totalScore = 0;
-        Double avg =  null;
-        for(BistroInfoDto resaBisName: bistroInfoDtos) {
-            reviewDtos = reviewRepository.findAllByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName()).stream().map(ReviewDto::from).toList();
-            Long reviewCnt = reviewRepository.countByResAdmin_ResaBisName(resaBisName.resAdminDto().resaBisName());
-            for(ReviewDto reviewDto :  reviewDtos) {
-                totalScore += reviewDto.revScore();
-            }
-            avg = (double) Math.round(totalScore / reviewDtos.size());
-
-            if(avg.isInfinite()) {
-//                avgScore.add(0.0);
-                ShopReviewResponse response = new ShopReviewResponse(avg, reviewCnt);
-                shopReviewResponseList.add(response);
-            } else {
-//                avgScore.add(avg);
-                ShopReviewResponse response = new ShopReviewResponse(avg,reviewCnt);
-                shopReviewResponseList.add(response);
-            }
-        }
-        System.out.println(shopReviewResponseList);
-        return shopReviewResponseList;
-    }
-
-
 
 
 }

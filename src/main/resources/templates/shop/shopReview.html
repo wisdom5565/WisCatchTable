@@ -254,7 +254,8 @@
             <header id="header" class="opaque">
                 <div class="container">
                     <div class="header-left-1">
-                        <h1 class="page-title" style="padding-right: 4px;" th:text="${shopname}">텍사스 데 브라질 센트럴시티점</h1>
+                        <h1 class="page-title" style="padding-right: 4px;" th:text="${resaBisName}">텍사스 데 브라질
+                            센트럴시티점</h1>
                     </div>
                 </div>
             </header>
@@ -263,40 +264,40 @@
                     <div class="container gutter-sm">
                         <div class="review-rating-summary review-rating-summary-splitview">
                             <div class="average">
-                                <h5><span th:text="|${revcnt}개 리뷰 별점 평균|">183개 리뷰 별점 평균</span></h5>
-                                <div class="score" th:text="${avgpoint}"><strong>4.5</strong></div>
+                                <h5><span th:text="|${progress.revCnt()}개 리뷰 별점 평균|">183개 리뷰 별점 평균</span></h5>
+                                <div class="score" th:text="${progress.avgScore()}"><strong>4.5</strong></div>
                             </div>
 
                             <section id="skills">
                                 <p>
                                     <span class="left_bar">5점</span>
-                                    <span class="bar"><progress th:value="${score5}"
-                                                                th:max="${scoreSum}"></progress></span>
-                                    <span class="right_bar" th:text="${score5}">55</span>
+                                    <span class="bar"><progress th:value="${progress.score5()}"
+                                                                th:max="${progress.scoreSum()}"></progress></span>
+                                    <span class="right_bar" th:text="${progress.score5()}">55</span>
                                 </p>
                                 <p>
                                     <span class="left_bar">4점</span>
-                                    <span class="bar"><progress th:value="${score4}"
-                                                                th:max="${scoreSum}"></progress></span>
-                                    <span class="right_bar" th:text="${score4}">55</span>
+                                    <span class="bar"><progress th:value="${progress.score4()}"
+                                                                th:max="${progress.scoreSum()}"></progress></span>
+                                    <span class="right_bar" th:text="${progress.score4()}">55</span>
                                 </p>
                                 <p>
                                     <span class="left_bar">3점</span>
-                                    <span class="bar"><progress th:value="${score3}"
-                                                                th:max="${scoreSum}"></progress></span>
-                                    <span class="right_bar" th:text="${score3}">55</span>
+                                    <span class="bar"><progress th:value="${progress.score3()}"
+                                                                th:max="${progress.scoreSum()}"></progress></span>
+                                    <span class="right_bar" th:text="${progress.score3()}">55</span>
                                 </p>
                                 <p>
                                     <span class="left_bar">2점</span>
-                                    <span class="bar"><progress th:value="${score2}"
-                                                                th:max="${scoreSum}"></progress></span>
-                                    <span class="right_bar" th:text="${score2}">55</span>
+                                    <span class="bar"><progress th:value="${progress.score2()}"
+                                                                th:max="${progress.scoreSum()}"></progress></span>
+                                    <span class="right_bar" th:text="${progress.score2()}">55</span>
                                 </p>
                                 <p>
                                     <span class="left_bar">1점</span>
-                                    <span class="bar"><progress th:value="${score1}"
-                                                                th:max="${scoreSum}"></progress></span>
-                                    <span class="right_bar" th:text="${score1}">55</span>
+                                    <span class="bar"><progress th:value="${progress.score1()}"
+                                                                th:max="${progress.scoreSum()}"></progress></span>
+                                    <span class="right_bar" th:text="${progress.score1()}">55</span>
                                 </p>
 
                             </section>
@@ -321,7 +322,7 @@
                                             <div class="pop-conts">
                                                 <div class="drawer-box">
                                                     <div class="review_sort">
-                                                        <a th:href="|/shop/review/${shopname}?page=0&size=10&sort=regDate|"
+                                                        <a th:href="|/shop/review/${resaBisName}?sort=regDate|"
                                                            class="btn_recent">최근 등록순
                                                             <img class="btn_recent" th:if="${sort=='regDate'}"
                                                                  id="btn_check"
@@ -333,18 +334,18 @@
                                                         </a>
                                                     </div>
                                                     <div class="review_sort">
-                                                        <a th:href="|/shop/review/${shopname}?page=0&size=10&sort=revScoreGood|"
+                                                        <a th:href="|/shop/review/${resaBisName}?sort=highScore|"
                                                            class="btn_good">별점 높은순
-                                                            <img class="btn_good" th:if="${sort=='revScoreGood'}"
+                                                            <img class="btn_good" th:if="${sort=='highScore'}"
                                                                  id="btn_check"
                                                                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
 
                                                         </a>
                                                     </div>
                                                     <div class="review_sort">
-                                                        <a th:href="|/shop/review/${shopname}?page=0&size=10&sort=revScoreBad|"
+                                                        <a th:href="|/shop/review/${resaBisName}?sort=lowScore|"
                                                            class="btn_bad">별점 낮은순
-                                                            <img class="btn_bad" th:if="${sort=='revScoreBad'}"
+                                                            <img class="btn_bad" th:if="${sort=='lowScore'}"
                                                                  id="btn_check"
                                                                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgyMFYyMEgweiIvPgogICAgICAgIDxwYXRoIHN0cm9rZT0iI0ZGM0QwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTMuNyA4TDguNyAxMyAxNi43IDUiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
                                                         </a>
@@ -473,21 +474,15 @@
                     <!--페이징 처리-->
                     <div class="page_wrap">
                         <div class="page_nation" aria-label="Page navigation example">
-                            <a th:href="@{'/shop/review/'+${shopname}+'?page='+${reviews.number - 1}+'&size=10&sort='+${sort}}"
-                               th:class="'page-prev' + (${reviews.number} <= 0 ? ' page-disabled':'')">
-                            </a>
-
+                            <a th:href="@{/shop/review/${resaBisName}(sort=${sort},page=${reviews.number - 1})}"
+                               th:class="'page-prev' + (${reviews.number} <= 0 ? ' page-disabled':'')"></a>
                             <span th:each="pageNumber : ${paginationBarNumbers}">
                         <a th:text="${pageNumber + 1}"
-                           th:href="@{'/shop/review/'+${shopname}+'?page='+${pageNumber}+'&size=10&sort='+${sort}}"
-                           th:class="(${pageNumber} == ${reviews.number} ? 'active' : '')">1</a>
-                            </span>
-
-
-                            <a th:href="@{'/shop/review/'+${shopname}+'?page='+${reviews.number + 1}+'&size=10&sort='+${sort}}"
-                               th:class="'page-next' + (${reviews.number} >= ${reviews.totalPages - 1} ? ' page-disabled':'')">
-                            </a>
-
+                           th:href="@{/shop/review/${resaBisName}(sort=${sort},page=${pageNumber})}"
+                           th:class="(${pageNumber} == ${reviews.number} ? 'active' : '')">1</a></span>
+                            <a th:href="@{/shop/review/${resaBisName}(sort=${sort},page=${reviews.number + 1})}"
+                               th:class="'page-next' +
+                    (${reviews.number} >= ${reviews.totalPages - 1} ? ' page-disabled':'')"></a>
                         </div>
                     </div>
                     <!--페이징 끝-->
@@ -495,6 +490,7 @@
             </main>
         </div>
     </div>
+    <!--리뷰신고-->
     <div th:each="review : ${reviews}">
         <div th:class="'modal revs' +${review.revIdx} + ' modal-overlay'">
             <div class="modal-window">
@@ -532,5 +528,4 @@
 <script type="text/javascript" src="/js/script.js"></script>
 <script src="/js/reviewHeartComm.js"></script>
 <script src="/js/report.js"></script>
-<!--<script type="text/javascript" src="/js/bar.js"></script>-->
 </html>

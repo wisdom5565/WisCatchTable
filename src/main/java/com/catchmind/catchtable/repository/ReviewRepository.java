@@ -11,7 +11,7 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    List<Review> findAllByProfile_PrIdx(Long prIdx, Sort sort);
+    List<Review> findAllByProfile_PrIdx(Long prIdz, Sort sort);
 
     Page<Review> findAllByResAdmin_ResaBisName(String resaBisName, Pageable pageable);
 

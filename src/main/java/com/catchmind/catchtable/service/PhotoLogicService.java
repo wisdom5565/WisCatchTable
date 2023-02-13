@@ -1,6 +1,7 @@
 package com.catchmind.catchtable.service;
 
 import com.catchmind.catchtable.domain.Photo;
+import com.catchmind.catchtable.dto.PhotoDto;
 import com.catchmind.catchtable.dto.ReviewDto;
 import com.catchmind.catchtable.dto.ReviewPhotoDto;
 import com.catchmind.catchtable.dto.network.response.ReviewResponse;
@@ -23,17 +24,11 @@ public class PhotoLogicService {
     private final PhotoRepository photoRepository;
     private final ReviewRepository reviewRepository;
     private final ReviewPhotoRepository reviewPhotoRepository;
-//
-//    public List<PhotoDto> photoList(String resaBisName){
-//        return photoRepository.findAllByResAdmin_ResaBisName(resaBisName).stream().map(PhotoDto::from).toList();
-//    }
-public List<Photo> photoDto(String resaBisName){
-    return photoRepository.findAllByResAdmin_ResaBisName(resaBisName).stream().toList();
-}
-//    public List<PhotoDto> photoList(){
-//        return photoRepository.findAll().stream().map(PhotoDto::from).toList();
 
-//    }
+public PhotoDto photoDto(String resaBisName){
+    return photoRepository.findByResAdmin_ResaBisName(resaBisName).map(PhotoDto::from).orElseThrow();
+}
+
 
     // 전체 리뷰 페이지
     public Page<ReviewResponse> getReviews(Pageable pageable) {

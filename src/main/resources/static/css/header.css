@@ -115,8 +115,6 @@
   line-height: 42px;
   align-items: flex-start;
   top: 175px;
-  /*padding-left: 25px;*/
-  /*padding-right: 25px;*/
   z-index: 1;
   left: 50%;
   transform: translate(-50%,0);
