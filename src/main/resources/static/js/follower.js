@@ -4,8 +4,6 @@ let listPrIdx = document.querySelectorAll('.list-pridx');
 let size = document.querySelector('.size').value;
 
 for (let i = 0; i < size; i++) {
-    console.log(listPrIdx[i].value)
-    console.log(isFollow[i])
     if (isFollow[i].value == 'true') {
         console.log("⭕")
         let btn = "<button type='button' onclick ='follow(" + prIdx[i].value + "," + listPrIdx[i].value + ")' class='btn btn-md btn-outline-orange btn-rounded full-width t" + listPrIdx[i].value + "'>" +
@@ -22,7 +20,7 @@ for (let i = 0; i < size; i++) {
 }
 
 function follow(prIdx, timeLineIdx) {
-    if(prIdx == null || prIdx == '') {
+    if(prIdx == null || prIdx == 0) {
         alert('로그인 후 이용해주세요!')
         location.href="/login";
     }

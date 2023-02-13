@@ -42,7 +42,7 @@ public class TimelineController {
             Page<ReviewResponse> reviews = timeLineService.getReviews(pageable);
             List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), reviews.getTotalPages());
             map.addAttribute("reviews", reviews);
-            map.addAttribute("prIdx", null);
+            map.addAttribute("prIdx", 0);
             map.addAttribute("paginationBarNumbers", barNumbers);
         } else {
             Long prIdx = catchPrincipal.prIdx();
@@ -65,6 +65,7 @@ public class TimelineController {
             map.addAttribute("isFollow", isFollow);
             map.addAttribute("timeLineIdx", timeLineIdx);
             map.addAttribute("profile", profile);
+            map.addAttribute("prIdx", 0);
         } else {
             Long prIdx = catchPrincipal.prIdx();
             Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
@@ -103,7 +104,7 @@ public class TimelineController {
 
     //  공개된 컬렉션 상세 페이지
     @GetMapping("/collection/{timeLineIdx}/detail/{colIdx}")
-    public String collection(@PathVariable Long timeLineIdx, @PathVariable Long colIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal,
+    public String collection(@PathVariable Long timeLineIdx, @PathVariable Long colIdx,
                              @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable, ModelMap map) {
         List<BistroSaveDto> responses = timeLineService.getCollectionDetail(colIdx);
         System.out.println(responses);
@@ -122,17 +123,28 @@ public class TimelineController {
     @GetMapping("/review/{timeLineIdx}")
     public String review(@PathVariable Long timeLineIdx, @AuthenticationPrincipal CatchPrincipal catchPrincipal, ModelMap map,
                          @PageableDefault(size = 10, sort = "colIdx", direction = Sort.Direction.DESC) Pageable pageable) {
-        Long prIdx = catchPrincipal.prIdx();
-        Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
-        List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), response.getTotalPages());
-        TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+        if(catchPrincipal == null) {
+            Page<ReviewResponse> response = timeLineService.getReview(null, timeLineIdx, pageable);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), response.getTotalPages());
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            map.addAttribute("profile", profile);
+            map.addAttribute("reviews", response);
+            map.addAttribute("paginationBarNumbers", barNumbers);
+            map.addAttribute("prIdx", 0);
+            map.addAttribute("timeLineIdx", timeLineIdx);
+        } else {
+            Long prIdx = catchPrincipal.prIdx();
+            Page<ReviewResponse> response = timeLineService.getReview(prIdx, timeLineIdx, pageable);
+            List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), response.getTotalPages());
+            TimeLineResponse profile = timeLineService.getHeader(timeLineIdx);
+            map.addAttribute("profile", profile);
+            map.addAttribute("reviews", response);
+            map.addAttribute("paginationBarNumbers", barNumbers);
+            map.addAttribute("prIdx", prIdx);
+            map.addAttribute("timeLineIdx", timeLineIdx);
 
+        }
 
-        map.addAttribute("profile", profile);
-        map.addAttribute("reviews", response);
-        map.addAttribute("paginationBarNumbers", barNumbers);
-        map.addAttribute("prIdx", prIdx);
-        map.addAttribute("timeLineIdx", timeLineIdx);
         return "timeline/profile-review";
     }
 
@@ -151,6 +163,7 @@ public class TimelineController {
             }
             map.addAttribute("timeLineIdx", timeLineIdx);
             map.addAttribute("profile", profile);
+            map.addAttribute("prIdx", 0);
             map.addAttribute("followings", followingList);
             // 로그인한 유저
         } else {
@@ -196,6 +209,7 @@ public class TimelineController {
             }
             map.addAttribute("timeLineIdx", timeLineIdx);
             map.addAttribute("profile", profile);
+            map.addAttribute("prIdx", 0);
             map.addAttribute("followers", followerList);
 
         } else {
@@ -357,26 +371,6 @@ public class TimelineController {
         Long com = timeLineService.delComment(comIdx, revIdx);
         return com;
     }
-
-//    // 댓글 좋아요
-//    @PostMapping("/new/comment/heart")
-//    @ResponseBody
-//    public Long newComHeart(@RequestBody CommentHeartRequest request) {
-//        System.out.println("❤️" + request.comLike());
-//        Long response = timeLineService.newComHeart(request);
-//        System.out.println(response);
-//        return response;
-//    }
-//
-//    // 댓글 좋아요삭제
-//    @PostMapping("/del/comment/heart")
-//    @ResponseBody
-//    public Long delComHeart(@RequestBody CommentHeartRequest request) {
-//        System.out.println("💙" + request.comLike());
-//        Long response = timeLineService.delComHeart(request);
-//        System.out.println(response);
-//        return response;
-//    }
 
     // 리뷰삭제
     @GetMapping("/del/review/{revIdx}/{resIdx}/{prIdx}")

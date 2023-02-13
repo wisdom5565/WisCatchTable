@@ -21,7 +21,7 @@ if(profile.value == 'true') {
 }
 
 function follow(prIdx, timeLineIdx) {
-    if(prIdx == null || prIdx == '') {
+    if(prIdx == null || prIdx == 0) {
         alert('로그인 후 이용해주세요!')
         location.href="/login";
     }

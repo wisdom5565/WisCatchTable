@@ -46,7 +46,7 @@ for (let i = 0; i < isSaved.length; i++) {
 }
 
 function marked(prIdx, resaBisName, isSaved, bdIdx) {
-    if (prIdx == null || prIdx == '') {
+    if (prIdx == null || prIdx == 0) {
         alert('로그인 후 이용해주세요!')
         location.href = "/login";
     }

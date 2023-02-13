@@ -100,6 +100,7 @@ public class ShopController {
                 map.addAttribute("paginationBarNumbers",barNumbers);
                 map.addAttribute("sort", sort);
                 map.addAttribute("filtername", filtername);
+                map.addAttribute("prIdx", 0);
             } else {
                 Long prIdx = catchPrincipal.prIdx();
                 reviews = shopService.getBisNameReviews(pageable, resaBisName, prIdx, sort);
@@ -200,13 +201,13 @@ public class ShopController {
                        @RequestParam(required = false) String bisCategory,
                        @RequestParam(required = false) String bisRegion) {
         String filtername = "최신등록순";
-        if (sort == null) {
+        if (sort == "" || sort == null) {
             if (catchPrincipal == null) {
                 Page<ShopListResponse> shopList = shopService.shopList(pageable, null, null);
                 List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), shopList.getTotalPages());
                 map.addAttribute("shopList", shopList);
                 map.addAttribute("paginationBarNumbers", barNumbers);
-                map.addAttribute("prIdx", "");
+                map.addAttribute("prIdx", 0);
                 map.addAttribute("sort", sort);
                 map.addAttribute("filtername", filtername);
             } else {
@@ -227,7 +228,7 @@ public class ShopController {
                         List<Integer> barNumbers = paginationService.getPaginationBarNumber(pageable.getPageNumber(), shopList.getTotalPages());
                         map.addAttribute("shopList", shopList);
                         map.addAttribute("paginationBarNumbers", barNumbers);
-                        map.addAttribute("prIdx", "");
+                        map.addAttribute("prIdx", 0);
                         map.addAttribute("sort", sort);
                         map.addAttribute("filtername", filtername);
                     } else {
@@ -248,7 +249,7 @@ public class ShopController {
                         filtername = "리뷰 많은순";
                         map.addAttribute("shopList", shopList);
                         map.addAttribute("paginationBarNumbers", barNumbers);
-                        map.addAttribute("prIdx", "");
+                        map.addAttribute("prIdx", 0);
                         map.addAttribute("sort", sort);
                         map.addAttribute("filtername", filtername);
                     } else {
@@ -270,7 +271,7 @@ public class ShopController {
                         filtername = "별점 높은순";
                         map.addAttribute("shopList", shopList);
                         map.addAttribute("paginationBarNumbers", barNumbers);
-                        map.addAttribute("prIdx", "");
+                        map.addAttribute("prIdx", 0);
                         map.addAttribute("sort", sort);
                         map.addAttribute("filtername", filtername);
                     } else {

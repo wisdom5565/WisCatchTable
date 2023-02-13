@@ -106,8 +106,7 @@
             <section class="section pb-30 pt-20 ">
                 <div class="container gutter-sm">
                     <div class="section-body">
-
-                        <div class="btn-centered"><a
+                        <div class="btn-centered"><a th:href="'/reservation/'+${bisDetail.bistroInfoDto().resAdminDto().resaBisName()}"
                                 th:onclick="checkBlock([[${bisDetail.resAdminDto().resaBisName()}]])"
                                 class="btn btn-rounded btn-outline-red"><span
                                 class="label arrow">예약가능 날짜 찾기</span></a></div>
@@ -220,7 +219,7 @@
                     <div class="section-header mb-25">
                         <h3 class="section-title">최신 리뷰</h3>
                         <div class="utils"><a class="__btn-all"
-                                              th:href="|/shop/review/${bisDetail.resAdminDto.resaBisName}?page=0&size=10&sort=regDate|">전체보기</a>
+                                              th:href="|/shop/review/${bisDetail.resAdminDto.resaBisName}|">전체보기</a>
                         </div>
                     </div>
                     <div class="section-body">
@@ -266,7 +265,7 @@
                                                         <div class="profile">
                                                             <h4 class="name username  "><span class="txt"
                                                                                               th:text="${review.prNick}">빠빠티</span>
-                                                            </h4><span class="date" th:text="${review.regDate}">2022.12.13</span>
+                                                            </h4><span class="date" th:text="${#temporals.format(review.regDate, 'yyyy년 MM월 dd일')}">2022.12.13</span>
                                                         </div>
                                                         <div class="rating"><span class="star"
                                                                                   th:text="${review.revScore}">5.0</span>
